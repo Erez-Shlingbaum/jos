@@ -2,8 +2,10 @@
 #define JOS_INC_MEMLAYOUT_H
 
 #ifndef __ASSEMBLER__
+
 #include <inc/types.h>
 #include <inc/mmu.h>
+
 #endif /* not __ASSEMBLER__ */
 
 /*
@@ -84,24 +86,24 @@
 
 
 // All physical memory mapped at this address
-#define	KERNBASE	0xF0000000
+#define    KERNBASE    0xF0000000
 
 // At IOPHYSMEM (640K) there is a 384K hole for I/O.  From the kernel,
 // IOPHYSMEM can be addressed at KERNBASE + IOPHYSMEM.  The hole ends
 // at physical address EXTPHYSMEM.
-#define IOPHYSMEM	0x0A0000
-#define EXTPHYSMEM	0x100000
+#define IOPHYSMEM    0x0A0000
+#define EXTPHYSMEM    0x100000
 
 // Kernel stack.
-#define KSTACKTOP	KERNBASE
-#define KSTKSIZE	(8*PGSIZE)   		// size of a kernel stack
-#define KSTKGAP		(8*PGSIZE)   		// size of a kernel stack guard
+#define KSTACKTOP    KERNBASE
+#define KSTKSIZE    (8*PGSIZE)        // size of a kernel stack
+#define KSTKGAP        (8*PGSIZE)        // size of a kernel stack guard
 
 // Memory-mapped IO.
-#define MMIOLIM		(KSTACKTOP - PTSIZE)
-#define MMIOBASE	(MMIOLIM - PTSIZE)
+#define MMIOLIM        (KSTACKTOP - PTSIZE)
+#define MMIOBASE    (MMIOLIM - PTSIZE)
 
-#define ULIM		(MMIOBASE)
+#define ULIM        (MMIOBASE)
 
 /*
  * User read-only mappings! Anything below here til UTOP are readonly to user.
@@ -109,34 +111,34 @@
  */
 
 // User read-only virtual page table (see 'uvpt' below)
-#define UVPT		(ULIM - PTSIZE)
+#define UVPT        (ULIM - PTSIZE)
 // Read-only copies of the Page structures
-#define UPAGES		(UVPT - PTSIZE)
+#define UPAGES        (UVPT - PTSIZE)
 // Read-only copies of the global env structures
-#define UENVS		(UPAGES - PTSIZE)
+#define UENVS        (UPAGES - PTSIZE)
 
 /*
  * Top of user VM. User can manipulate VA from UTOP-1 and down!
  */
 
 // Top of user-accessible VM
-#define UTOP		UENVS
+#define UTOP        UENVS
 // Top of one-page user exception stack
-#define UXSTACKTOP	UTOP
+#define UXSTACKTOP    UTOP
 // Next page left invalid to guard against exception stack overflow; then:
 // Top of normal user stack
-#define USTACKTOP	(UTOP - 2*PGSIZE)
+#define USTACKTOP    (UTOP - 2*PGSIZE)
 
 // Where user programs generally begin
-#define UTEXT		(2*PTSIZE)
+#define UTEXT        (2*PTSIZE)
 
 // Used for temporary page mappings.  Typed 'void*' for convenience
-#define UTEMP		((void*) PTSIZE)
+#define UTEMP        ((void*) PTSIZE)
 // Used for temporary page mappings for the user page-fault handler
 // (should not conflict with other temporary page mappings)
-#define PFTEMP		(UTEMP + PTSIZE - PGSIZE)
+#define PFTEMP        (UTEMP + PTSIZE - PGSIZE)
 // The location of the user-level STABS data structure
-#define USTABDATA	(PTSIZE / 2)
+#define USTABDATA    (PTSIZE / 2)
 
 #ifndef __ASSEMBLER__
 
