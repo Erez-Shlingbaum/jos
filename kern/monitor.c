@@ -25,6 +25,7 @@ static struct Command commands[] = {
 		{"help",      "Display this list of commands",        mon_help},
 		{"kerninfo",  "Display information about the kernel", mon_kerninfo},
 		{"backtrace", "Print backtrace",                      mon_backtrace},
+		{"shutdown",  "QEMU SPECIFIC SHUTDOWN",               mon_qemu_shutdown},
 };
 
 /***** Implementations of basic kernel monitor commands *****/
@@ -90,7 +91,11 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 	return 0;
 }
 
-
+int mon_qemu_shutdown(int argc, char **argv, struct Trapframe *tf)
+{
+	outw(0x604, 0x2000);
+	return 0;
+}
 
 /***** Kernel monitor command interpreter *****/
 
