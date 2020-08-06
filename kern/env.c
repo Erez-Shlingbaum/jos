@@ -115,7 +115,7 @@ void
 env_init(void)
 {
 	// Set up envs array
-	// LAB 3: Your code here.
+	// TODO LAB 3: Your code here.
 
 	// Per-CPU part of the initialization
 	env_init_percpu();
