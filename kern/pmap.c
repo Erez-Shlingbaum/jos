@@ -103,15 +103,14 @@ boot_alloc(uint32_t n)
 		return nextfree;
 
 	// Make sure we have enough memory
-	if (ROUNDUP((char *) nextfree + n, PGSIZE) > (char *) (KERNBASE + PTSIZE))
-		panic("Next free > npages*PGSIZE: %x > %u * %u = %x", nextfree, npages, PGSIZE, KERNBASE + PTSIZE);
-
+	if ((uint32_t) ROUNDUP(nextfree + n, PGSIZE) > KERNBASE + PTSIZE)
+		panic("boot_alloc: out of memory\n");
 
 	// Allocate a chunk large enough to hold 'n' bytes, then update
 	// nextfree.  Make sure nextfree is kept aligned
 	// to a multiple of PGSIZE.
 	result = nextfree;
-	nextfree = ROUNDUP((char *) nextfree + n, PGSIZE);
+	nextfree = ROUNDUP(nextfree + n, PGSIZE);
 
 	return result;
 }
