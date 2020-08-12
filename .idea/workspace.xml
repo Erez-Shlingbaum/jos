@@ -42,7 +42,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b207754b-21fa-418e-8a5d-383ccd1603c5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/kern/kernel.ld" beforeDir="false" afterPath="$PROJECT_DIR$/kern/kernel.ld" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/memlayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/env.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/pmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pmap.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +92,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
-  <component name="RunManager" selected="Makefile.qemu">
+  <component name="RunManager" selected="Makefile.qemu-gdb">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="main">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -107,12 +114,6 @@
       </makefile>
       <method v="2" />
     </configuration>
-    <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="clean" workingDirectory="" arguments="">
-        <envs />
-      </makefile>
-      <method v="2" />
-    </configuration>
     <configuration name="gdb" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/GNUmakefile" target="gdb" workingDirectory="" arguments="">
         <envs />
@@ -121,6 +122,12 @@
     </configuration>
     <configuration name="qemu-gdb" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/GNUmakefile" target="qemu-gdb" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="qemu-nox" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="qemu-nox" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
@@ -134,18 +141,18 @@
     <list>
       <item itemvalue="CMake Application.main" />
       <item itemvalue="Makefile.all" />
-      <item itemvalue="Makefile.clean" />
       <item itemvalue="Makefile.gdb" />
       <item itemvalue="Makefile.qemu-gdb" />
       <item itemvalue="Makefile.qemu" />
+      <item itemvalue="Makefile.qemu-nox" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Makefile.qemu" />
-        <item itemvalue="Makefile.all" />
-        <item itemvalue="Makefile.clean" />
         <item itemvalue="Makefile.qemu-gdb" />
+        <item itemvalue="Makefile.qemu" />
+        <item itemvalue="Makefile.qemu-nox" />
         <item itemvalue="Makefile.gdb" />
+        <item itemvalue="Makefile.all" />
       </list>
     </recent_temporary>
   </component>
@@ -190,7 +197,8 @@
       <workItem from="1596727662822" duration="8820000" />
       <workItem from="1596743908663" duration="435000" />
       <workItem from="1596745224993" duration="3581000" />
-      <workItem from="1596748822014" duration="3283000" />
+      <workItem from="1596748822014" duration="9504000" />
+      <workItem from="1596998442435" duration="40695000" />
     </task>
     <task id="LOCAL-00001" summary="Solved lab1.&#10;&#10;Implemented backtrace function.">
       <created>1588115190784</created>
@@ -227,7 +235,21 @@
       <option name="project" value="LOCAL" />
       <updated>1596748897024</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed lab3 bug related to new gcc versions.">
+      <created>1596752172995</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1596752172995</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added .idea folder to git">
+      <created>1596752363109</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1596752363109</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +284,9 @@
     <MESSAGE value="Formatted code" />
     <MESSAGE value="Finished lab2!" />
     <MESSAGE value="Merge lab2 into lab3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge lab2 into lab3" />
+    <MESSAGE value="Fixed lab3 bug related to new gcc versions." />
+    <MESSAGE value="Added .idea folder to git" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added .idea folder to git" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -270,55 +294,63 @@
       <screen x="0" y="0" width="1718" height="888" />
     </state>
     <state x="497" y="155" width="802" height="717" key="#Plugins/0.0.1718.888@0.0.1718.888" timestamp="1596282935438" />
+    <state x="704" y="327" width="503" height="392" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597260799540">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="704" y="327" width="503" height="392" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1597260799540" />
     <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1596282884625">
       <screen x="0" y="0" width="1718" height="888" />
     </state>
     <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1718.888@0.0.1718.888" timestamp="1596282884625" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1596748896922">
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1596752363056">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="495" y="102" width="814" height="690" key="CommitChangelistDialog2/0.0.1718.888@0.0.1718.888" timestamp="1596392868156" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1596748896922" />
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752363056" />
     <state x="99" y="100" width="1722" height="841" key="DiffContextDialog" timestamp="1596747555593">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="99" y="100" width="1722" height="841" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555593" />
-    <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl" timestamp="1596748018989">
+    <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl" timestamp="1597223965791">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1596748018989" />
-    <state x="824" y="420" key="Github.ShareDialog" timestamp="1588115242545">
+    <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597223965791" />
+    <state width="1878" height="425" key="GridCell.Tab.0.bottom" timestamp="1597262370675">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="824" y="420" key="Github.ShareDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588115242545" />
-    <state width="1878" height="231" key="GridCell.Tab.0.bottom" timestamp="1596752039852">
+    <state width="817" height="350" key="GridCell.Tab.0.bottom/0.0.1718.888@0.0.1718.888" timestamp="1597262079154" />
+    <state width="1878" height="425" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370675" />
+    <state width="1878" height="425" key="GridCell.Tab.0.center" timestamp="1597262370674">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1676" height="221" key="GridCell.Tab.0.bottom/0.0.1718.888@0.0.1718.888" timestamp="1596474148200" />
-    <state width="1878" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1596752039852" />
-    <state width="1878" height="231" key="GridCell.Tab.0.center" timestamp="1596752039851">
+    <state width="817" height="350" key="GridCell.Tab.0.center/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
+    <state width="1878" height="425" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370674" />
+    <state width="1878" height="425" key="GridCell.Tab.0.left" timestamp="1597262370673">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1676" height="221" key="GridCell.Tab.0.center/0.0.1718.888@0.0.1718.888" timestamp="1596474148198" />
-    <state width="1878" height="231" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1596752039851" />
-    <state width="1878" height="231" key="GridCell.Tab.0.left" timestamp="1596752039850">
+    <state width="817" height="350" key="GridCell.Tab.0.left/0.0.1718.888@0.0.1718.888" timestamp="1597262079152" />
+    <state width="1878" height="425" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370673" />
+    <state width="1878" height="425" key="GridCell.Tab.0.right" timestamp="1597262370674">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1676" height="221" key="GridCell.Tab.0.left/0.0.1718.888@0.0.1718.888" timestamp="1596474148197" />
-    <state width="1878" height="231" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1596752039850" />
-    <state width="1878" height="231" key="GridCell.Tab.0.right" timestamp="1596752039851">
+    <state width="817" height="350" key="GridCell.Tab.0.right/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
+    <state width="1878" height="425" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370674" />
+    <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1597223981496">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1676" height="221" key="GridCell.Tab.0.right/0.0.1718.888@0.0.1718.888" timestamp="1596474148199" />
-    <state width="1878" height="231" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1596752039851" />
-    <state x="68" y="80" width="1686" height="868" key="MergeDialog" timestamp="1596746322304">
+    <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel/0.0.1920.1040@0.0.1920.1040" timestamp="1597223981496" />
+    <state width="640" height="476" key="ImportCMakeProjectWizard.topPanel" timestamp="1597223981496">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="68" y="80" width="1686" height="868" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596746322304" />
-    <state x="670" y="240" width="830" height="567" key="MultipleFileMergeDialog" timestamp="1596746322314">
+    <state width="640" height="476" key="ImportCMakeProjectWizard.topPanel/0.0.1920.1040@0.0.1920.1040" timestamp="1597223981496" />
+    <state x="68" y="80" width="1686" height="868" key="MergeDialog" timestamp="1596752454684">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="670" y="240" width="830" height="567" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596746322314" />
+    <state x="68" y="80" width="1686" height="868" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596752454684" />
+    <state x="670" y="240" width="830" height="567" key="MultipleFileMergeDialog" timestamp="1596752464307">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="670" y="240" width="830" height="567" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596752464307" />
     <state x="456" y="155" width="1007" height="735" key="SettingsEditor" timestamp="1596748785915">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -327,43 +359,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555594" />
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1596746801101">
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1596752486185">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596746801101" />
-    <state x="99" y="100" width="1722" height="841" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1588159793761">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="99" y="100" width="1722" height="841" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588159793761" />
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752486185" />
     <state x="491" y="291" key="com.intellij.ide.util.TipDialog" timestamp="1590785636178">
       <screen x="0" y="0" width="1718" height="888" />
     </state>
     <state x="491" y="291" key="com.intellij.ide.util.TipDialog/0.0.1718.888@0.0.1718.888" timestamp="1590785636178" />
-    <state x="639" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588157530358" />
-    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596748856004">
+    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596752286866">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596748856004" />
+    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752286866" />
     <state x="717" y="238" width="478" height="571" key="git4idea.branch.GitSmartOperationDialog" timestamp="1596747537772">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="717" y="238" width="478" height="571" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747537772" />
-    <state x="745" y="315" width="430" height="416" key="git4idea.merge.GitMergeDialog" timestamp="1588159550119">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="745" y="315" width="430" height="416" key="git4idea.merge.GitMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588159550119" />
     <state x="733" y="425" width="446" height="196" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1596745326209">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="733" y="425" width="446" height="196" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596745326209" />
-    <state x="623" y="236" key="run.anything.popup" timestamp="1596748779828">
+    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog" timestamp="1597169029209">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1596748779828" />
-    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup" timestamp="1596748800067">
+    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597169029209" />
+    <state x="623" y="236" key="run.anything.popup" timestamp="1597174500451">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597174500451" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup" timestamp="1597238468070">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="557" y="196" width="672" height="579" key="search.everywhere.popup/0.0.1718.888@0.0.1718.888" timestamp="1596476252413" />
-    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1596748800067" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597238468070" />
   </component>
 </project>
