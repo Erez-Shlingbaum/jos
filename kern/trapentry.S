@@ -10,6 +10,9 @@
 # exceptions/interrupts
 ###################################################################
 
+#define _TRAPNAME(num) trap_ ## num
+#define TRAPNAME(num) _TRAPNAME(num)
+
 /* TRAPHANDLER defines a globally-visible function for handling a trap.
  * It pushes a trap number onto the stack, then jumps to _alltraps.
  * Use TRAPHANDLER for traps where the CPU automatically pushes an error code.
@@ -28,6 +31,8 @@
 	pushl $(num);							\
 	jmp _alltraps
 
+#define MYTRAPHANDLER(num) TRAPHANDLER(TRAPNAME(num), num)
+
 /* Use TRAPHANDLER_NOEC for traps where the CPU doesn't push an error code.
  * It pushes a 0 in place of the error code, so the trap frame has the same
  * format in either case.
@@ -41,15 +46,78 @@
 	pushl $(num);							\
 	jmp _alltraps
 
+#define MYTRAPHANDLER_NOEC(num) TRAPHANDLER_NOEC(TRAPNAME(num), num)
+
 .text
 
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
 
+MYTRAPHANDLER_NOEC(T_DIVIDE);	// 0
+MYTRAPHANDLER_NOEC(T_DEBUG);	// 1
+MYTRAPHANDLER_NOEC(T_NMI);		// 2
+MYTRAPHANDLER_NOEC(T_BRKPT);	// 3
+MYTRAPHANDLER_NOEC(T_OFLOW);	// 4
+MYTRAPHANDLER_NOEC(T_BOUND);	// 5
+MYTRAPHANDLER_NOEC(T_ILLOP);	// 6
+MYTRAPHANDLER_NOEC(T_DEVICE);	// 7
+MYTRAPHANDLER(T_DBLFLT);		// 8
+								// 9
+MYTRAPHANDLER(T_TSS);			// 10
+MYTRAPHANDLER(T_SEGNP);			// 11
+MYTRAPHANDLER(T_STACK);			// 12
+MYTRAPHANDLER(T_GPFLT);			// 13
+MYTRAPHANDLER(T_PGFLT);			// 14
+								// 15
+MYTRAPHANDLER_NOEC(T_FPERR);	// 16
+MYTRAPHANDLER(T_ALIGN);			// 17
+MYTRAPHANDLER_NOEC(T_MCHK);		// 18
+MYTRAPHANDLER_NOEC(T_SIMDERR);	// 19
+								// 20
+								// 21
+								// 22
+								// 23
+								// 24
+								// 25
+								// 26
+								// 27
+								// 28
+								// 29
+								// 30 - Security Exception (push errorcode)
+								//
+
+MYTRAPHANDLER(T_SYSCALL);		// 48
 
 
 /*
  * Lab 3: Your code here for _alltraps
+	pusha registers
+ 	uint16_t tf_es;
+	uint16_t tf_padding1;
+	uint16_t tf_ds;
+	uint16_t tf_padding2;
+	uint32_t tf_trapno;
+	below here defined by x86 hardware
+	uint32_t tf_err;
+	uintptr_t tf_eip;
+	uint16_t tf_cs;
+	uint16_t tf_padding3;
+	uint32_t tf_eflags;
+	below here only when crossing rings, such as from user to kernel
+	uintptr_t tf_esp;
+	uint16_t tf_ss;
+	uint16_t tf_padding4;
  */
 
+_alltraps:
+	pushl %ds
+	pushl %es
+	movw $GD_KD, %ax
+	movw %ax, %ds
+	movw %ax, %es
+	pushal
+	push %esp
+	call trap
+
+// Return from _alltraps is at env_pop_tf

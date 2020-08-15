@@ -43,9 +43,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b207754b-21fa-418e-8a5d-383ccd1603c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inc/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/memlayout.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kern/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/env.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kern/pmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pmap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/trap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/trapentry.S" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trapentry.S" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,8 +107,8 @@
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="all" workingDirectory="" arguments="">
+    <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="clean" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
@@ -140,19 +139,19 @@
     </configuration>
     <list>
       <item itemvalue="CMake Application.main" />
-      <item itemvalue="Makefile.all" />
       <item itemvalue="Makefile.gdb" />
       <item itemvalue="Makefile.qemu-gdb" />
       <item itemvalue="Makefile.qemu" />
       <item itemvalue="Makefile.qemu-nox" />
+      <item itemvalue="Makefile.clean" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Makefile.qemu-gdb" />
+        <item itemvalue="Makefile.clean" />
         <item itemvalue="Makefile.qemu" />
         <item itemvalue="Makefile.qemu-nox" />
         <item itemvalue="Makefile.gdb" />
-        <item itemvalue="Makefile.all" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +197,7 @@
       <workItem from="1596743908663" duration="435000" />
       <workItem from="1596745224993" duration="3581000" />
       <workItem from="1596748822014" duration="9504000" />
-      <workItem from="1596998442435" duration="40695000" />
+      <workItem from="1596998442435" duration="53245000" />
     </task>
     <task id="LOCAL-00001" summary="Solved lab1.&#10;&#10;Implemented backtrace function.">
       <created>1588115190784</created>
@@ -249,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596752363109</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Finished Exercise 2 of lab3">
+      <created>1597262717380</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1597262717381</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,8 +292,8 @@
     <MESSAGE value="Merge lab2 into lab3" />
     <MESSAGE value="Fixed lab3 bug related to new gcc versions." />
     <MESSAGE value="Added .idea folder to git" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added .idea folder to git" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="Finished Exercise 2 of lab3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Exercise 2 of lab3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="497" y="155" width="802" height="717" key="#Plugins" timestamp="1596282935438">
@@ -302,39 +308,39 @@
       <screen x="0" y="0" width="1718" height="888" />
     </state>
     <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1718.888@0.0.1718.888" timestamp="1596282884625" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1596752363056">
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1597262717300">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="495" y="102" width="814" height="690" key="CommitChangelistDialog2/0.0.1718.888@0.0.1718.888" timestamp="1596392868156" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752363056" />
-    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog" timestamp="1596747555593">
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1597262717300" />
+    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog" timestamp="1597262677631">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555593" />
+    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597262677631" />
     <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl" timestamp="1597223965791">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597223965791" />
-    <state width="1878" height="425" key="GridCell.Tab.0.bottom" timestamp="1597262370675">
+    <state width="1878" height="248" key="GridCell.Tab.0.bottom" timestamp="1597514796243">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="817" height="350" key="GridCell.Tab.0.bottom/0.0.1718.888@0.0.1718.888" timestamp="1597262079154" />
-    <state width="1878" height="425" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370675" />
-    <state width="1878" height="425" key="GridCell.Tab.0.center" timestamp="1597262370674">
+    <state width="1878" height="248" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597514796243" />
+    <state width="1878" height="248" key="GridCell.Tab.0.center" timestamp="1597514796242">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="817" height="350" key="GridCell.Tab.0.center/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
-    <state width="1878" height="425" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370674" />
-    <state width="1878" height="425" key="GridCell.Tab.0.left" timestamp="1597262370673">
+    <state width="1878" height="248" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597514796242" />
+    <state width="1878" height="248" key="GridCell.Tab.0.left" timestamp="1597514796241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="817" height="350" key="GridCell.Tab.0.left/0.0.1718.888@0.0.1718.888" timestamp="1597262079152" />
-    <state width="1878" height="425" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370673" />
-    <state width="1878" height="425" key="GridCell.Tab.0.right" timestamp="1597262370674">
+    <state width="1878" height="248" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597514796241" />
+    <state width="1878" height="248" key="GridCell.Tab.0.right" timestamp="1597514796242">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="817" height="350" key="GridCell.Tab.0.right/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
-    <state width="1878" height="425" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597262370674" />
+    <state width="1878" height="248" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597514796242" />
     <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1597223981496">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -359,10 +365,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555594" />
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1596752486185">
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1597262729461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752486185" />
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1597262729461" />
     <state x="491" y="291" key="com.intellij.ide.util.TipDialog" timestamp="1590785636178">
       <screen x="0" y="0" width="1718" height="888" />
     </state>

@@ -20,35 +20,35 @@ static struct Trapframe *last_tf;
 /* Interrupt descriptor table.  (Must be built at run time because
  * shifted function addresses can't be represented in relocation records.)
  */
-struct Gatedesc idt[256] = { { 0 } };
+struct Gatedesc idt[256] = {{0}};
 struct Pseudodesc idt_pd = {
-	sizeof(idt) - 1, (uint32_t) idt
+		sizeof(idt) - 1, (uint32_t) idt
 };
 
 
 static const char *trapname(int trapno)
 {
-	static const char * const excnames[] = {
-		"Divide error",
-		"Debug",
-		"Non-Maskable Interrupt",
-		"Breakpoint",
-		"Overflow",
-		"BOUND Range Exceeded",
-		"Invalid Opcode",
-		"Device Not Available",
-		"Double Fault",
-		"Coprocessor Segment Overrun",
-		"Invalid TSS",
-		"Segment Not Present",
-		"Stack Fault",
-		"General Protection",
-		"Page Fault",
-		"(unknown trap)",
-		"x87 FPU Floating-Point Error",
-		"Alignment Check",
-		"Machine-Check",
-		"SIMD Floating-Point Exception"
+	static const char *const excnames[] = {
+			"Divide error",
+			"Debug",
+			"Non-Maskable Interrupt",
+			"Breakpoint",
+			"Overflow",
+			"BOUND Range Exceeded",
+			"Invalid Opcode",
+			"Device Not Available",
+			"Double Fault",
+			"Coprocessor Segment Overrun",
+			"Invalid TSS",
+			"Segment Not Present",
+			"Stack Fault",
+			"General Protection",
+			"Page Fault",
+			"(unknown trap)",
+			"x87 FPU Floating-Point Error",
+			"Alignment Check",
+			"Machine-Check",
+			"SIMD Floating-Point Exception"
 	};
 
 	if (trapno < ARRAY_SIZE(excnames))
@@ -58,6 +58,8 @@ static const char *trapname(int trapno)
 	return "(unknown trap)";
 }
 
+#define _TRAPNAME(num) trap_ ## num
+#define TRAPNAME(num) _TRAPNAME(num)
 
 void
 trap_init(void)
@@ -65,8 +67,49 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
+	extern void TRAPNAME(T_DIVIDE)(void);
+	extern void TRAPNAME(T_DEBUG)(void);
+	extern void TRAPNAME(T_NMI)(void);
+	extern void TRAPNAME(T_BRKPT)(void);
+	extern void TRAPNAME(T_OFLOW)(void);
+	extern void TRAPNAME(T_BOUND)(void);
+	extern void TRAPNAME(T_ILLOP)(void);
+	extern void TRAPNAME(T_DEVICE)(void);
+	extern void TRAPNAME(T_DBLFLT)(void);
+	extern void TRAPNAME(T_TSS)(void);
+	extern void TRAPNAME(T_SEGNP)(void);
+	extern void TRAPNAME(T_STACK)(void);
+	extern void TRAPNAME(T_GPFLT)(void);
+	extern void TRAPNAME(T_PGFLT)(void);
+	extern void TRAPNAME(T_FPERR)(void);
+	extern void TRAPNAME(T_ALIGN)(void);
+	extern void TRAPNAME(T_MCHK)(void);
+	extern void TRAPNAME(T_SIMDERR)(void);
+	extern void TRAPNAME(T_SYSCALL)(void);
 
-	// Per-CPU setup 
+	SETGATE(idt[T_DIVIDE], false, GD_KT, TRAPNAME(T_DIVIDE), 0);
+	SETGATE(idt[T_DEBUG], false, GD_KT, TRAPNAME(T_DEBUG), 0);
+	SETGATE(idt[T_NMI], false, GD_KT, TRAPNAME(T_NMI), 0);
+	SETGATE(idt[T_BRKPT], true, GD_KT, TRAPNAME(T_BRKPT), 0);
+	SETGATE(idt[T_OFLOW], true, GD_KT, TRAPNAME(T_OFLOW), 0);
+	SETGATE(idt[T_BOUND], false, GD_KT, TRAPNAME(T_BOUND), 0);
+	SETGATE(idt[T_ILLOP], false, GD_KT, TRAPNAME(T_ILLOP), 0);
+	SETGATE(idt[T_DEVICE], false, GD_KT, TRAPNAME(T_DEVICE), 0);
+	SETGATE(idt[T_DBLFLT], false, GD_KT, TRAPNAME(T_DBLFLT), 0);
+	SETGATE(idt[T_TSS], false, GD_KT, TRAPNAME(T_TSS), 0);
+	SETGATE(idt[T_SEGNP], false, GD_KT, TRAPNAME(T_SEGNP), 0);
+	SETGATE(idt[T_STACK], false, GD_KT, TRAPNAME(T_STACK), 0);
+	SETGATE(idt[T_GPFLT], false, GD_KT, TRAPNAME(T_GPFLT), 0);
+	SETGATE(idt[T_PGFLT], false, GD_KT, TRAPNAME(T_PGFLT), 0);
+	SETGATE(idt[T_FPERR], false, GD_KT, TRAPNAME(T_FPERR), 0);
+	SETGATE(idt[T_ALIGN], false, GD_KT, TRAPNAME(T_ALIGN), 0);
+	SETGATE(idt[T_MCHK], false, GD_KT, TRAPNAME(T_MCHK), 0);
+	SETGATE(idt[T_SIMDERR], false, GD_KT, TRAPNAME(T_SIMDERR), 0);
+
+
+	SETGATE(idt[T_SYSCALL], true, GD_KT, TRAPNAME(T_SYSCALL), 3);
+
+	// Per-CPU setup
 	trap_init_percpu();
 }
 
@@ -82,7 +125,7 @@ trap_init_percpu(void)
 
 	// Initialize the TSS slot of the gdt.
 	gdt[GD_TSS0 >> 3] = SEG16(STS_T32A, (uint32_t) (&ts),
-					sizeof(struct Taskstate) - 1, 0);
+							  sizeof(struct Taskstate) - 1, 0);
 	gdt[GD_TSS0 >> 3].sd_s = 0;
 
 	// Load the TSS selector (like other segment selectors, the
@@ -112,15 +155,16 @@ print_trapframe(struct Trapframe *tf)
 	// PR=a protection violation caused the fault (NP=page not present).
 	if (tf->tf_trapno == T_PGFLT)
 		cprintf(" [%s, %s, %s]\n",
-			tf->tf_err & 4 ? "user" : "kernel",
-			tf->tf_err & 2 ? "write" : "read",
-			tf->tf_err & 1 ? "protection" : "not-present");
+				tf->tf_err & 4 ? "user" : "kernel",
+				tf->tf_err & 2 ? "write" : "read",
+				tf->tf_err & 1 ? "protection" : "not-present");
 	else
 		cprintf("\n");
 	cprintf("  eip  0x%08x\n", tf->tf_eip);
 	cprintf("  cs   0x----%04x\n", tf->tf_cs);
 	cprintf("  flag 0x%08x\n", tf->tf_eflags);
-	if ((tf->tf_cs & 3) != 0) {
+	if ((tf->tf_cs & 3) != 0)
+	{
 		cprintf("  esp  0x%08x\n", tf->tf_esp);
 		cprintf("  ss   0x----%04x\n", tf->tf_ss);
 	}
@@ -149,7 +193,8 @@ trap_dispatch(struct Trapframe *tf)
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
 		panic("unhandled trap in kernel");
-	else {
+	else
+	{
 		env_destroy(curenv);
 		return;
 	}
@@ -160,7 +205,7 @@ trap(struct Trapframe *tf)
 {
 	// The environment may have set DF and some versions
 	// of GCC rely on DF being clear
-	asm volatile("cld" ::: "cc");
+	asm volatile("cld":: : "cc");
 
 	// Check that interrupts are disabled.  If this assertion
 	// fails, DO NOT be tempted to fix it by inserting a "cli" in
@@ -169,7 +214,8 @@ trap(struct Trapframe *tf)
 
 	cprintf("Incoming TRAP frame at %p\n", tf);
 
-	if ((tf->tf_cs & 3) == 3) {
+	if ((tf->tf_cs & 3) == 3)
+	{
 		// Trapped from user mode.
 		assert(curenv);
 
@@ -211,7 +257,7 @@ page_fault_handler(struct Trapframe *tf)
 
 	// Destroy the environment that caused the fault.
 	cprintf("[%08x] user fault va %08x ip %08x\n",
-		curenv->env_id, fault_va, tf->tf_eip);
+			curenv->env_id, fault_va, tf->tf_eip);
 	print_trapframe(tf);
 	env_destroy(curenv);
 }
