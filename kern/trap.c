@@ -90,8 +90,8 @@ trap_init(void)
 	SETGATE(idt[T_DIVIDE], false, GD_KT, TRAPNAME(T_DIVIDE), 0);
 	SETGATE(idt[T_DEBUG], false, GD_KT, TRAPNAME(T_DEBUG), 0);
 	SETGATE(idt[T_NMI], false, GD_KT, TRAPNAME(T_NMI), 0);
-	SETGATE(idt[T_BRKPT], true, GD_KT, TRAPNAME(T_BRKPT), 0);
-	SETGATE(idt[T_OFLOW], true, GD_KT, TRAPNAME(T_OFLOW), 0);
+	SETGATE(idt[T_BRKPT], false, GD_KT, TRAPNAME(T_BRKPT), 3);
+	SETGATE(idt[T_OFLOW], false, GD_KT, TRAPNAME(T_OFLOW), 0);
 	SETGATE(idt[T_BOUND], false, GD_KT, TRAPNAME(T_BOUND), 0);
 	SETGATE(idt[T_ILLOP], false, GD_KT, TRAPNAME(T_ILLOP), 0);
 	SETGATE(idt[T_DEVICE], false, GD_KT, TRAPNAME(T_DEVICE), 0);
@@ -106,8 +106,7 @@ trap_init(void)
 	SETGATE(idt[T_MCHK], false, GD_KT, TRAPNAME(T_MCHK), 0);
 	SETGATE(idt[T_SIMDERR], false, GD_KT, TRAPNAME(T_SIMDERR), 0);
 
-
-	SETGATE(idt[T_SYSCALL], true, GD_KT, TRAPNAME(T_SYSCALL), 3);
+	SETGATE(idt[T_SYSCALL], false, GD_KT, TRAPNAME(T_SYSCALL), 3);
 
 	// Per-CPU setup
 	trap_init_percpu();
@@ -186,17 +185,46 @@ print_regs(struct PushRegs *regs)
 static void
 trap_dispatch(struct Trapframe *tf)
 {
-	// Handle processor exceptions.
-	// LAB 3: Your code here.
+	assert(tf != NULL);
+	pte_t *pte;
 
-	// Unexpected trap: The user process or the kernel has a bug.
-	print_trapframe(tf);
-	if (tf->tf_cs == GD_KT)
-		panic("unhandled trap in kernel");
-	else
+	// Handle processor exceptions.
+	switch (tf->tf_trapno)
 	{
-		env_destroy(curenv);
-		return;
+		case T_SYSCALL:
+			// Generic system call: pass system call number in AX,
+			// up to five parameters in DX, CX, BX, DI, SI.
+			// Interrupt kernel with T_SYSCALL.
+			tf->tf_regs.reg_eax = syscall(
+					tf->tf_regs.reg_eax,
+					tf->tf_regs.reg_edx,
+					tf->tf_regs.reg_ecx,
+					tf->tf_regs.reg_ebx,
+					tf->tf_regs.reg_edi,
+					tf->tf_regs.reg_esi
+			);
+			break;
+
+		case T_PGFLT:
+			page_fault_handler(tf);
+			break;
+		case T_BRKPT:
+			monitor(tf);
+			break;
+
+		default:
+			// Some debug info
+			print_trapframe(tf);
+
+			// Unexpected trap: The user process or the kernel has a bug.
+			if (tf->tf_cs == GD_KT)
+				panic("unhandled trap in kernel");
+			else
+			{
+				// For unhandled exceptions, we need to DESTROY the environment
+				env_destroy(curenv);
+				return;
+			}
 	}
 }
 
@@ -213,7 +241,6 @@ trap(struct Trapframe *tf)
 	assert(!(read_eflags() & FL_IF));
 
 	cprintf("Incoming TRAP frame at %p\n", tf);
-
 	if ((tf->tf_cs & 3) == 3)
 	{
 		// Trapped from user mode.
@@ -249,8 +276,10 @@ page_fault_handler(struct Trapframe *tf)
 	fault_va = rcr2();
 
 	// Handle kernel-mode page faults.
-
 	// LAB 3: Your code here.
+	if ((tf->tf_cs & 3) == 0)
+		panic("A Page Fault in Kernel!");
+
 
 	// We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
@@ -261,4 +290,3 @@ page_fault_handler(struct Trapframe *tf)
 	print_trapframe(tf);
 	env_destroy(curenv);
 }
-

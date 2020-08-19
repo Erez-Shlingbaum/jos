@@ -183,7 +183,7 @@ mem_init(void)
 	//      (ie. perm = PTE_U | PTE_P)
 	//    - pages itself -- kernel RW, user NONE
 	// Your code goes here:
-	boot_map_region(kern_pgdir, UPAGES, PTSIZE, PADDR(pages), PTE_U);
+	boot_map_region(kern_pgdir, UPAGES, npages * sizeof(struct PageInfo), PADDR(pages), PTE_U | PTE_P);
 
 	//////////////////////////////////////////////////////////////////////
 	// Map the 'envs' array read-only by the user at linear address UENVS
@@ -191,7 +191,7 @@ mem_init(void)
 	// Permissions:
 	//    - the new image at UENVS  -- kernel R, user R
 	//    - envs itself -- kernel RW, user NONE
-	boot_map_region(kern_pgdir, UENVS, PTSIZE, PADDR(envs), PTE_U);
+	boot_map_region(kern_pgdir, UENVS, NENV * sizeof(struct Env), PADDR(envs), PTE_U | PTE_P);
 
 	//////////////////////////////////////////////////////////////////////
 	// Use the physical memory that 'bootstack' refers to as the kernel
@@ -328,7 +328,7 @@ page_init(void)
 struct PageInfo *
 page_alloc(int alloc_flags)
 {
-	if (!page_free_list)
+	if (page_free_list == NULL)
 		return NULL;
 
 	// Remove entry from the list
@@ -415,13 +415,13 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 		// Out of memory
 		if (pginfo == NULL)
 			return NULL;
-		pginfo->pp_ref = 1;
+		pginfo->pp_ref++;
 
 		// pg_table holds the va of the page table
 		pg_table = (pte_t *) page2kva(pginfo);
 
 		// Assign the new allocated page table to the page directory entry
-		pgdir[PDX(va)] = (pde_t) (PADDR(pg_table) | PTE_P | PTE_W); // permissions might not be needed here
+		pgdir[PDX(va)] = (pde_t) (PADDR(pg_table) | PTE_P | PTE_W | PTE_U);
 	}
 
 	// Return the address of the page table entry corresponding to va
@@ -451,9 +451,9 @@ boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm
 	{
 		const void *ith_va = (const void *) va + i * PGSIZE;
 		pte_t *pg_table_entry = pgdir_walk(pgdir, ith_va, true);
-
-		*pg_table_entry = pa + i * PGSIZE;
-		*pg_table_entry |= perm | PTE_P;
+		if (pg_table_entry == NULL)
+			panic("Problem");
+		*pg_table_entry = (pa + i * PGSIZE) | perm | PTE_P;
 	}
 }
 
@@ -491,13 +491,13 @@ page_insert(pde_t *pgdir, struct PageInfo *pp, void *va, int perm)
 
 	// Increment here to avoid page_remove freeing pp
 	pp->pp_ref++;
-	if (PTE_ADDR(*pg_table_entry) != 0)
-	{
+
+	if ((*pg_table_entry & PTE_P) != 0)
 		page_remove(pgdir, va);
-	}
+
 	// Add relevant permissions to page table, as well as to the page dir
 	*pg_table_entry = page2pa(pp) | perm | PTE_P;
-	pgdir[PDX(va)] |= perm | PTE_P; // I am not sure about this though
+	pgdir[PDX(va)] |= perm;
 	return 0;
 }
 
@@ -516,7 +516,7 @@ struct PageInfo *
 page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
 {
 	pte_t *pg_table_entry = pgdir_walk(pgdir, va, false);
-	if (pg_table_entry == NULL)
+	if (pg_table_entry == NULL || (*pg_table_entry & PTE_P) == 0)
 		return NULL;
 
 	if (pte_store != NULL)
@@ -549,13 +549,12 @@ page_remove(pde_t *pgdir, void *va)
 		return;
 	// Decrement pp_ref and free if needed
 	page_decref(pg_info);
+	// Unmap the page table entry corresponding to va
+	*pg_entry = 0;
 	// If pp pg_info was freed
 	if (pg_info->pp_ref == 0)
 		// Unmap the page table entry
 		tlb_invalidate(pgdir, va);
-
-	// Unmap the page table entry corresponding to va
-	*pg_entry = 0;
 }
 
 //
@@ -593,8 +592,20 @@ static uintptr_t user_mem_check_addr;
 int
 user_mem_check(struct Env *env, const void *va, size_t len, int perm)
 {
-	// LAB 3: Your code here.
+	perm |= PTE_P;
 
+	const void *begin = ROUNDDOWN(va, PGSIZE);
+	const void *end = ROUNDUP(va + len, PGSIZE);
+
+	for (; begin < end; begin += PGSIZE)
+	{
+		pte_t *p = pgdir_walk(env->env_pgdir, (void *) begin, false);
+		if (p == NULL || !(*p & perm) || (unsigned int) begin >= ULIM)
+		{
+			user_mem_check_addr = (uintptr_t) ((begin < va) ? va : begin);
+			return -E_FAULT;
+		}
+	}
 	return 0;
 }
 
@@ -1035,3 +1046,5 @@ check_page_installed_pgdir(void)
 
 	cprintf("check_page_installed_pgdir() succeeded!\n");
 }
+
+

@@ -53,7 +53,6 @@
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
-
 MYTRAPHANDLER_NOEC(T_DIVIDE);	// 0
 MYTRAPHANDLER_NOEC(T_DEBUG);	// 1
 MYTRAPHANDLER_NOEC(T_NMI);		// 2
@@ -87,37 +86,18 @@ MYTRAPHANDLER_NOEC(T_SIMDERR);	// 19
 								// 30 - Security Exception (push errorcode)
 								//
 
-MYTRAPHANDLER(T_SYSCALL);		// 48
+MYTRAPHANDLER_NOEC(T_SYSCALL);		// 48
 
-
-/*
- * Lab 3: Your code here for _alltraps
-	pusha registers
- 	uint16_t tf_es;
-	uint16_t tf_padding1;
-	uint16_t tf_ds;
-	uint16_t tf_padding2;
-	uint32_t tf_trapno;
-	below here defined by x86 hardware
-	uint32_t tf_err;
-	uintptr_t tf_eip;
-	uint16_t tf_cs;
-	uint16_t tf_padding3;
-	uint32_t tf_eflags;
-	below here only when crossing rings, such as from user to kernel
-	uintptr_t tf_esp;
-	uint16_t tf_ss;
-	uint16_t tf_padding4;
- */
 
 _alltraps:
 	pushl %ds
 	pushl %es
+	pushal
 	movw $GD_KD, %ax
 	movw %ax, %ds
 	movw %ax, %es
-	pushal
-	push %esp
+	pushl %esp
 	call trap
+
 
 // Return from _alltraps is at env_pop_tf
