@@ -65,6 +65,8 @@ static const char *trapname(int trapno)
 	return "(unknown trap)";
 }
 
+#define _TRAPNAME(num) trap_ ## num
+#define TRAPNAME(num) _TRAPNAME(num)
 
 void
 trap_init(void)
@@ -72,8 +74,48 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
+	extern void TRAPNAME(T_DIVIDE)(void);
+	extern void TRAPNAME(T_DEBUG)(void);
+	extern void TRAPNAME(T_NMI)(void);
+	extern void TRAPNAME(T_BRKPT)(void);
+	extern void TRAPNAME(T_OFLOW)(void);
+	extern void TRAPNAME(T_BOUND)(void);
+	extern void TRAPNAME(T_ILLOP)(void);
+	extern void TRAPNAME(T_DEVICE)(void);
+	extern void TRAPNAME(T_DBLFLT)(void);
+	extern void TRAPNAME(T_TSS)(void);
+	extern void TRAPNAME(T_SEGNP)(void);
+	extern void TRAPNAME(T_STACK)(void);
+	extern void TRAPNAME(T_GPFLT)(void);
+	extern void TRAPNAME(T_PGFLT)(void);
+	extern void TRAPNAME(T_FPERR)(void);
+	extern void TRAPNAME(T_ALIGN)(void);
+	extern void TRAPNAME(T_MCHK)(void);
+	extern void TRAPNAME(T_SIMDERR)(void);
+	extern void TRAPNAME(T_SYSCALL)(void);
 
-	// Per-CPU setup 
+	SETGATE(idt[T_DIVIDE], false, GD_KT, TRAPNAME(T_DIVIDE), 0);
+	SETGATE(idt[T_DEBUG], false, GD_KT, TRAPNAME(T_DEBUG), 0);
+	SETGATE(idt[T_NMI], false, GD_KT, TRAPNAME(T_NMI), 0);
+	SETGATE(idt[T_BRKPT], false, GD_KT, TRAPNAME(T_BRKPT), 3);
+	SETGATE(idt[T_OFLOW], false, GD_KT, TRAPNAME(T_OFLOW), 0);
+	SETGATE(idt[T_BOUND], false, GD_KT, TRAPNAME(T_BOUND), 0);
+	SETGATE(idt[T_ILLOP], false, GD_KT, TRAPNAME(T_ILLOP), 0);
+	SETGATE(idt[T_DEVICE], false, GD_KT, TRAPNAME(T_DEVICE), 0);
+	SETGATE(idt[T_DBLFLT], false, GD_KT, TRAPNAME(T_DBLFLT), 0);
+	SETGATE(idt[T_TSS], false, GD_KT, TRAPNAME(T_TSS), 0);
+	SETGATE(idt[T_SEGNP], false, GD_KT, TRAPNAME(T_SEGNP), 0);
+	SETGATE(idt[T_STACK], false, GD_KT, TRAPNAME(T_STACK), 0);
+	SETGATE(idt[T_GPFLT], false, GD_KT, TRAPNAME(T_GPFLT), 0);
+	SETGATE(idt[T_PGFLT], false, GD_KT, TRAPNAME(T_PGFLT), 0);
+	SETGATE(idt[T_FPERR], false, GD_KT, TRAPNAME(T_FPERR), 0);
+	SETGATE(idt[T_ALIGN], false, GD_KT, TRAPNAME(T_ALIGN), 0);
+	SETGATE(idt[T_MCHK], false, GD_KT, TRAPNAME(T_MCHK), 0);
+	SETGATE(idt[T_SIMDERR], false, GD_KT, TRAPNAME(T_SIMDERR), 0);
+
+	SETGATE(idt[T_SYSCALL], false, GD_KT, TRAPNAME(T_SYSCALL), 3);
+
+	// Per-CPU setup
 	trap_init_percpu();
 }
 
@@ -174,18 +216,53 @@ print_regs(struct PushRegs *regs)
 static void
 trap_dispatch(struct Trapframe *tf)
 {
+	assert(tf != NULL);
+	pte_t *pte;
+
 	// Handle processor exceptions.
-	// LAB 3: Your code here.
+	switch (tf->tf_trapno)
+	{
+		case T_SYSCALL:
+			// Generic system call: pass system call number in AX,
+			// up to five parameters in DX, CX, BX, DI, SI.
+			// Interrupt kernel with T_SYSCALL.
+			tf->tf_regs.reg_eax = syscall(
+					tf->tf_regs.reg_eax,
+					tf->tf_regs.reg_edx,
+					tf->tf_regs.reg_ecx,
+					tf->tf_regs.reg_ebx,
+					tf->tf_regs.reg_edi,
+					tf->tf_regs.reg_esi
+			);
+			break;
 
-	// Handle spurious interrupts
-	// The hardware sometimes raises these because of noise on the
-	// IRQ line or other reasons. We don't care.
-	if (tf->tf_trapno == IRQ_OFFSET + IRQ_SPURIOUS) {
-		cprintf("Spurious interrupt on irq 7\n");
-		print_trapframe(tf);
-		return;
-	}
+		case T_PGFLT:
+			page_fault_handler(tf);
+			break;
+		case T_BRKPT:
+			monitor(tf);
+			break;
+		// Handle spurious interrupts
+		// The hardware sometimes raises these because of noise on the
+		// IRQ line or other reasons. We don't care.
+		case IRQ_OFFSET + IRQ_SPURIOUS:
+			cprintf("Spurious interrupt on irq 7\n");
+			print_trapframe(tf);
+			return;
 
+		default:
+			// Some debug info
+			print_trapframe(tf);
+
+			// Unexpected trap: The user process or the kernel has a bug.
+			if (tf->tf_cs == GD_KT)
+				panic("unhandled trap in kernel");
+			else
+			{
+				// For unhandled exceptions, we need to DESTROY the environment
+				env_destroy(curenv);
+				return;
+			}
 	// Handle clock interrupts. Don't forget to acknowledge the
 	// interrupt using lapic_eoi() before calling the scheduler!
 	// LAB 4: Your code here.
@@ -269,8 +346,10 @@ page_fault_handler(struct Trapframe *tf)
 	fault_va = rcr2();
 
 	// Handle kernel-mode page faults.
-
 	// LAB 3: Your code here.
+	if ((tf->tf_cs & 3) == 0)
+		panic("A Page Fault in Kernel!");
+
 
 	// We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
