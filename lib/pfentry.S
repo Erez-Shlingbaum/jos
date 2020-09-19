@@ -12,16 +12,21 @@
 // exception stack, and then it pushes a UTrapframe onto our user
 // exception stack:
 //
-//	trap-time esp
-//	trap-time eflags
-//	trap-time eip
-//	utf_regs.reg_eax
-//	...
-//	utf_regs.reg_esi
-//	utf_regs.reg_edi
-//	utf_err (error code)
-//	utf_fault_va            <-- %esp
-//
+// scratch space 		+0x34
+// trap-time esp        +0x30
+// trap-time eflags     +0x2c
+// trap-time eip        +0x28
+// utf_regs.reg_eax     +0x24
+// utf_regs.reg_ecx     +0x20
+// utf_regs.reg_edx     +0x1c
+// utf_regs.reg_ebx     +0x18
+// utf_regs.reg_oesp    +0x14
+// utf_regs.reg_ebp     +0x10
+// utf_regs.reg_esi     +0xc
+// utf_regs.reg_edi     +0x8
+// utf_err (error code) +0x4
+// utf_fault_va         +0x00 <-- %esp
+
 // If this is a recursive fault, the kernel will reserve for us a
 // blank word above the trap-time esp for scratch work when we unwind
 // the recursive call.
@@ -37,7 +42,7 @@ _pgfault_upcall:
 	movl _pgfault_handler, %eax
 	call *%eax
 	addl $4, %esp			// pop function argument
-	
+
 	// Now the C page fault handler has returned and you must return
 	// to the trap time state.
 	// Push trap-time %eip onto the trap-time stack.
@@ -65,18 +70,42 @@ _pgfault_upcall:
 	// ways as registers become unavailable as scratch space.
 	//
 	// LAB 4: Your code here.
+	movl 0x28(%esp), %eax 	// Copy trap-time eip to eax
+	movl 0x30(%esp), %ebx 	// Copy trap-time esp to ebx
+
+	subl $4, %ebx 		// Simulate "pushing" trap time esp
+	movl %eax, (%ebx) 		// Push trap-time %eip onto the trap-time stack
+
+	movl %ebx, 0x30(%esp) 	//(we update the value on the stack because we use it later)
+
+	movl %eax, 0x34(%esp)	// Copy trap-time eip to the scratch space
+
+
+	// Pop fault_va and err
+	addl $8, %esp
 
 	// Restore the trap-time registers.  After you do this, you
 	// can no longer modify any general-purpose registers.
 	// LAB 4: Your code here.
+	popl %edi
+	popl %esi
+	popl %ebp
+	addl $4, %esp // pop oesp which is "useless"
+	popl %ebx
+	popl %edx
+	popl %ecx
+	popl %eax
+	addl $4, %esp // pop trap-time eip
 
 	// Restore eflags from the stack.  After you do this, you can
 	// no longer use arithmetic operations or anything else that
 	// modifies eflags.
 	// LAB 4: Your code here.
+	popfl
 
 	// Switch back to the adjusted trap-time stack.
 	// LAB 4: Your code here.
-
+	popl %esp
 	// Return to re-execute the instruction that faulted.
 	// LAB 4: Your code here.
+	retl // eip was copied to scartch space (in the recursive case)
