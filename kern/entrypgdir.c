@@ -17,14 +17,15 @@ pte_t entry_pgtable[NPTENTRIES];
 // related to linking and static initializers, we use "x + PTE_P"
 // here, rather than the more standard "x | PTE_P".  Everywhere else
 // you should use "|" to combine flags.
+
 __attribute__((__aligned__(PGSIZE)))
 pde_t entry_pgdir[NPDENTRIES] = {
-	// Map VA's [0, 4MB) to PA's [0, 4MB)
-	[0]
-		= ((uintptr_t)entry_pgtable - KERNBASE) + PTE_P,
-	// Map VA's [KERNBASE, KERNBASE+4MB) to PA's [0, 4MB)
-	[KERNBASE>>PDXSHIFT]
-		= ((uintptr_t)entry_pgtable - KERNBASE) + PTE_P + PTE_W
+
+		// Map VA's [0, 4MB) to PA's [0, 4MB)
+		[0] = ((uintptr_t) entry_pgtable - KERNBASE) + PTE_P,
+
+		// Map VA's [KERNBASE, KERNBASE+4MB) to PA's [0, 4MB)
+		[KERNBASE >> PDXSHIFT] = ((uintptr_t) entry_pgtable - KERNBASE) + PTE_P + PTE_W
 };
 
 // Entry 0 of the page table maps to physical page 0, entry 1 to

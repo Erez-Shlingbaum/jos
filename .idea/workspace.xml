@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:github" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/lab3" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="jos" targetName="main" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b207754b-21fa-418e-8a5d-383ccd1603c5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jos.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNUmakefile" beforeDir="false" afterPath="$PROJECT_DIR$/GNUmakefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/lib.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/lib.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/memlayout.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/mmu.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/mmu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/trap.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/trap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/types.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/entrypgdir.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/entrypgdir.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/env.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/monitor.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/monitor.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/monitor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/pmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pmap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/sched.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/sched.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/syscall.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/trap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/trapentry.S" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trapentry.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/fork.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fork.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ipc.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ipc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libmain.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libmain.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pfentry.S" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pfentry.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pgfault.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pgfault.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/printfmt.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printfmt.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/syscall.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/pingpong.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/pingpong.c" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Erez Shlingbaum &lt;erez.shlingbaum@gmail.com&gt;" />
+        <option value="Erez Shlingbaum" />
+        <option value="Erez-Shlingbaum@gmail.com" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="lab3_bad" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1auGTfqQYBOE0Anp27NuqSWz9Xg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="MakefileSettings" />
+  </component>
+  <component name="RunManager" selected="Makefile.qemu">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="main">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="clean" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="gdb" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="gdb" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="qemu-gdb" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="qemu-gdb" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="qemu-nox" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="qemu-nox" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="qemu" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/GNUmakefile" target="qemu" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.main" />
+      <item itemvalue="Makefile.clean" />
+      <item itemvalue="Makefile.gdb" />
+      <item itemvalue="Makefile.qemu" />
+      <item itemvalue="Makefile.qemu-gdb" />
+      <item itemvalue="Makefile.qemu-nox" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile.qemu" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b207754b-21fa-418e-8a5d-383ccd1603c5" name="Default Changelist" comment="" />
+      <created>1587578074619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587578074619</updated>
+      <workItem from="1587578075836" duration="512000" />
+      <workItem from="1587578601780" duration="1207000" />
+      <workItem from="1587584815989" duration="13138000" />
+      <workItem from="1587839175137" duration="1378000" />
+      <workItem from="1588094196931" duration="8293000" />
+      <workItem from="1588110499701" duration="4923000" />
+      <workItem from="1588157530236" duration="2267000" />
+      <workItem from="1588181068596" duration="3109000" />
+      <workItem from="1588440342227" duration="5959000" />
+      <workItem from="1589625336465" duration="33000" />
+      <workItem from="1589625401817" duration="133000" />
+      <workItem from="1589630251470" duration="202000" />
+      <workItem from="1590785627436" duration="183000" />
+      <workItem from="1590785820488" duration="26000" />
+      <workItem from="1590785858622" duration="758000" />
+      <workItem from="1590845600671" duration="14666000" />
+      <workItem from="1591460138493" duration="24000" />
+      <workItem from="1591460199127" duration="3039000" />
+      <workItem from="1596282788161" duration="105000" />
+      <workItem from="1596282923690" duration="167000" />
+      <workItem from="1596283128315" duration="67000" />
+      <workItem from="1596283723637" duration="119000" />
+      <workItem from="1596311998275" duration="4500000" />
+      <workItem from="1596389688879" duration="10535000" />
+      <workItem from="1596475229316" duration="8317000" />
+      <workItem from="1596552670154" duration="7133000" />
+      <workItem from="1596649268058" duration="10405000" />
+      <workItem from="1596727662822" duration="8820000" />
+      <workItem from="1596743908663" duration="435000" />
+      <workItem from="1596745224993" duration="3581000" />
+      <workItem from="1596748822014" duration="9504000" />
+      <workItem from="1596998442435" duration="82743000" />
+      <workItem from="1598048935961" duration="27000" />
+      <workItem from="1598381872365" duration="203000" />
+      <workItem from="1599073261417" duration="5574000" />
+      <workItem from="1599302094760" duration="663000" />
+      <workItem from="1599304201310" duration="7584000" />
+      <workItem from="1599364503244" duration="101475000" />
+    </task>
+    <task id="LOCAL-00001" summary="Solved lab1.&#10;&#10;Implemented backtrace function.">
+      <created>1588115190784</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588115190784</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Formatted code">
+      <created>1588159191529</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1588159191529</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Finished lab2!">
+      <created>1596736506796</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1596736506796</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Merge lab2 into lab3">
+      <created>1596746410150</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1596746410150</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Merge lab2 into lab3">
+      <created>1596748897024</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1596748897024</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fixed lab3 bug related to new gcc versions.">
+      <created>1596752172995</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1596752172995</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added .idea folder to git">
+      <created>1596752363109</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1596752363109</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Finished Exercise 2 of lab3">
+      <created>1597262717380</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1597262717381</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finished Exercise 4(Part A) of lab3">
+      <created>1597514959840</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1597514959840</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge branch 'lab3' into lab4&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/kernel.ld&#10;#&#9;kern/pmap.c&#10;#&#9;kern/pmap.h&#10;#&#9;kern/trap.c">
+      <created>1597937416684</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1597937416684</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/lab3" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Solved lab1.&#10;&#10;Implemented backtrace function." />
+    <MESSAGE value="Formatted code" />
+    <MESSAGE value="Finished lab2!" />
+    <MESSAGE value="Merge lab2 into lab3" />
+    <MESSAGE value="Fixed lab3 bug related to new gcc versions." />
+    <MESSAGE value="Added .idea folder to git" />
+    <MESSAGE value="Finished Exercise 2 of lab3" />
+    <MESSAGE value="Finished Exercise 4(Part A) of lab3" />
+    <MESSAGE value="Merge branch 'lab3' into lab4&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/kernel.ld&#10;#&#9;kern/pmap.c&#10;#&#9;kern/pmap.h&#10;#&#9;kern/trap.c" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'lab3' into lab4&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/kernel.ld&#10;#&#9;kern/pmap.c&#10;#&#9;kern/pmap.h&#10;#&#9;kern/trap.c" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="182" width="802" height="717" key="#Plugins" timestamp="1599364484800">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="497" y="155" width="802" height="717" key="#Plugins/0.0.1718.888@0.0.1718.888" timestamp="1596282935438" />
+    <state x="555" y="182" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1599364484800" />
+    <state x="418" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599766592670">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="418" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599766592670" />
+    <state x="704" y="327" width="515" height="392" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600435227328">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="704" y="327" width="515" height="392" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1600435227328" />
+    <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1596282884625">
+      <screen x="0" y="0" width="1718" height="888" />
+    </state>
+    <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1718.888@0.0.1718.888" timestamp="1596282884625" />
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1597937416635">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="495" y="102" width="814" height="690" key="CommitChangelistDialog2/0.0.1718.888@0.0.1718.888" timestamp="1596392868156" />
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1597937416635" />
+    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog" timestamp="1597859525518">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597859525518" />
+    <state x="665" y="226" width="426" height="516" key="FileChooserDialogImpl" timestamp="1598382069635">
+      <screen x="0" y="0" width="1718" height="888" />
+    </state>
+    <state x="665" y="226" key="FileChooserDialogImpl/0.0.1718.888@0.0.1718.888" timestamp="1598382069635" />
+    <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597223965791" />
+    <state width="1878" height="285" key="GridCell.Tab.0.bottom" timestamp="1599595394777">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="817" height="350" key="GridCell.Tab.0.bottom/0.0.1718.888@0.0.1718.888" timestamp="1597262079154" />
+    <state width="1878" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599595394777" />
+    <state width="1878" height="285" key="GridCell.Tab.0.center" timestamp="1599595394776">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="817" height="350" key="GridCell.Tab.0.center/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
+    <state width="1878" height="285" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599595394776" />
+    <state width="1878" height="285" key="GridCell.Tab.0.left" timestamp="1599595394775">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="817" height="350" key="GridCell.Tab.0.left/0.0.1718.888@0.0.1718.888" timestamp="1597262079152" />
+    <state width="1878" height="285" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599595394775" />
+    <state width="1878" height="285" key="GridCell.Tab.0.right" timestamp="1599595394776">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="817" height="350" key="GridCell.Tab.0.right/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
+    <state width="1878" height="285" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599595394776" />
+    <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1597223981496">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel/0.0.1920.1040@0.0.1920.1040" timestamp="1597223981496" />
+    <state width="640" height="476" key="ImportCMakeProjectWizard.topPanel" timestamp="1597223981496">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="640" height="476" key="ImportCMakeProjectWizard.topPanel/0.0.1920.1040@0.0.1920.1040" timestamp="1597223981496" />
+    <state x="51" y="6" width="1853" height="990" key="MergeDialog" timestamp="1600515249727">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="51" y="6" width="1853" height="990" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600515249727" />
+    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog" timestamp="1600515249730">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600515249730" />
+    <state x="456" y="155" width="1007" height="735" key="SettingsEditor" timestamp="1599364660778">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="456" y="155" width="1007" height="735" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599364660778" />
+    <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog" timestamp="1596747555594">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555594" />
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1597937425227">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1597937425227" />
+    <state x="566" y="134" width="780" height="778" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600462425632">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="566" y="134" width="780" height="778" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1600462425632" />
+    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596752286866">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752286866" />
+    <state x="717" y="238" width="478" height="571" key="git4idea.branch.GitSmartOperationDialog" timestamp="1596747537772">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="717" y="238" width="478" height="571" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747537772" />
+    <state x="99" y="100" width="1520" height="689" key="git4idea.log.GitShowExternalLogAction" timestamp="1597935946247">
+      <screen x="0" y="0" width="1718" height="888" />
+    </state>
+    <state x="99" y="100" width="1520" height="689" key="git4idea.log.GitShowExternalLogAction/0.0.1718.888@0.0.1718.888" timestamp="1597935946247" />
+    <state x="733" y="425" width="446" height="196" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1596745326209">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="733" y="425" width="446" height="196" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596745326209" />
+    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog" timestamp="1597169029209">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597169029209" />
+    <state x="623" y="236" key="run.anything.popup" timestamp="1600464388310">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600464388310" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup" timestamp="1600514747445">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="557" y="196" width="672" height="579" key="search.everywhere.popup/0.0.1718.888@0.0.1718.888" timestamp="1596476252413" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600514747445" />
+  </component>
+</project>

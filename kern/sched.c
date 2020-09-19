@@ -11,8 +11,6 @@ void sched_halt(void);
 void
 sched_yield(void)
 {
-	struct Env *idle;
-
 	// Implement simple round-robin scheduling.
 	//
 	// Search through 'envs' for an ENV_RUNNABLE environment in
@@ -31,6 +29,23 @@ sched_yield(void)
 
 	// LAB 4: Your code here.
 
+	size_t env_i = 0;
+	if (curenv != NULL)
+	{
+
+		env_i = ENVX(curenv->env_id);
+
+		// Make sure current environment's status is runnable
+		if (envs[env_i].env_status == ENV_RUNNING)
+			envs[env_i].env_status = ENV_RUNNABLE;
+
+		env_i++;
+	}
+
+	for (size_t count = 0; count < NENV; count++)
+		if (envs[(env_i + count) % NENV].env_status == ENV_RUNNABLE)
+			env_run(&envs[(env_i + count) % NENV]);
+
 	// sched_halt never returns
 	sched_halt();
 }
@@ -45,13 +60,15 @@ sched_halt(void)
 
 	// For debugging and testing purposes, if there are no runnable
 	// environments in the system, then drop into the kernel monitor.
-	for (i = 0; i < NENV; i++) {
+	for (i = 0; i < NENV; i++)
+	{
 		if ((envs[i].env_status == ENV_RUNNABLE ||
-		     envs[i].env_status == ENV_RUNNING ||
-		     envs[i].env_status == ENV_DYING))
+			 envs[i].env_status == ENV_RUNNING ||
+			 envs[i].env_status == ENV_DYING))
 			break;
 	}
-	if (i == NENV) {
+	if (i == NENV)
+	{
 		cprintf("No runnable environments in the system!\n");
 		while (1)
 			monitor(NULL);
@@ -71,15 +88,15 @@ sched_halt(void)
 
 	// Reset stack pointer, enable interrupts and then halt.
 	asm volatile (
-		"movl $0, %%ebp\n"
-		"movl %0, %%esp\n"
-		"pushl $0\n"
-		"pushl $0\n"
-		// Uncomment the following line after completing exercise 13
-		//"sti\n"
-		"1:\n"
-		"hlt\n"
-		"jmp 1b\n"
+	"movl $0, %%ebp\n"
+	"movl %0, %%esp\n"
+	"pushl $0\n"
+	"pushl $0\n"
+	// Uncomment the following line after completing exercise 13
+	"sti\n"
+	"1:\n"
+	"hlt\n"
+	"jmp 1b\n"
 	: : "a" (thiscpu->cpu_ts.ts_esp0));
 }
 

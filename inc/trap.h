@@ -42,7 +42,6 @@
 #ifndef __ASSEMBLER__
 
 #include <inc/types.h>
-
 struct PushRegs {
 	/* registers as pushed by pusha */
 	uint32_t reg_edi;

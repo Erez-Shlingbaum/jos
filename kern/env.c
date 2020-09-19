@@ -117,8 +117,15 @@ envid2env(envid_t envid, struct Env **env_store, bool checkperm)
 void
 env_init(void)
 {
-	// Set up envs array
-	// LAB 3: Your code here.
+	// Point to first environment
+	env_free_list = envs;
+	for (int i = NENV - 1; i >= 0; --i)
+	{
+		envs[i].env_status = ENV_FREE;
+		envs[i].env_id = 0;
+		envs[i].env_link = env_free_list;
+		env_free_list = &envs[i];
+	}
 
 	// Per-CPU part of the initialization
 	env_init_percpu();
@@ -158,7 +165,6 @@ env_init_percpu(void)
 static int
 env_setup_vm(struct Env *e)
 {
-	int i;
 	struct PageInfo *p = NULL;
 
 	// Allocate a page for the page directory
@@ -180,8 +186,10 @@ env_setup_vm(struct Env *e)
 	//	is an exception -- you need to increment env_pgdir's
 	//	pp_ref for env_free to work correctly.
 	//    - The functions in kern/pmap.h are handy.
+	e->env_pgdir = page2kva(p);
+	++p->pp_ref;
+	memcpy(e->env_pgdir, kern_pgdir, PGSIZE);
 
-	// LAB 3: Your code here.
 
 	// UVPT maps the env's own page table read-only.
 	// Permissions: kernel R, user R
@@ -247,6 +255,7 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 
 	// Enable interrupts while in user mode.
 	// LAB 4: Your code here.
+	e->env_tf.tf_eflags |= FL_IF;
 
 	// Clear the page fault handler until user installs one.
 	e->env_pgfault_upcall = 0;
@@ -272,13 +281,30 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 static void
 region_alloc(struct Env *e, void *va, size_t len)
 {
-	// LAB 3: Your code here.
 	// (But only if you need it for load_icode.)
 	//
 	// Hint: It is easier to use region_alloc if the caller can pass
 	//   'va' and 'len' values that are not page-aligned.
 	//   You should round va down, and round (va + len) up.
 	//   (Watch out for corner-cases!)
+
+	void *start_va = ROUNDDOWN(va, PGSIZE);
+	void *end_va = ROUNDUP(va + len, PGSIZE);
+
+	assert((end_va - start_va) % PGSIZE == 0);
+	size_t num_pages = (end_va - start_va) / PGSIZE;
+
+	for (size_t i = 0; i < num_pages; ++i)
+	{
+		void *ith_va = start_va + i * PGSIZE;
+
+		struct PageInfo *page_info = page_alloc(0);
+		if (page_info == NULL)
+			panic("page_alloc returned NULL\n");
+		int ret = page_insert(e->env_pgdir, page_info, ith_va, PTE_W | PTE_U);
+		if (ret < 0)
+			panic("page_insert: %e\n", ret);
+	}
 }
 
 //
@@ -334,12 +360,45 @@ load_icode(struct Env *e, uint8_t *binary)
 	//  to make sure that the environment starts executing there.
 	//  What?  (See env_run() and env_pop_tf() below.)
 
-	// LAB 3: Your code here.
+	struct Elf *elf_header = (struct Elf *) binary;
+
+	// Check if this is a valid ELF
+	if (elf_header->e_magic != ELF_MAGIC)
+		panic("bad e_magic: %d\n", elf_header->e_magic);
+
+	// load each program segment
+	struct Proghdr *ph = (struct Proghdr *) (binary + elf_header->e_phoff);
+	struct Proghdr *eph = ph + elf_header->e_phnum;
+
+	// Switch address space temporarily
+	lcr3(PADDR(e->env_pgdir));
+	// for each program segment
+	for (; ph < eph; ph++)
+	{
+		// If we are not supposed to load, continue to the next segment
+		if (ph->p_type != ELF_PROG_LOAD)
+			continue;
+
+		if (ph->p_filesz > ph->p_memsz)
+			panic("file size is bigger than requested memory size\n");
+
+		// Allocate the needed va
+		region_alloc(e, (void *) ph->p_va, ph->p_memsz);
+
+		// Load the elf segment to allocated memory
+		memcpy((uint8_t *) ph->p_va, binary + ph->p_offset, ph->p_filesz);
+		memset((uint8_t *) ph->p_va + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
+	}
+
+	// Switch back to kernel address space
+	lcr3(PADDR(kern_pgdir));
+
+	// Set entry point
+	e->env_tf.tf_eip = elf_header->e_entry;
 
 	// Now map one page for the program's initial stack
 	// at virtual address USTACKTOP - PGSIZE.
-
-	// LAB 3: Your code here.
+	region_alloc(e, (void *) (USTACKTOP - PGSIZE), PGSIZE);
 }
 
 //
@@ -352,8 +411,13 @@ load_icode(struct Env *e, uint8_t *binary)
 void
 env_create(uint8_t *binary, enum EnvType type)
 {
-	// LAB 3: Your code here.
+	struct Env *e;
+	int ret;
+	if ((ret = env_alloc(&e, 0)) < 0)
+		panic("All envs allocated: %e\n", ret);
 
+	load_icode(e, binary);
+	e->env_type = type;
 	// If this is the file server (type == ENV_TYPE_FS) give it I/O privileges.
 	// LAB 5: Your code here.
 }
@@ -484,9 +548,21 @@ env_run(struct Env *e)
 	//	e->env_tf.  Go back through the code you wrote above
 	//	and make sure you have set the relevant parts of
 	//	e->env_tf to sensible values.
+	// First environment
 
-	// LAB 3: Your code here.
+	// If were switching to a different env
+	if (curenv != NULL && curenv->env_status == ENV_RUNNING)
+		curenv->env_status = ENV_RUNNABLE;
 
-	panic("env_run not yet implemented");
+	curenv = e;
+	curenv->env_status = ENV_RUNNING;
+	curenv->env_runs++;
+
+	// Switch address space
+	lcr3(PADDR(curenv->env_pgdir));
+
+	unlock_kernel();
+	env_pop_tf(&e->env_tf);
+
 }
 
