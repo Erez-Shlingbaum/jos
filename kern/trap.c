@@ -23,35 +23,35 @@ static struct Trapframe *last_tf;
 /* Interrupt descriptor table.  (Must be built at run time because
  * shifted function addresses can't be represented in relocation records.)
  */
-struct Gatedesc idt[256] = { { 0 } };
+struct Gatedesc idt[256] = {{0}};
 struct Pseudodesc idt_pd = {
-	sizeof(idt) - 1, (uint32_t) idt
+		sizeof(idt) - 1, (uint32_t) idt
 };
 
 
 static const char *trapname(int trapno)
 {
-	static const char * const excnames[] = {
-		"Divide error",
-		"Debug",
-		"Non-Maskable Interrupt",
-		"Breakpoint",
-		"Overflow",
-		"BOUND Range Exceeded",
-		"Invalid Opcode",
-		"Device Not Available",
-		"Double Fault",
-		"Coprocessor Segment Overrun",
-		"Invalid TSS",
-		"Segment Not Present",
-		"Stack Fault",
-		"General Protection",
-		"Page Fault",
-		"(unknown trap)",
-		"x87 FPU Floating-Point Error",
-		"Alignment Check",
-		"Machine-Check",
-		"SIMD Floating-Point Exception"
+	static const char *const excnames[] = {
+			"Divide error",
+			"Debug",
+			"Non-Maskable Interrupt",
+			"Breakpoint",
+			"Overflow",
+			"BOUND Range Exceeded",
+			"Invalid Opcode",
+			"Device Not Available",
+			"Double Fault",
+			"Coprocessor Segment Overrun",
+			"Invalid TSS",
+			"Segment Not Present",
+			"Stack Fault",
+			"General Protection",
+			"Page Fault",
+			"(unknown trap)",
+			"x87 FPU Floating-Point Error",
+			"Alignment Check",
+			"Machine-Check",
+			"SIMD Floating-Point Exception"
 	};
 
 	if (trapno < ARRAY_SIZE(excnames))
@@ -225,15 +225,16 @@ print_trapframe(struct Trapframe *tf)
 	// PR=a protection violation caused the fault (NP=page not present).
 	if (tf->tf_trapno == T_PGFLT)
 		cprintf(" [%s, %s, %s]\n",
-			tf->tf_err & 4 ? "user" : "kernel",
-			tf->tf_err & 2 ? "write" : "read",
-			tf->tf_err & 1 ? "protection" : "not-present");
+				tf->tf_err & 4 ? "user" : "kernel",
+				tf->tf_err & 2 ? "write" : "read",
+				tf->tf_err & 1 ? "protection" : "not-present");
 	else
 		cprintf("\n");
 	cprintf("  eip  0x%08x\n", tf->tf_eip);
 	cprintf("  cs   0x----%04x\n", tf->tf_cs);
 	cprintf("  flag 0x%08x\n", tf->tf_eflags);
-	if ((tf->tf_cs & 3) != 0) {
+	if ((tf->tf_cs & 3) != 0)
+	{
 		cprintf("  esp  0x%08x\n", tf->tf_esp);
 		cprintf("  ss   0x----%04x\n", tf->tf_ss);
 	}
@@ -288,7 +289,6 @@ trap_dispatch(struct Trapframe *tf)
 		case IRQ_OFFSET + IRQ_TIMER:
 			lapic_eoi();
 			sched_yield();
-			break;
 
 			// Handle spurious interrupts
 			// The hardware sometimes raises these because of noise on the
@@ -297,7 +297,14 @@ trap_dispatch(struct Trapframe *tf)
 			cprintf("Spurious interrupt on irq 7\n");
 			print_trapframe(tf);
 			return;
-
+			// Handle keyboard and serial interrupts.
+			// LAB 5: Your code here.
+		case IRQ_OFFSET + IRQ_KBD:
+			kbd_intr();
+			break;
+		case IRQ_OFFSET + IRQ_SERIAL:
+			serial_intr();
+			break;
 		default:
 			// Some debug info
 			print_trapframe(tf);
@@ -311,9 +318,7 @@ trap_dispatch(struct Trapframe *tf)
 				env_destroy(curenv);
 				return;
 			}
-
-	// Handle keyboard and serial interrupts.
-	// LAB 5: Your code here.
+	}
 }
 
 void
@@ -321,12 +326,12 @@ trap(struct Trapframe *tf)
 {
 	// The environment may have set DF and some versions
 	// of GCC rely on DF being clear
-	asm volatile("cld" ::: "cc");
+	asm volatile("cld":: : "cc");
 
 	// Halt the CPU if some other CPU has called panic()
 	extern char *panicstr;
 	if (panicstr)
-		asm volatile("hlt");
+			asm volatile("hlt");
 
 	// Re-acqurie the big kernel lock if we were halted in
 	// sched_yield()
@@ -337,7 +342,8 @@ trap(struct Trapframe *tf)
 	// the interrupt path.
 	assert(!(read_eflags() & FL_IF));
 
-	if ((tf->tf_cs & 3) == 3) {
+	if ((tf->tf_cs & 3) == 3)
+	{
 		// Trapped from user mode.
 		// Acquire the big kernel lock before doing any
 		// serious kernel work.
@@ -347,7 +353,8 @@ trap(struct Trapframe *tf)
 		assert(curenv);
 
 		// Garbage collect if current enviroment is a zombie
-		if (curenv->env_status == ENV_DYING) {
+		if (curenv->env_status == ENV_DYING)
+		{
 			env_free(curenv);
 			curenv = NULL;
 			sched_yield();
@@ -477,4 +484,3 @@ page_fault_handler(struct Trapframe *tf)
 	env_destroy(curenv);
 
 }
-

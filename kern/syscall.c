@@ -52,8 +52,13 @@ sys_env_destroy(envid_t envid)
 	int r;
 	struct Env *e;
 
-	if ((r = envid2env(envid, &e, 1)) < 0)
+	if ((r = envid2env(envid, &e, true)) < 0)
 		return r;
+//	if (e == curenv)
+//		cprintf("[%08x] exiting gracefully\n", curenv->env_id);
+//	else
+//		cprintf("[%08x] destroying %08x\n", curenv->env_id, e->env_id);
+
 	env_destroy(e);
 	return 0;
 }
@@ -79,7 +84,6 @@ sys_exofork(void)
 	// will appear to return 0.
 
 	// LAB 4: Your code here.
-//	cprintf("sys_exofork\n");
 
 	struct Env *env;
 	int ret = env_alloc(&env, curenv->env_id);
@@ -108,9 +112,7 @@ sys_env_set_status(envid_t envid, int status)
 	// You should set envid2env's third argument to 1, which will
 	// check whether the current environment has permission to set
 	// envid's status.
-	// LAB 4: Your code here.
 
-//	cprintf("sys_env_set_status: envid=%d, status=%d\n", envid, status);
 	if (status != ENV_RUNNABLE && status != ENV_NOT_RUNNABLE)
 		return -E_INVAL;
 	struct Env *env;
@@ -134,7 +136,20 @@ sys_env_set_trapframe(envid_t envid, struct Trapframe *tf)
 	// LAB 5: Your code here.
 	// Remember to check whether the user has supplied us with a good
 	// address!
-	panic("sys_env_set_trapframe not implemented");
+	struct Env *env;
+	int ret = envid2env(envid, &env, true);
+	if (ret < 0)
+		return ret;
+
+	user_mem_assert(curenv, tf, sizeof(*tf), PTE_U);
+
+	tf->tf_cs = curenv->env_tf.tf_cs;
+	tf->tf_ds = curenv->env_tf.tf_ds;
+	tf->tf_eflags &= ~FL_IOPL_MASK;
+	tf->tf_eflags |= FL_IF;
+
+	env->env_tf = *tf;
+	return 0;
 }
 
 // Set the page fault upcall for 'envid' by modifying the corresponding struct
@@ -183,15 +198,10 @@ sys_page_alloc(envid_t envid, void *va, int perm)
 	//   If page_insert() fails, remember to free the page you
 	//   allocated!
 
-	// LAB 4: Your code here.
-//	cprintf("sys_page_alloc: envid=%d, va=%p, perm=%d\n", envid, va, perm);
 
 	if ((uintptr_t) va >= UTOP || (uintptr_t) va % PGSIZE != 0)
-	{
-//		cprintf("va >= UTOP( %p ) = %s\n", UTOP, (uintptr_t) va >= UTOP ? "true" : "false");
-//		cprintf("sys_page_alloc bad adress / not page aligned\n");
 		return -E_INVAL;
-	}
+
 	// Make sure perm consist only of flags in PTE_SYSCALl
 	// and make sure U,P are set
 	if ((perm & ~PTE_SYSCALL) || !(perm & (PTE_U | PTE_P)))
@@ -241,7 +251,6 @@ sys_page_map(envid_t srcenvid, void *srcva,
 	//   Use the third argument to page_lookup() to
 	//   check the current permissions on the page.
 
-	// LAB 4: Your code here.
 
 	// Get env structures for each envid
 //	cprintf("sys_page_map: srcenvid=%d, dstenvid=%d, srcva=%p, dstva=%p, perm=%d\n", srcenvid, dstenvid, srcva, dstva,
@@ -291,9 +300,6 @@ sys_page_map(envid_t srcenvid, void *srcva,
 static int
 sys_page_unmap(envid_t envid, void *va)
 {
-	// Hint: This function is a wrapper around page_remove().
-//	cprintf("sys_page_unmap: envid=%d va=%p\n", envid, va);
-
 	struct Env *env;
 	int ret = envid2env(envid, &env, true);
 	if (ret < 0)
@@ -476,6 +482,9 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 			break;
 		case SYS_yield:
 			sys_yield();
+			break;
+		case SYS_env_set_trapframe:
+			retvalue = sys_env_set_trapframe(a1, (struct Trapframe *) a2);
 			break;
 		case SYS_ipc_try_send:
 			retvalue = (uint32_t) sys_ipc_try_send((envid_t) a1, (uint32_t) a2, (void *) a3, (unsigned int) a4);

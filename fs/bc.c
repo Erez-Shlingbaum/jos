@@ -2,13 +2,16 @@
 #include "fs.h"
 
 // Return the virtual address of this disk block.
-void*
+void *
 diskaddr(uint32_t blockno)
 {
 	if (blockno == 0 || (super && blockno >= super->s_nblocks))
 		panic("bad block number %08x in diskaddr", blockno);
-	return (char*) (DISKMAP + blockno * BLKSIZE);
+	return (char *) (DISKMAP + blockno * BLKSIZE);
 }
+// addr = DISMAP + blb*blksize
+// addr - DIS = blb*blksize
+// blbno = (addr-DIS) / blksize
 
 // Is this virtual address mapped?
 bool
@@ -30,13 +33,13 @@ static void
 bc_pgfault(struct UTrapframe *utf)
 {
 	void *addr = (void *) utf->utf_fault_va;
-	uint32_t blockno = ((uint32_t)addr - DISKMAP) / BLKSIZE;
+	uint32_t blockno = ((uint32_t) addr - DISKMAP) / BLKSIZE;
 	int r;
 
 	// Check that the fault was within the block cache region
-	if (addr < (void*)DISKMAP || addr >= (void*)(DISKMAP + DISKSIZE))
+	if (addr < (void *) DISKMAP || addr >= (void *) (DISKMAP + DISKSIZE))
 		panic("page fault in FS: eip %08x, va %08x, err %04x",
-		      utf->utf_eip, addr, utf->utf_err);
+			  utf->utf_eip, addr, utf->utf_err);
 
 	// Sanity check the block number.
 	if (super && blockno >= super->s_nblocks)
@@ -48,6 +51,10 @@ bc_pgfault(struct UTrapframe *utf)
 	// the disk.
 	//
 	// LAB 5: you code here:
+	r = sys_page_alloc(0, ROUNDDOWN(addr, PGSIZE), PTE_P | PTE_U | PTE_W);
+	if (r < 0)
+		panic("page_alloc fail: %e\n", r);
+	ide_read(((size_t) ROUNDDOWN(addr, PGSIZE) - DISKMAP) / SECTSIZE, ROUNDDOWN(addr, PGSIZE), BLKSIZE / SECTSIZE);
 
 	// Clear the dirty bit for the disk block page since we just read the
 	// block from disk
@@ -71,13 +78,16 @@ bc_pgfault(struct UTrapframe *utf)
 void
 flush_block(void *addr)
 {
-	uint32_t blockno = ((uint32_t)addr - DISKMAP) / BLKSIZE;
+	uint32_t sectno = ((uint32_t) addr - DISKMAP) / SECTSIZE;
 
-	if (addr < (void*)DISKMAP || addr >= (void*)(DISKMAP + DISKSIZE))
+	if (addr < (void *) DISKMAP || addr >= (void *) (DISKMAP + DISKSIZE))
 		panic("flush_block of bad va %08x", addr);
 
 	// LAB 5: Your code here.
-	panic("flush_block not implemented");
+	if (!va_is_mapped(addr) || !va_is_dirty(addr))
+		return;
+	ide_write(sectno, ROUNDDOWN(addr, PGSIZE), BLKSIZE / SECTSIZE);
+	sys_page_map(0, ROUNDDOWN(addr, PGSIZE), 0, ROUNDDOWN(addr, PGSIZE), PTE_P | PTE_U | PTE_W);
 }
 
 // Test that the block cache works, by smashing the superblock and

@@ -71,45 +71,26 @@ duppage(envid_t envid, unsigned pn)
 {
 	// LAB 4: Your code here.
 
-	pte_t pte_addr = uvpt[pn];
-	// I assume this function is called with good pages
-	if ((pte_addr & PTE_P) == 0)
-		panic("PTE NOT PRESENT\n");
-
 	void *addr = (void *) (pn * PGSIZE);
+	uint32_t perm = uvpt[PGNUM(addr)] & PTE_SYSCALL;
+	int r;
 
-	// If page is W or COW
-	if ((pte_addr & (PTE_W | PTE_COW)) != 0)
+	// Make a page copy on write if its writable and not shared
+	if (((perm & PTE_W) && !(perm & PTE_SHARE)) || (perm & PTE_COW))
 	{
-		int perm = PTE_P | PTE_U | PTE_COW;
-
-		// Map child
-		int ret = sys_page_map(0, addr, envid, addr, perm);
-		if (ret < 0)
-		{
-			panic("duppage: child mapping, sys_page_map - %e", ret);
-			return ret;
-		}
-		// Remap parent
-		ret = sys_page_map(0, addr, 0, addr, perm);
-		if (ret < 0)
-		{
-			panic("duppage: parent remapping, sys_page_map - %e", ret);
-			return ret;
-		}
-	} else
-	{
-		int perm = PTE_P | PTE_U;
-
-		// Map child
-		int ret = sys_page_map(0, addr, envid, addr, perm);
-		if (ret < 0)
-		{
-			cprintf("addr=%p", addr);
-			panic("duppage: child mapping, sys_page_map - %e", ret);
-			return ret;
-		}
+		perm |= PTE_COW;
+		perm &= ~PTE_W;
 	}
+
+	r = sys_page_map(0, addr, envid, addr, perm);
+	if (r < 0)
+		return r;
+
+	// Change source environment page permissions
+	r = sys_page_map(0, addr, 0, addr, perm);
+	if (r < 0)
+		return r;
+
 	return 0;
 }
 
@@ -174,7 +155,7 @@ fork(void)
 		int ret = duppage(child_envid, i);
 		if (ret < 0)
 		{
-			panic("FUCK %d\n", ret);
+			panic("duppage bad %d\n", ret);
 //			return ret;
 		}
 	}
