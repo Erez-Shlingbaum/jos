@@ -11,20 +11,25 @@
 #include <kern/monitor.h>
 #include <kern/kdebug.h>
 #include <kern/trap.h>
+#include "pmap.h"
+#include "env.h"
 
-#define CMDBUF_SIZE	80	// enough for one VGA text line
+#define CMDBUF_SIZE    80    // enough for one VGA text line
 
 
 struct Command {
 	const char *name;
 	const char *desc;
 	// return -1 to force monitor to exit
-	int (*func)(int argc, char** argv, struct Trapframe* tf);
+	int (*func)(int argc, char **argv, struct Trapframe *tf);
 };
 
 static struct Command commands[] = {
-	{ "help", "Display this list of commands", mon_help },
-	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
+		{"help",      "Display this list of commands",        mon_help},
+		{"kerninfo",  "Display information about the kernel", mon_kerninfo},
+		{"backtrace", "Print backtrace",                      mon_backtrace},
+		{"shutdown",  "QEMU SPECIFIC SHUTDOWN",               mon_qemu_shutdown},
+		{"ppm",       "print page mappings",                  mon_print_page_mappings},
 };
 
 /***** Implementations of basic kernel monitor commands *****/
@@ -51,18 +56,60 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 	cprintf("  edata  %08x (virt)  %08x (phys)\n", edata, edata - KERNBASE);
 	cprintf("  end    %08x (virt)  %08x (phys)\n", end, end - KERNBASE);
 	cprintf("Kernel executable memory footprint: %dKB\n",
-		ROUNDUP(end - entry, 1024) / 1024);
+			ROUNDUP(end - entry, 1024) / 1024);
 	return 0;
 }
 
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-	// Your code here.
+	struct frame {
+		void *ebp;
+		void *eip;
+		void *args[5];
+	};
+
+	struct frame *current_frame = (struct frame *) read_ebp();
+
+	cprintf("Stack backtrace:\n");
+	do
+	{
+		// Print frame info
+		cprintf("  ebp %08x  eip %08x  args", current_frame, current_frame->eip);
+		for (int i = 0; i < sizeof(current_frame->args) / sizeof(*current_frame->args); i++)
+			cprintf(" %08x", current_frame->args[i]);
+		cprintf("\n");
+
+		struct Eipdebuginfo eipdebuginfo = {0};
+		// Print debug info
+		debuginfo_eip((uintptr_t) current_frame->eip, &eipdebuginfo);
+		cprintf(
+				"%s:%d: %.*s+%d\n",
+				eipdebuginfo.eip_file,
+				eipdebuginfo.eip_line,
+				eipdebuginfo.eip_fn_namelen,
+				eipdebuginfo.eip_fn_name,
+				(uintptr_t)current_frame->eip - (uintptr_t)eipdebuginfo.eip_fn_addr
+		);
+
+		current_frame = (struct frame *) current_frame->ebp;
+	} while (current_frame != NULL);
+
 	return 0;
 }
 
+int
+mon_qemu_shutdown(int argc, char **argv, struct Trapframe *tf)
+{
+	outw(0x604, 0x2000);
+	return 0;
+}
 
+int
+mon_print_page_mappings(int argc, char **argv, struct Trapframe *tf)
+{
+	return 0;
+}
 
 /***** Kernel monitor command interpreter *****/
 
@@ -79,7 +126,8 @@ runcmd(char *buf, struct Trapframe *tf)
 	// Parse the command buffer into whitespace-separated arguments
 	argc = 0;
 	argv[argc] = 0;
-	while (1) {
+	while (1)
+	{
 		// gobble whitespace
 		while (*buf && strchr(WHITESPACE, *buf))
 			*buf++ = 0;
@@ -87,7 +135,8 @@ runcmd(char *buf, struct Trapframe *tf)
 			break;
 
 		// save and scan past next arg
-		if (argc == MAXARGS-1) {
+		if (argc == MAXARGS - 1)
+		{
 			cprintf("Too many arguments (max %d)\n", MAXARGS);
 			return 0;
 		}
@@ -100,7 +149,8 @@ runcmd(char *buf, struct Trapframe *tf)
 	// Lookup and invoke the command
 	if (argc == 0)
 		return 0;
-	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+	for (i = 0; i < ARRAY_SIZE(commands); i++)
+	{
 		if (strcmp(argv[0], commands[i].name) == 0)
 			return commands[i].func(argc, argv, tf);
 	}
@@ -119,7 +169,8 @@ monitor(struct Trapframe *tf)
 	if (tf != NULL)
 		print_trapframe(tf);
 
-	while (1) {
+	while (1)
+	{
 		buf = readline("K> ");
 		if (buf != NULL)
 			if (runcmd(buf, tf) < 0)
