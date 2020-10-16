@@ -16,6 +16,7 @@
 #include <kern/spinlock.h>
 #include <kern/time.h>
 #include <kern/pci.h>
+#include "e1000.h"
 
 static void boot_aps(void);
 
@@ -105,7 +106,8 @@ boot_aps(void)
 	memmove(code, mpentry_start, mpentry_end - mpentry_start);
 
 	// Boot each AP one at a time
-	for (c = cpus; c < cpus + ncpu; c++) {
+	for (c = cpus; c < cpus + ncpu; c++)
+	{
 		if (c == cpus + cpunum())  // We've started already.
 			continue;
 
@@ -114,8 +116,7 @@ boot_aps(void)
 		// Start the CPU at mpentry_start
 		lapic_startap(c->cpu_id, PADDR(code));
 		// Wait for the CPU to finish some basic setup in mp_main()
-		while(c->cpu_status != CPU_STARTED)
-			;
+		while (c->cpu_status != CPU_STARTED);
 	}
 }
 
@@ -152,7 +153,7 @@ const char *panicstr;
  * It prints "panic: mesg", and then enters the kernel monitor.
  */
 void
-_panic(const char *file, int line, const char *fmt,...)
+_panic(const char *file, int line, const char *fmt, ...)
 {
 	va_list ap;
 
@@ -169,7 +170,7 @@ _panic(const char *file, int line, const char *fmt,...)
 	cprintf("\n");
 	va_end(ap);
 
-dead:
+	dead:
 	/* break into the kernel monitor */
 	while (1)
 		monitor(NULL);
@@ -177,7 +178,7 @@ dead:
 
 /* like panic, but don't */
 void
-_warn(const char *file, int line, const char *fmt,...)
+_warn(const char *file, int line, const char *fmt, ...)
 {
 	va_list ap;
 

@@ -73,7 +73,7 @@
  * one included in your C library
  */
 #ifndef MEMCPY
-#define MEMCPY(dst,src,len)             memcpy(dst,src,len)
+#define MEMCPY(dst, src, len)             memcpy(dst,src,len)
 #endif
 
 /**
@@ -81,7 +81,7 @@
  * call to memcpy() if the length is known at compile time and is small.
  */
 #ifndef SMEMCPY
-#define SMEMCPY(dst,src,len)            memcpy(dst,src,len)
+#define SMEMCPY(dst, src, len)            memcpy(dst,src,len)
 #endif
 
 /*
@@ -662,7 +662,7 @@
  */
 #ifndef TCP_WND
 #define TCP_WND                         2048
-#endif 
+#endif
 
 /**
  * TCP_MAXRTX: Maximum number of retransmissions of data segments.
@@ -760,7 +760,7 @@
 #ifndef LWIP_EVENT_API
 #define LWIP_EVENT_API                  0
 #define LWIP_CALLBACK_API               1
-#else 
+#else
 #define LWIP_EVENT_API                  1
 #define LWIP_CALLBACK_API               0
 #endif
@@ -1411,28 +1411,28 @@
 #ifndef CHECKSUM_GEN_IP
 #define CHECKSUM_GEN_IP                 1
 #endif
- 
+
 /**
  * CHECKSUM_GEN_UDP==1: Generate checksums in software for outgoing UDP packets.
  */
 #ifndef CHECKSUM_GEN_UDP
 #define CHECKSUM_GEN_UDP                1
 #endif
- 
+
 /**
  * CHECKSUM_GEN_TCP==1: Generate checksums in software for outgoing TCP packets.
  */
 #ifndef CHECKSUM_GEN_TCP
 #define CHECKSUM_GEN_TCP                1
 #endif
- 
+
 /**
  * CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets.
  */
 #ifndef CHECKSUM_CHECK_IP
 #define CHECKSUM_CHECK_IP               1
 #endif
- 
+
 /**
  * CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets.
  */

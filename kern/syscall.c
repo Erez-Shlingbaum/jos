@@ -12,6 +12,7 @@
 #include <kern/console.h>
 #include <kern/sched.h>
 #include <kern/time.h>
+#include "e1000.h"
 
 // Print a string to the system console.
 // The string is exactly 'len' characters long.
@@ -442,8 +443,25 @@ static int
 sys_time_msec(void)
 {
 	// LAB 6: Your code here.
-	panic("sys_time_msec not implemented");
+	return time_msec();
 }
+
+// try transmit a packet
+static int sys_try_transmit_packet(const uint8_t *packet_data, uint32_t packet_size)
+{
+	user_mem_assert(curenv, packet_data, packet_size, PTE_P | PTE_U);
+	return e1000_try_transmit_packet(packet_data, packet_size);
+}
+
+// try recv a packet
+static int sys_try_recv_packet(uint8_t *buffer, uint32_t buffer_size, uint32_t *packet_size)
+{
+	user_mem_assert(curenv, buffer, buffer_size, PTE_P | PTE_U | PTE_W);
+	user_mem_assert(curenv, packet_size, sizeof(uint32_t), PTE_P | PTE_U | PTE_W);
+
+	return e1000_try_recv_packet(buffer, buffer_size, packet_size);
+}
+
 
 // Dispatches to the correct kernel function, passing the arguments.
 int32_t
@@ -501,6 +519,16 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 		case SYS_ipc_recv:
 			retvalue = (uint32_t) sys_ipc_recv((void *) a1);
 			break;
+		case SYS_time_msec:
+			retvalue = sys_time_msec();
+			break;
+		case SYS_try_transmit_packet:
+			retvalue = sys_try_transmit_packet((const uint8_t *) a1, a2);
+			break;
+		case SYS_try_recv_packet:
+			retvalue = sys_try_recv_packet((uint8_t *) a1, a2, (uint32_t *) a3);
+			break;
+
 		default:
 			return -E_INVAL;
 	}

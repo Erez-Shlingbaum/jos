@@ -61,7 +61,7 @@ extern "C" {
 #endif
 PACK_STRUCT_BEGIN
 struct eth_addr {
-  PACK_STRUCT_FIELD(u8_t addr[ETHARP_HWADDR_LEN]);
+	PACK_STRUCT_FIELD(u8_t addr[ETHARP_HWADDR_LEN]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -74,11 +74,11 @@ PACK_STRUCT_END
 PACK_STRUCT_BEGIN
 struct eth_hdr {
 #if ETH_PAD_SIZE
-  PACK_STRUCT_FIELD(u8_t padding[ETH_PAD_SIZE]);
+	PACK_STRUCT_FIELD(u8_t padding[ETH_PAD_SIZE]);
 #endif
-  PACK_STRUCT_FIELD(struct eth_addr dest);
-  PACK_STRUCT_FIELD(struct eth_addr src);
-  PACK_STRUCT_FIELD(u16_t type);
+	PACK_STRUCT_FIELD(struct eth_addr dest);
+	PACK_STRUCT_FIELD(struct eth_addr src);
+	PACK_STRUCT_FIELD(u16_t type);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -91,15 +91,15 @@ PACK_STRUCT_END
 PACK_STRUCT_BEGIN
 /** the ARP message */
 struct etharp_hdr {
-  PACK_STRUCT_FIELD(struct eth_hdr ethhdr);
-  PACK_STRUCT_FIELD(u16_t hwtype);
-  PACK_STRUCT_FIELD(u16_t proto);
-  PACK_STRUCT_FIELD(u16_t _hwlen_protolen);
-  PACK_STRUCT_FIELD(u16_t opcode);
-  PACK_STRUCT_FIELD(struct eth_addr shwaddr);
-  PACK_STRUCT_FIELD(struct ip_addr2 sipaddr);
-  PACK_STRUCT_FIELD(struct eth_addr dhwaddr);
-  PACK_STRUCT_FIELD(struct ip_addr2 dipaddr);
+	PACK_STRUCT_FIELD(struct eth_hdr ethhdr);
+	PACK_STRUCT_FIELD(u16_t hwtype);
+	PACK_STRUCT_FIELD(u16_t proto);
+	PACK_STRUCT_FIELD(u16_t _hwlen_protolen);
+	PACK_STRUCT_FIELD(u16_t opcode);
+	PACK_STRUCT_FIELD(struct eth_addr shwaddr);
+	PACK_STRUCT_FIELD(struct ip_addr2 sipaddr);
+	PACK_STRUCT_FIELD(struct eth_addr dhwaddr);
+	PACK_STRUCT_FIELD(struct ip_addr2 dipaddr);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -111,8 +111,8 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 struct ethip_hdr {
-  PACK_STRUCT_FIELD(struct eth_hdr eth);
-  PACK_STRUCT_FIELD(struct ip_hdr ip);
+	PACK_STRUCT_FIELD(struct eth_hdr eth);
+	PACK_STRUCT_FIELD(struct ip_hdr ip);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -136,18 +136,18 @@ PACK_STRUCT_END
   * defined here to be accessed by memp.h
   */
 struct etharp_q_entry {
-  struct etharp_q_entry *next;
-  struct pbuf *p;
+	struct etharp_q_entry *next;
+	struct pbuf *p;
 };
 #endif /* ARP_QUEUEING */
 
 #define etharp_init() /* Compatibility define, not init needed. */
 void etharp_tmr(void);
 s8_t etharp_find_addr(struct netif *netif, struct ip_addr *ipaddr,
-         struct eth_addr **eth_ret, struct ip_addr **ip_ret);
+					  struct eth_addr **eth_ret, struct ip_addr **ip_ret);
 void etharp_ip_input(struct netif *netif, struct pbuf *p);
 void etharp_arp_input(struct netif *netif, struct eth_addr *ethaddr,
-         struct pbuf *p);
+					  struct pbuf *p);
 err_t etharp_output(struct netif *netif, struct pbuf *q, struct ip_addr *ipaddr);
 err_t etharp_query(struct netif *netif, struct ip_addr *ipaddr, struct pbuf *q);
 err_t etharp_request(struct netif *netif, struct ip_addr *ipaddr);
@@ -156,10 +156,10 @@ err_t ethernet_input(struct pbuf *p, struct netif *netif);
 
 #if LWIP_AUTOIP
 err_t etharp_raw(struct netif *netif, const struct eth_addr *ethsrc_addr,
-                 const struct eth_addr *ethdst_addr,
-                 const struct eth_addr *hwsrc_addr, const struct ip_addr *ipsrc_addr,
-                 const struct eth_addr *hwdst_addr, const struct ip_addr *ipdst_addr,
-                 const u16_t opcode);
+				 const struct eth_addr *ethdst_addr,
+				 const struct eth_addr *hwsrc_addr, const struct ip_addr *ipsrc_addr,
+				 const struct eth_addr *hwdst_addr, const struct ip_addr *ipdst_addr,
+				 const u16_t opcode);
 #endif /* LWIP_AUTOIP */
 
 #define eth_addr_cmp(addr1, addr2) (memcmp((addr1)->addr, (addr2)->addr, ETHARP_HWADDR_LEN) == 0)

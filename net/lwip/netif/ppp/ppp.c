@@ -312,12 +312,12 @@ pppLinkTerminated(int pd)
 
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    pppoe_disconnect(pc->pppoe_sc);
+	pppoe_disconnect(pc->pppoe_sc);
   } else
 #endif /* PPPOE_SUPPORT */
   {
 #if PPPOS_SUPPORT
-    pppMainWakeup(pd);
+	pppMainWakeup(pd);
 #endif /* PPPOS_SUPPORT */
   }
 }
@@ -331,12 +331,12 @@ pppLinkDown(int pd)
 
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    pppoe_disconnect(pc->pppoe_sc);
+	pppoe_disconnect(pc->pppoe_sc);
   } else
 #endif /* PPPOE_SUPPORT */
   {
 #if PPPOS_SUPPORT
-    pppMainWakeup(pd);
+	pppMainWakeup(pd);
 #endif /* PPPOS_SUPPORT */
   }
 }
@@ -396,21 +396,21 @@ pppInit(void)
   magicInit();
 
   for (i = 0; i < NUM_PPP; i++) {
-    pppControl[i].openFlag = 0;
+	pppControl[i].openFlag = 0;
 
-    subnetMask = htonl(0xffffff00);
+	subnetMask = htonl(0xffffff00);
 
-    outpacket_buf[i] = (u_char *)mem_malloc(PPP_MRU+PPP_HDRLEN);
-    if(!outpacket_buf[i]) {
-      return ERR_MEM;
-    }
+	outpacket_buf[i] = (u_char *)mem_malloc(PPP_MRU+PPP_HDRLEN);
+	if(!outpacket_buf[i]) {
+	  return ERR_MEM;
+	}
 
-    /*
-     * Initialize to the standard option set.
-     */
-    for (j = 0; (protp = ppp_protocols[j]) != NULL; ++j) {
-      (*protp->init)(i);
-    }
+	/*
+	 * Initialize to the standard option set.
+	 */
+	for (j = 0; (protp = ppp_protocols[j]) != NULL; ++j) {
+	  (*protp->init)(i);
+	}
   }
 
 #if LINK_STATS
@@ -430,64 +430,64 @@ void
 pppSetAuth(enum pppAuthType authType, const char *user, const char *passwd)
 {
   switch(authType) {
-    case PPPAUTHTYPE_NONE:
-    default:
+	case PPPAUTHTYPE_NONE:
+	default:
 #ifdef LWIP_PPP_STRICT_PAP_REJECT
-      ppp_settings.refuse_pap = 1;
+	  ppp_settings.refuse_pap = 1;
 #else  /* LWIP_PPP_STRICT_PAP_REJECT */
-      /* some providers request pap and accept an empty login/pw */
-      ppp_settings.refuse_pap = 0;
+	  /* some providers request pap and accept an empty login/pw */
+	  ppp_settings.refuse_pap = 0;
 #endif /* LWIP_PPP_STRICT_PAP_REJECT */
-      ppp_settings.refuse_chap = 1;
-      break;
+	  ppp_settings.refuse_chap = 1;
+	  break;
 
-    case PPPAUTHTYPE_ANY:
-      /* Warning: Using PPPAUTHTYPE_ANY might have security consequences.
-       * RFC 1994 says:
-       *
-       * In practice, within or associated with each PPP server, there is a
-       * database which associates "user" names with authentication
-       * information ("secrets").  It is not anticipated that a particular
-       * named user would be authenticated by multiple methods.  This would
-       * make the user vulnerable to attacks which negotiate the least secure
-       * method from among a set (such as PAP rather than CHAP).  If the same
-       * secret was used, PAP would reveal the secret to be used later with
-       * CHAP.
-       *
-       * Instead, for each user name there should be an indication of exactly
-       * one method used to authenticate that user name.  If a user needs to
-       * make use of different authentication methods under different
-       * circumstances, then distinct user names SHOULD be employed, each of
-       * which identifies exactly one authentication method.
-       *
-       */
-      ppp_settings.refuse_pap = 0;
-      ppp_settings.refuse_chap = 0;
-      break;
+	case PPPAUTHTYPE_ANY:
+	  /* Warning: Using PPPAUTHTYPE_ANY might have security consequences.
+	   * RFC 1994 says:
+	   *
+	   * In practice, within or associated with each PPP server, there is a
+	   * database which associates "user" names with authentication
+	   * information ("secrets").  It is not anticipated that a particular
+	   * named user would be authenticated by multiple methods.  This would
+	   * make the user vulnerable to attacks which negotiate the least secure
+	   * method from among a set (such as PAP rather than CHAP).  If the same
+	   * secret was used, PAP would reveal the secret to be used later with
+	   * CHAP.
+	   *
+	   * Instead, for each user name there should be an indication of exactly
+	   * one method used to authenticate that user name.  If a user needs to
+	   * make use of different authentication methods under different
+	   * circumstances, then distinct user names SHOULD be employed, each of
+	   * which identifies exactly one authentication method.
+	   *
+	   */
+	  ppp_settings.refuse_pap = 0;
+	  ppp_settings.refuse_chap = 0;
+	  break;
 
-    case PPPAUTHTYPE_PAP:
-      ppp_settings.refuse_pap = 0;
-      ppp_settings.refuse_chap = 1;
-      break;
+	case PPPAUTHTYPE_PAP:
+	  ppp_settings.refuse_pap = 0;
+	  ppp_settings.refuse_chap = 1;
+	  break;
 
-    case PPPAUTHTYPE_CHAP:
-      ppp_settings.refuse_pap = 1;
-      ppp_settings.refuse_chap = 0;
-      break;
+	case PPPAUTHTYPE_CHAP:
+	  ppp_settings.refuse_pap = 1;
+	  ppp_settings.refuse_chap = 0;
+	  break;
   }
 
   if(user) {
-    strncpy(ppp_settings.user, user, sizeof(ppp_settings.user)-1);
-    ppp_settings.user[sizeof(ppp_settings.user)-1] = '\0';
+	strncpy(ppp_settings.user, user, sizeof(ppp_settings.user)-1);
+	ppp_settings.user[sizeof(ppp_settings.user)-1] = '\0';
   } else {
-    ppp_settings.user[0] = '\0';
+	ppp_settings.user[0] = '\0';
   }
 
   if(passwd) {
-    strncpy(ppp_settings.passwd, passwd, sizeof(ppp_settings.passwd)-1);
-    ppp_settings.passwd[sizeof(ppp_settings.passwd)-1] = '\0';
+	strncpy(ppp_settings.passwd, passwd, sizeof(ppp_settings.passwd)-1);
+	ppp_settings.passwd[sizeof(ppp_settings.passwd)-1] = '\0';
   } else {
-    ppp_settings.passwd[0] = '\0';
+	ppp_settings.passwd[0] = '\0';
   }
 }
 
@@ -509,62 +509,62 @@ pppOverSerialOpen(sio_fd_t fd, void (*linkStatusCB)(void *ctx, int errCode, void
   for (pd = 0; pd < NUM_PPP && pppControl[pd].openFlag != 0; pd++);
 
   if (pd >= NUM_PPP) {
-    pd = PPPERR_OPEN;
+	pd = PPPERR_OPEN;
   } else {
-    pppControl[pd].openFlag = !0;
+	pppControl[pd].openFlag = !0;
   }
 
   /* Launch a deamon thread. */
   if (pd >= 0) {
-    pppControl[pd].openFlag = 1;
+	pppControl[pd].openFlag = 1;
 
-    lcp_init(pd);
-    pc = &pppControl[pd];
-    pc->fd = fd;
+	lcp_init(pd);
+	pc = &pppControl[pd];
+	pc->fd = fd;
 #if PPPOE_SUPPORT
-    pc->ethif= NULL;
+	pc->ethif= NULL;
 #endif /* PPPOE_SUPPORT */
-    pc->kill_link = 0;
-    pc->sig_hup = 0;
-    pc->if_up = 0;
-    pc->errCode = 0;
-    pc->inState = PDIDLE;
-    pc->inHead = NULL;
-    pc->inTail = NULL;
-    pc->inEscaped = 0;
-    pc->lastXMit = 0;
+	pc->kill_link = 0;
+	pc->sig_hup = 0;
+	pc->if_up = 0;
+	pc->errCode = 0;
+	pc->inState = PDIDLE;
+	pc->inHead = NULL;
+	pc->inTail = NULL;
+	pc->inEscaped = 0;
+	pc->lastXMit = 0;
 
 #if VJ_SUPPORT
-    pc->vjEnabled = 0;
-    vj_compress_init(&pc->vjComp);
+	pc->vjEnabled = 0;
+	vj_compress_init(&pc->vjComp);
 #endif /* VJ_SUPPORT */
 
-    /* 
-     * Default the in and out accm so that escape and flag characters
-     * are always escaped. 
-     */
-    memset(pc->inACCM, 0, sizeof(ext_accm));
-    pc->inACCM[15] = 0x60;
-    memset(pc->outACCM, 0, sizeof(ext_accm));
-    pc->outACCM[15] = 0x60;
+	/*
+	 * Default the in and out accm so that escape and flag characters
+	 * are always escaped.
+	 */
+	memset(pc->inACCM, 0, sizeof(ext_accm));
+	pc->inACCM[15] = 0x60;
+	memset(pc->outACCM, 0, sizeof(ext_accm));
+	pc->outACCM[15] = 0x60;
 
-    pc->linkStatusCB = linkStatusCB;
-    pc->linkStatusCtx = linkStatusCtx;
+	pc->linkStatusCB = linkStatusCB;
+	pc->linkStatusCtx = linkStatusCtx;
 
-    sys_thread_new(PPP_THREAD_NAME, pppMain, (void*)pd, PPP_THREAD_STACKSIZE, PPP_THREAD_PRIO);
-    if(!linkStatusCB) {
-      while(pd >= 0 && !pc->if_up) {
-        sys_msleep(500);
-        if (lcp_phase[pd] == PHASE_DEAD) {
-          pppClose(pd);
-          if (pc->errCode) {
-            pd = pc->errCode;
-          } else {
-            pd = PPPERR_CONNECT;
-          }
-        }
-      }
-    }
+	sys_thread_new(PPP_THREAD_NAME, pppMain, (void*)pd, PPP_THREAD_STACKSIZE, PPP_THREAD_PRIO);
+	if(!linkStatusCB) {
+	  while(pd >= 0 && !pc->if_up) {
+		sys_msleep(500);
+		if (lcp_phase[pd] == PHASE_DEAD) {
+		  pppClose(pd);
+		  if (pc->errCode) {
+			pd = pc->errCode;
+		  } else {
+			pd = PPPERR_CONNECT;
+		  }
+		}
+	  }
+	}
   }
 
   return pd;
@@ -596,71 +596,71 @@ int pppOverEthernetOpen(struct netif *ethif, const char *service_name, const cha
   /* Find a free PPP session descriptor. Critical region? */
   for (pd = 0; pd < NUM_PPP && pppControl[pd].openFlag != 0; pd++);
   if (pd >= NUM_PPP) {
-    pd = PPPERR_OPEN;
+	pd = PPPERR_OPEN;
   } else {
-    pppControl[pd].openFlag = !0;
+	pppControl[pd].openFlag = !0;
   }
 
   /* Launch a deamon thread. */
   if (pd >= 0) {
 
-    pppControl[pd].openFlag = 1;
+	pppControl[pd].openFlag = 1;
 
-    lcp_init(pd);
+	lcp_init(pd);
 
-    lcp_wantoptions[pd].mru = PPPOE_MAXMTU;
-    lcp_wantoptions[pd].neg_asyncmap = 0;
-    lcp_wantoptions[pd].neg_pcompression = 0;
-    lcp_wantoptions[pd].neg_accompression = 0;
+	lcp_wantoptions[pd].mru = PPPOE_MAXMTU;
+	lcp_wantoptions[pd].neg_asyncmap = 0;
+	lcp_wantoptions[pd].neg_pcompression = 0;
+	lcp_wantoptions[pd].neg_accompression = 0;
 
-    lcp_allowoptions[pd].mru = PPPOE_MAXMTU;
-    lcp_allowoptions[pd].neg_asyncmap = 0;
-    lcp_allowoptions[pd].neg_pcompression = 0;
-    lcp_allowoptions[pd].neg_accompression = 0;
+	lcp_allowoptions[pd].mru = PPPOE_MAXMTU;
+	lcp_allowoptions[pd].neg_asyncmap = 0;
+	lcp_allowoptions[pd].neg_pcompression = 0;
+	lcp_allowoptions[pd].neg_accompression = 0;
 
-    pc = &pppControl[pd];
-    pc->if_up = 0;
-    pc->errCode = 0;
-    pc->lastXMit = 0;
+	pc = &pppControl[pd];
+	pc->if_up = 0;
+	pc->errCode = 0;
+	pc->lastXMit = 0;
 #if PPPOS_SUPPORT
-    pc->kill_link = 0;
-    pc->sig_hup = 0;
-    pc->inState = PDIDLE;
-    pc->inHead = NULL;
-    pc->inTail = NULL;
-    pc->inEscaped = 0;
+	pc->kill_link = 0;
+	pc->sig_hup = 0;
+	pc->inState = PDIDLE;
+	pc->inHead = NULL;
+	pc->inTail = NULL;
+	pc->inEscaped = 0;
 #if VJ_SUPPORT
-    pc->vjEnabled = 0;
+	pc->vjEnabled = 0;
 #endif /* VJ_SUPPORT */
 #endif /* PPPOS_SUPPORT */
-    pc->ethif= ethif;
+	pc->ethif= ethif;
 
-    memset(pc->inACCM,  0, sizeof(ext_accm));
-    memset(pc->outACCM, 0, sizeof(ext_accm));
+	memset(pc->inACCM,  0, sizeof(ext_accm));
+	memset(pc->outACCM, 0, sizeof(ext_accm));
 
-    pc->linkStatusCB  = linkStatusCB;
-    pc->linkStatusCtx = linkStatusCtx;
+	pc->linkStatusCB  = linkStatusCB;
+	pc->linkStatusCtx = linkStatusCtx;
 
-    if(pppoe_create(ethif, pd, pppOverEthernetLinkStatusCB, &pc->pppoe_sc) != ERR_OK) {
-      pc->openFlag = 0;
-      return PPPERR_OPEN;
-    }
+	if(pppoe_create(ethif, pd, pppOverEthernetLinkStatusCB, &pc->pppoe_sc) != ERR_OK) {
+	  pc->openFlag = 0;
+	  return PPPERR_OPEN;
+	}
 
-    pppoe_connect(pc->pppoe_sc);
+	pppoe_connect(pc->pppoe_sc);
 
-    if(!linkStatusCB) {
-      while(pd >= 0 && !pc->if_up) {
-        sys_msleep(500);
-        if (lcp_phase[pd] == PHASE_DEAD) {
-          pppClose(pd);
-          if (pc->errCode) {
-            pd = pc->errCode;
-          } else {
-            pd = PPPERR_CONNECT;
-          }
-        }
-      }
-    }
+	if(!linkStatusCB) {
+	  while(pd >= 0 && !pc->if_up) {
+		sys_msleep(500);
+		if (lcp_phase[pd] == PHASE_DEAD) {
+		  pppClose(pd);
+		  if (pc->errCode) {
+			pd = pc->errCode;
+		  } else {
+			pd = PPPERR_CONNECT;
+		  }
+		}
+	  }
+	}
   }
 
   return pd;
@@ -668,7 +668,7 @@ int pppOverEthernetOpen(struct netif *ethif, const char *service_name, const cha
 #endif /* PPPOE_SUPPORT */
 
 
-/* Close a PPP connection and release the descriptor. 
+/* Close a PPP connection and release the descriptor.
  * Any outstanding packets in the queues are dropped.
  * Return 0 on success, an error code on failure. */
 int
@@ -680,24 +680,24 @@ pppClose(int pd)
   /* Disconnect */
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    PPPDEBUG((LOG_DEBUG, "pppClose: unit %d kill_link -> pppStopCB\n", pd));
-    pc->errCode = PPPERR_USER;
-    /* This will leave us at PHASE_DEAD. */
-    tcpip_callback(pppStopCB, (void*)pd);
+	PPPDEBUG((LOG_DEBUG, "pppClose: unit %d kill_link -> pppStopCB\n", pd));
+	pc->errCode = PPPERR_USER;
+	/* This will leave us at PHASE_DEAD. */
+	tcpip_callback(pppStopCB, (void*)pd);
   } else
 #endif /* PPPOE_SUPPORT */
   {
 #if PPPOS_SUPPORT
-    pc->kill_link = !0;
-    pppMainWakeup(pd);
+	pc->kill_link = !0;
+	pppMainWakeup(pd);
 #endif /* PPPOS_SUPPORT */
   }
 
   if(!pc->linkStatusCB) {
-    while(st >= 0 && lcp_phase[pd] != PHASE_DEAD) {
-      sys_msleep(500);
-      break;
-    }
+	while(st >= 0 && lcp_phase[pd] != PHASE_DEAD) {
+	  sys_msleep(500);
+	  break;
+	}
   }
 
   return st;
@@ -711,14 +711,14 @@ pppSigHUP(int pd)
 
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    PPPDEBUG((LOG_DEBUG, "pppSigHUP: unit %d sig_hup -> pppHupCB\n", pd));
-    tcpip_callback(pppHupCB, (void*)pd);
+	PPPDEBUG((LOG_DEBUG, "pppSigHUP: unit %d sig_hup -> pppHupCB\n", pd));
+	tcpip_callback(pppHupCB, (void*)pd);
   } else
 #endif /* PPPOE_SUPPORT */
   {
 #if PPPOS_SUPPORT
-    pc->sig_hup = 1;
-    pppMainWakeup(pd);
+	pc->sig_hup = 1;
+	pppMainWakeup(pd);
 #endif /* PPPOS_SUPPORT */
   }
 }
@@ -731,20 +731,20 @@ nPut(PPPControl *pc, struct pbuf *nb)
   int c;
 
   for(b = nb; b != NULL; b = b->next) {
-    if((c = sio_write(pc->fd, b->payload, b->len)) != b->len) {
-      PPPDEBUG((LOG_WARNING,
-               "PPP nPut: incomplete sio_write(%d,, %u) = %d\n", pc->fd, b->len, c));
-      LINK_STATS_INC(link.err);
-      pc->lastXMit = 0; /* prepend PPP_FLAG to next packet */
-      break;
-    }
+	if((c = sio_write(pc->fd, b->payload, b->len)) != b->len) {
+	  PPPDEBUG((LOG_WARNING,
+			   "PPP nPut: incomplete sio_write(%d,, %u) = %d\n", pc->fd, b->len, c));
+	  LINK_STATS_INC(link.err);
+	  pc->lastXMit = 0; /* prepend PPP_FLAG to next packet */
+	  break;
+	}
   }
 
   pbuf_free(nb);
   LINK_STATS_INC(link.xmit);
 }
 
-/* 
+/*
  * pppAppend - append given character to end of given pbuf.  If outACCM
  * is not NULL and the character needs to be escaped, do so.
  * If pbuf is full, append another.
@@ -754,28 +754,28 @@ static struct pbuf *
 pppAppend(u_char c, struct pbuf *nb, ext_accm *outACCM)
 {
   struct pbuf *tb = nb;
-  
+
   /* Make sure there is room for the character and an escape code.
    * Sure we don't quite fill the buffer if the character doesn't
    * get escaped but is one character worth complicating this? */
   /* Note: We assume no packet header. */
   if (nb && (PBUF_POOL_BUFSIZE - nb->len) < 2) {
-    tb = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
-    if (tb) {
-      nb->next = tb;
-    } else {
-      LINK_STATS_INC(link.memerr);
-    }
-    nb = tb;
+	tb = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
+	if (tb) {
+	  nb->next = tb;
+	} else {
+	  LINK_STATS_INC(link.memerr);
+	}
+	nb = tb;
   }
 
   if (nb) {
-    if (outACCM && ESCAPE_P(*outACCM, c)) {
-      *((u_char*)nb->payload + nb->len++) = PPP_ESCAPE;
-      *((u_char*)nb->payload + nb->len++) = c ^ PPP_TRANS;
-    } else {
-      *((u_char*)nb->payload + nb->len++) = c;
-    }
+	if (outACCM && ESCAPE_P(*outACCM, c)) {
+	  *((u_char*)nb->payload + nb->len++) = PPP_ESCAPE;
+	  *((u_char*)nb->payload + nb->len++) = c ^ PPP_TRANS;
+	} else {
+	  *((u_char*)nb->payload + nb->len++) = c;
+	}
   }
 
   return tb;
@@ -793,9 +793,9 @@ pppifOutputOverEthernet(int pd, struct pbuf *p)
 
   pb = pbuf_alloc(PBUF_LINK, pppoe_hdrlen + sizeof(protocol), PBUF_RAM);
   if(!pb) {
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.proterr);
-    return ERR_MEM;
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.proterr);
+	return ERR_MEM;
   }
 
   pbuf_header(pb, -pppoe_hdrlen);
@@ -803,15 +803,15 @@ pppifOutputOverEthernet(int pd, struct pbuf *p)
   pc->lastXMit = sys_jiffies();
 
   if (!pc->pcomp || protocol > 0xFF) {
-    *((u_char*)pb->payload + i++) = (protocol >> 8) & 0xFF;
+	*((u_char*)pb->payload + i++) = (protocol >> 8) & 0xFF;
   }
   *((u_char*)pb->payload + i) = protocol & 0xFF;
 
   pbuf_chain(pb, p);
 
   if(pppoe_xmit(pc->pppoe_sc, pb) != ERR_OK) {
-    LINK_STATS_INC(link.err);
-    return PPPERR_DEVICE;
+	LINK_STATS_INC(link.err);
+	return PPPERR_DEVICE;
   }
 
   LINK_STATS_INC(link.xmit);
@@ -838,24 +838,24 @@ pppifOutput(struct netif *netif, struct pbuf *pb, struct ip_addr *ipaddr)
   /* We let any protocol value go through - it can't hurt us
    * and the peer will just drop it if it's not accepting it. */
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag || !pb) {
-    PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: bad parms prot=%d pb=%p\n",
-              pd, protocol, pb));
-    LINK_STATS_INC(link.opterr);
-    LINK_STATS_INC(link.drop);
-    return ERR_ARG;
+	PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: bad parms prot=%d pb=%p\n",
+			  pd, protocol, pb));
+	LINK_STATS_INC(link.opterr);
+	LINK_STATS_INC(link.drop);
+	return ERR_ARG;
   }
 
   /* Check that the link is up. */
   if (lcp_phase[pd] == PHASE_DEAD) {
-    PPPDEBUG((LOG_ERR, "pppifOutput[%d]: link not up\n", pd));
-    LINK_STATS_INC(link.rterr);
-    LINK_STATS_INC(link.drop);
-    return ERR_RTE;
+	PPPDEBUG((LOG_ERR, "pppifOutput[%d]: link not up\n", pd));
+	LINK_STATS_INC(link.rterr);
+	LINK_STATS_INC(link.drop);
+	return ERR_RTE;
   }
 
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    return pppifOutputOverEthernet(pd, pb);
+	return pppifOutputOverEthernet(pd, pb);
   }
 #endif /* PPPOE_SUPPORT */
 
@@ -863,36 +863,36 @@ pppifOutput(struct netif *netif, struct pbuf *pb, struct ip_addr *ipaddr)
   /* Grab an output buffer. */
   headMB = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
   if (headMB == NULL) {
-    PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: first alloc fail\n", pd));
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.drop);
-    return ERR_MEM;
+	PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: first alloc fail\n", pd));
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.drop);
+	return ERR_MEM;
   }
 
 #if VJ_SUPPORT
-  /* 
+  /*
    * Attempt Van Jacobson header compression if VJ is configured and
-   * this is an IP packet. 
+   * this is an IP packet.
    */
   if (protocol == PPP_IP && pc->vjEnabled) {
-    switch (vj_compress_tcp(&pc->vjComp, pb)) {
-      case TYPE_IP:
-        /* No change...
-           protocol = PPP_IP_PROTOCOL; */
-        break;
-      case TYPE_COMPRESSED_TCP:
-        protocol = PPP_VJC_COMP;
-        break;
-      case TYPE_UNCOMPRESSED_TCP:
-        protocol = PPP_VJC_UNCOMP;
-        break;
-      default:
-        PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: bad IP packet\n", pd));
-        LINK_STATS_INC(link.proterr);
-        LINK_STATS_INC(link.drop);
-        pbuf_free(headMB);
-        return ERR_VAL;
-    }
+	switch (vj_compress_tcp(&pc->vjComp, pb)) {
+	  case TYPE_IP:
+		/* No change...
+		   protocol = PPP_IP_PROTOCOL; */
+		break;
+	  case TYPE_COMPRESSED_TCP:
+		protocol = PPP_VJC_COMP;
+		break;
+	  case TYPE_UNCOMPRESSED_TCP:
+		protocol = PPP_VJC_UNCOMP;
+		break;
+	  default:
+		PPPDEBUG((LOG_WARNING, "pppifOutput[%d]: bad IP packet\n", pd));
+		LINK_STATS_INC(link.proterr);
+		LINK_STATS_INC(link.drop);
+		pbuf_free(headMB);
+		return ERR_VAL;
+	}
   }
 #endif /* VJ_SUPPORT */
 
@@ -900,20 +900,20 @@ pppifOutput(struct netif *netif, struct pbuf *pb, struct ip_addr *ipaddr)
 
   /* Build the PPP header. */
   if ((sys_jiffies() - pc->lastXMit) >= PPP_MAXIDLEFLAG) {
-    tailMB = pppAppend(PPP_FLAG, tailMB, NULL);
+	tailMB = pppAppend(PPP_FLAG, tailMB, NULL);
   }
 
   pc->lastXMit = sys_jiffies();
   if (!pc->accomp) {
-    fcsOut = PPP_FCS(fcsOut, PPP_ALLSTATIONS);
-    tailMB = pppAppend(PPP_ALLSTATIONS, tailMB, &pc->outACCM);
-    fcsOut = PPP_FCS(fcsOut, PPP_UI);
-    tailMB = pppAppend(PPP_UI, tailMB, &pc->outACCM);
+	fcsOut = PPP_FCS(fcsOut, PPP_ALLSTATIONS);
+	tailMB = pppAppend(PPP_ALLSTATIONS, tailMB, &pc->outACCM);
+	fcsOut = PPP_FCS(fcsOut, PPP_UI);
+	tailMB = pppAppend(PPP_UI, tailMB, &pc->outACCM);
   }
   if (!pc->pcomp || protocol > 0xFF) {
-    c = (protocol >> 8) & 0xFF;
-    fcsOut = PPP_FCS(fcsOut, c);
-    tailMB = pppAppend(c, tailMB, &pc->outACCM);
+	c = (protocol >> 8) & 0xFF;
+	fcsOut = PPP_FCS(fcsOut, c);
+	tailMB = pppAppend(c, tailMB, &pc->outACCM);
   }
   c = protocol & 0xFF;
   fcsOut = PPP_FCS(fcsOut, c);
@@ -921,20 +921,20 @@ pppifOutput(struct netif *netif, struct pbuf *pb, struct ip_addr *ipaddr)
 
   /* Load packet. */
   for(p = pb; p; p = p->next) {
-    int n;
-    u_char *sPtr;
+	int n;
+	u_char *sPtr;
 
-    sPtr = (u_char*)p->payload;
-    n = p->len;
-    while (n-- > 0) {
-      c = *sPtr++;
+	sPtr = (u_char*)p->payload;
+	n = p->len;
+	while (n-- > 0) {
+	  c = *sPtr++;
 
-      /* Update FCS before checking for special characters. */
-      fcsOut = PPP_FCS(fcsOut, c);
-      
-      /* Copy to output buffer escaping special characters. */
-      tailMB = pppAppend(c, tailMB, &pc->outACCM);
-    }
+	  /* Update FCS before checking for special characters. */
+	  fcsOut = PPP_FCS(fcsOut, c);
+
+	  /* Copy to output buffer escaping special characters. */
+	  tailMB = pppAppend(c, tailMB, &pc->outACCM);
+	}
   }
 
   /* Add FCS and trailing flag. */
@@ -946,13 +946,13 @@ pppifOutput(struct netif *netif, struct pbuf *pb, struct ip_addr *ipaddr)
 
   /* If we failed to complete the packet, throw it away. */
   if (!tailMB) {
-    PPPDEBUG((LOG_WARNING,
-             "pppifOutput[%d]: Alloc err - dropping proto=%d\n", 
-              pd, protocol));
-    pbuf_free(headMB);
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.drop);
-    return ERR_MEM;
+	PPPDEBUG((LOG_WARNING,
+			 "pppifOutput[%d]: Alloc err - dropping proto=%d\n",
+			  pd, protocol));
+	pbuf_free(headMB);
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.drop);
+	return ERR_MEM;
   }
 
   /* Send it. */
@@ -973,43 +973,43 @@ pppIOCtl(int pd, int cmd, void *arg)
   int st = 0;
 
   if (pd < 0 || pd >= NUM_PPP) {
-    st = PPPERR_PARAM;
+	st = PPPERR_PARAM;
   } else {
-    switch(cmd) {
-    case PPPCTLG_UPSTATUS:      /* Get the PPP up status. */
-      if (arg) {
-        *(int *)arg = (int)(pc->if_up);
-      } else {
-        st = PPPERR_PARAM;
-      }
-      break;
-    case PPPCTLS_ERRCODE:       /* Set the PPP error code. */
-      if (arg) {
-        pc->errCode = *(int *)arg;
-      } else {
-        st = PPPERR_PARAM;
-      }
-      break;
-    case PPPCTLG_ERRCODE:       /* Get the PPP error code. */
-      if (arg) {
-        *(int *)arg = (int)(pc->errCode);
-      } else {
-        st = PPPERR_PARAM;
-      }
-      break;
+	switch(cmd) {
+	case PPPCTLG_UPSTATUS:      /* Get the PPP up status. */
+	  if (arg) {
+		*(int *)arg = (int)(pc->if_up);
+	  } else {
+		st = PPPERR_PARAM;
+	  }
+	  break;
+	case PPPCTLS_ERRCODE:       /* Set the PPP error code. */
+	  if (arg) {
+		pc->errCode = *(int *)arg;
+	  } else {
+		st = PPPERR_PARAM;
+	  }
+	  break;
+	case PPPCTLG_ERRCODE:       /* Get the PPP error code. */
+	  if (arg) {
+		*(int *)arg = (int)(pc->errCode);
+	  } else {
+		st = PPPERR_PARAM;
+	  }
+	  break;
 #if PPPOS_SUPPORT
-    case PPPCTLG_FD:
-      if (arg) {
-        *(sio_fd_t *)arg = pc->fd;
-      } else {
-        st = PPPERR_PARAM;
-      }
-      break;
+	case PPPCTLG_FD:
+	  if (arg) {
+		*(sio_fd_t *)arg = pc->fd;
+	  } else {
+		st = PPPERR_PARAM;
+	  }
+	  break;
 #endif /* PPPOS_SUPPORT */
-    default:
-      st = PPPERR_PARAM;
-      break;
-    }
+	default:
+	  st = PPPERR_PARAM;
+	  break;
+	}
   }
 
   return st;
@@ -1026,9 +1026,9 @@ pppMTU(int pd)
 
   /* Validate parameters. */
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
+	st = 0;
   } else {
-    st = pc->mtu;
+	st = pc->mtu;
   }
 
   return st;
@@ -1047,9 +1047,9 @@ pppWriteOverEthernet(int pd, const u_char *s, int n)
 
   pb = pbuf_alloc(PBUF_LINK, pppoe_hdrlen + n, PBUF_RAM);
   if(!pb) {
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.proterr);
-    return PPPERR_ALLOC;
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.proterr);
+	return PPPERR_ALLOC;
   }
 
   pbuf_header(pb, -pppoe_hdrlen);
@@ -1059,8 +1059,8 @@ pppWriteOverEthernet(int pd, const u_char *s, int n)
   SMEMCPY(pb->payload, s, n);
 
   if(pppoe_xmit(pc->pppoe_sc, pb) != ERR_OK) {
-    LINK_STATS_INC(link.err);
-    return PPPERR_DEVICE;
+	LINK_STATS_INC(link.err);
+	return PPPERR_DEVICE;
   }
 
   LINK_STATS_INC(link.xmit);
@@ -1085,16 +1085,16 @@ pppWrite(int pd, const u_char *s, int n)
 
 #if PPPOE_SUPPORT
   if(pc->ethif) {
-    return pppWriteOverEthernet(pd, s, n);
+	return pppWriteOverEthernet(pd, s, n);
   }
 #endif /* PPPOE_SUPPORT */
 
 #if PPPOS_SUPPORT
   headMB = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
   if (headMB == NULL) {
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.proterr);
-    return PPPERR_ALLOC;
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.proterr);
+	return PPPERR_ALLOC;
   }
 
   tailMB = headMB;
@@ -1102,22 +1102,22 @@ pppWrite(int pd, const u_char *s, int n)
   /* If the link has been idle, we'll send a fresh flag character to
    * flush any noise. */
   if ((sys_jiffies() - pc->lastXMit) >= PPP_MAXIDLEFLAG) {
-    tailMB = pppAppend(PPP_FLAG, tailMB, NULL);
+	tailMB = pppAppend(PPP_FLAG, tailMB, NULL);
   }
   pc->lastXMit = sys_jiffies();
 
   fcsOut = PPP_INITFCS;
   /* Load output buffer. */
   while (n-- > 0) {
-    c = *s++;
+	c = *s++;
 
-    /* Update FCS before checking for special characters. */
-    fcsOut = PPP_FCS(fcsOut, c);
+	/* Update FCS before checking for special characters. */
+	fcsOut = PPP_FCS(fcsOut, c);
 
-    /* Copy to output buffer escaping special characters. */
-    tailMB = pppAppend(c, tailMB, &pc->outACCM);
+	/* Copy to output buffer escaping special characters. */
+	tailMB = pppAppend(c, tailMB, &pc->outACCM);
   }
-    
+
   /* Add FCS and trailing flag. */
   c = ~fcsOut & 0xFF;
   tailMB = pppAppend(c, tailMB, &pc->outACCM);
@@ -1128,17 +1128,17 @@ pppWrite(int pd, const u_char *s, int n)
   /* If we failed to complete the packet, throw it away.
    * Otherwise send it. */
   if (!tailMB) {
-    PPPDEBUG((LOG_WARNING,
-             "pppWrite[%d]: Alloc err - dropping pbuf len=%d\n", pd, headMB->len));
-           /*"pppWrite[%d]: Alloc err - dropping %d:%.*H", pd, headMB->len, LWIP_MIN(headMB->len * 2, 40), headMB->payload)); */
-    pbuf_free(headMB);
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.proterr);
-    return PPPERR_ALLOC;
+	PPPDEBUG((LOG_WARNING,
+			 "pppWrite[%d]: Alloc err - dropping pbuf len=%d\n", pd, headMB->len));
+		   /*"pppWrite[%d]: Alloc err - dropping %d:%.*H", pd, headMB->len, LWIP_MIN(headMB->len * 2, 40), headMB->payload)); */
+	pbuf_free(headMB);
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.proterr);
+	return PPPERR_ALLOC;
   }
 
   PPPDEBUG((LOG_INFO, "pppWrite[%d]: len=%d\n", pd, headMB->len));
-                   /* "pppWrite[%d]: %d:%.*H", pd, headMB->len, LWIP_MIN(headMB->len * 2, 40), headMB->payload)); */
+				   /* "pppWrite[%d]: %d:%.*H", pd, headMB->len, LWIP_MIN(headMB->len * 2, 40), headMB->payload)); */
   nPut(pc, headMB);
 #endif /* PPPOS_SUPPORT */
 
@@ -1154,18 +1154,18 @@ ppp_send_config( int unit, int mtu, u32_t asyncmap, int pcomp, int accomp)
 {
   PPPControl *pc = &pppControl[unit];
   int i;
-  
+
   pc->mtu = mtu;
   pc->pcomp = pcomp;
   pc->accomp = accomp;
-  
+
   /* Load the ACCM bits for the 32 control codes. */
   for (i = 0; i < 32/8; i++) {
-    pc->outACCM[i] = (u_char)((asyncmap >> (8 * i)) & 0xFF);
+	pc->outACCM[i] = (u_char)((asyncmap >> (8 * i)) & 0xFF);
   }
   PPPDEBUG((LOG_INFO, "ppp_send_config[%d]: outACCM=%X %X %X %X\n",
-            unit,
-            pc->outACCM[0], pc->outACCM[1], pc->outACCM[2], pc->outACCM[3]));
+			unit,
+			pc->outACCM[0], pc->outACCM[1], pc->outACCM[2], pc->outACCM[3]));
 }
 
 
@@ -1177,11 +1177,11 @@ ppp_set_xaccm(int unit, ext_accm *accm)
 {
   SMEMCPY(pppControl[unit].outACCM, accm, sizeof(ext_accm));
   PPPDEBUG((LOG_INFO, "ppp_set_xaccm[%d]: outACCM=%X %X %X %X\n",
-            unit,
-            pppControl[unit].outACCM[0],
-            pppControl[unit].outACCM[1],
-            pppControl[unit].outACCM[2],
-            pppControl[unit].outACCM[3]));
+			unit,
+			pppControl[unit].outACCM[0],
+			pppControl[unit].outACCM[1],
+			pppControl[unit].outACCM[2],
+			pppControl[unit].outACCM[3]));
 }
 
 
@@ -1201,11 +1201,11 @@ ppp_recv_config( int unit, int mru, u32_t asyncmap, int pcomp, int accomp)
 
   /* Load the ACCM bits for the 32 control codes. */
   for (i = 0; i < 32 / 8; i++) {
-    pc->inACCM[i] = (u_char)(asyncmap >> (i * 8));
+	pc->inACCM[i] = (u_char)(asyncmap >> (i * 8));
   }
   PPPDEBUG((LOG_INFO, "ppp_recv_config[%d]: inACCM=%X %X %X %X\n",
-            unit,
-            pc->inACCM[0], pc->inACCM[1], pc->inACCM[2], pc->inACCM[3]));
+			unit,
+			pc->inACCM[0], pc->inACCM[1], pc->inACCM[2], pc->inACCM[3]));
 }
 
 #if 0
@@ -1272,16 +1272,16 @@ GetMask(u32_t addr)
 
   htonl(addr);
   if (IN_CLASSA(addr)) { /* determine network mask for address class */
-    nmask = IN_CLASSA_NET;
+	nmask = IN_CLASSA_NET;
   } else if (IN_CLASSB(addr)) {
-    nmask = IN_CLASSB_NET;
-  } else { 
-    nmask = IN_CLASSC_NET;
+	nmask = IN_CLASSB_NET;
+  } else {
+	nmask = IN_CLASSC_NET;
   }
 
   /* class D nets are disallowed by bad_ip_adrs */
   mask = subnetMask | htonl(nmask);
-  
+
   /* XXX
    * Scan through the system's network interfaces.
    * Get each netmask and OR them into our mask.
@@ -1298,12 +1298,12 @@ sifvjcomp( int pd, int vjcomp, int cidcomp, int maxcid)
 {
 #if PPPOS_SUPPORT && VJ_SUPPORT
   PPPControl *pc = &pppControl[pd];
-  
+
   pc->vjEnabled = vjcomp;
   pc->vjComp.compressSlot = cidcomp;
   pc->vjComp.maxSlotIndex = maxcid;
   PPPDEBUG((LOG_INFO, "sifvjcomp: VJ compress enable=%d slot=%d max slot=%d\n",
-            vjcomp, cidcomp, maxcid));
+			vjcomp, cidcomp, maxcid));
 #endif /* PPPOS_SUPPORT && VJ_SUPPORT */
 
   return 0;
@@ -1331,29 +1331,29 @@ sifup(int pd)
 {
   PPPControl *pc = &pppControl[pd];
   int st = 1;
-  
-  if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
-  } else {
-    netif_remove(&pc->netif);
-    if (netif_add(&pc->netif, &pc->addrs.our_ipaddr, &pc->addrs.netmask, &pc->addrs.his_ipaddr, (void *)pd, pppifNetifInit, ip_input)) {
-      netif_set_up(&pc->netif);
-#if LWIP_DHCP
-      /* ugly workaround for storing a reference to the ppp related info*/
-      pc->netif.dhcp = (struct dhcp *) &pc->addrs;
-#endif /* LWIP_DHCP */
-      pc->if_up = 1;
-      pc->errCode = PPPERR_NONE;
 
-      PPPDEBUG((LOG_DEBUG, "sifup: unit %d: linkStatusCB=%lx errCode=%d\n", pd, pc->linkStatusCB, pc->errCode));
-      if(pc->linkStatusCB) {
-        pc->linkStatusCB(pc->linkStatusCtx, pc->errCode, &pc->addrs);
-      }
-    } else {
-      st = 0;
-      PPPDEBUG((LOG_ERR, "sifup[%d]: netif_add failed\n", pd));
-    }
+  if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
+  } else {
+	netif_remove(&pc->netif);
+	if (netif_add(&pc->netif, &pc->addrs.our_ipaddr, &pc->addrs.netmask, &pc->addrs.his_ipaddr, (void *)pd, pppifNetifInit, ip_input)) {
+	  netif_set_up(&pc->netif);
+#if LWIP_DHCP
+	  /* ugly workaround for storing a reference to the ppp related info*/
+	  pc->netif.dhcp = (struct dhcp *) &pc->addrs;
+#endif /* LWIP_DHCP */
+	  pc->if_up = 1;
+	  pc->errCode = PPPERR_NONE;
+
+	  PPPDEBUG((LOG_DEBUG, "sifup: unit %d: linkStatusCB=%lx errCode=%d\n", pd, pc->linkStatusCB, pc->errCode));
+	  if(pc->linkStatusCB) {
+		pc->linkStatusCB(pc->linkStatusCtx, pc->errCode, &pc->addrs);
+	  }
+	} else {
+	  st = 0;
+	  PPPDEBUG((LOG_ERR, "sifup[%d]: netif_add failed\n", pd));
+	}
   }
 
   return st;
@@ -1379,17 +1379,17 @@ sifdown(int pd)
 {
   PPPControl *pc = &pppControl[pd];
   int st = 1;
-  
+
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifdown[%d]: bad parms\n", pd));
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifdown[%d]: bad parms\n", pd));
   } else {
-    pc->if_up = 0;
-    netif_remove(&pc->netif);
-    PPPDEBUG((LOG_DEBUG, "sifdown: unit %d: linkStatusCB=%lx errCode=%d\n", pd, pc->linkStatusCB, pc->errCode));
-    if(pc->linkStatusCB) {
-      pc->linkStatusCB(pc->linkStatusCtx, PPPERR_CONNECT, NULL);
-    }
+	pc->if_up = 0;
+	netif_remove(&pc->netif);
+	PPPDEBUG((LOG_DEBUG, "sifdown: unit %d: linkStatusCB=%lx errCode=%d\n", pd, pc->linkStatusCB, pc->errCode));
+	if(pc->linkStatusCB) {
+	  pc->linkStatusCB(pc->linkStatusCtx, PPPERR_CONNECT, NULL);
+	}
   }
   return st;
 }
@@ -1408,16 +1408,16 @@ sifaddr( int pd, u32_t o, u32_t h, u32_t m, u32_t ns1, u32_t ns2)
 {
   PPPControl *pc = &pppControl[pd];
   int st = 1;
-  
+
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
   } else {
-    SMEMCPY(&pc->addrs.our_ipaddr, &o, sizeof(o));
-    SMEMCPY(&pc->addrs.his_ipaddr, &h, sizeof(h));
-    SMEMCPY(&pc->addrs.netmask, &m, sizeof(m));
-    SMEMCPY(&pc->addrs.dns1, &ns1, sizeof(ns1));
-    SMEMCPY(&pc->addrs.dns2, &ns2, sizeof(ns2));
+	SMEMCPY(&pc->addrs.our_ipaddr, &o, sizeof(o));
+	SMEMCPY(&pc->addrs.his_ipaddr, &h, sizeof(h));
+	SMEMCPY(&pc->addrs.netmask, &m, sizeof(m));
+	SMEMCPY(&pc->addrs.dns1, &ns1, sizeof(ns1));
+	SMEMCPY(&pc->addrs.dns2, &ns2, sizeof(ns2));
   }
   return st;
 }
@@ -1434,18 +1434,18 @@ cifaddr( int pd, u32_t o, u32_t h)
 {
   PPPControl *pc = &pppControl[pd];
   int st = 1;
-  
+
   LWIP_UNUSED_ARG(o);
   LWIP_UNUSED_ARG(h);
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
   } else {
-    IP4_ADDR(&pc->addrs.our_ipaddr, 0,0,0,0);
-    IP4_ADDR(&pc->addrs.his_ipaddr, 0,0,0,0);
-    IP4_ADDR(&pc->addrs.netmask, 255,255,255,0);
-    IP4_ADDR(&pc->addrs.dns1, 0,0,0,0);
-    IP4_ADDR(&pc->addrs.dns2, 0,0,0,0);
+	IP4_ADDR(&pc->addrs.our_ipaddr, 0,0,0,0);
+	IP4_ADDR(&pc->addrs.his_ipaddr, 0,0,0,0);
+	IP4_ADDR(&pc->addrs.netmask, 255,255,255,0);
+	IP4_ADDR(&pc->addrs.dns1, 0,0,0,0);
+	IP4_ADDR(&pc->addrs.dns2, 0,0,0,0);
   }
   return st;
 }
@@ -1463,10 +1463,10 @@ sifdefaultroute(int pd, u32_t l, u32_t g)
   LWIP_UNUSED_ARG(g);
 
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
   } else {
-    netif_set_default(&pc->netif);
+	netif_set_default(&pc->netif);
   }
 
   /* TODO: check how PPP handled the netMask, previously not set by ipSetDefault */
@@ -1487,10 +1487,10 @@ cifdefaultroute(int pd, u32_t l, u32_t g)
   LWIP_UNUSED_ARG(g);
 
   if (pd < 0 || pd >= NUM_PPP || !pc->openFlag) {
-    st = 0;
-    PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
+	st = 0;
+	PPPDEBUG((LOG_WARNING, "sifup[%d]: bad parms\n", pd));
   } else {
-    netif_set_default(NULL);
+	netif_set_default(NULL);
   }
 
   return st;
@@ -1515,9 +1515,9 @@ pppMain(void *arg)
 
   p = pbuf_alloc(PBUF_RAW, PPP_MRU+PPP_HDRLEN, PBUF_RAM);
   if (!p) {
-    LWIP_ASSERT("p != NULL", p);
-    pc->errCode = PPPERR_ALLOC;
-    goto out;
+	LWIP_ASSERT("p != NULL", p);
+	pc->errCode = PPPERR_ALLOC;
+	goto out;
   }
 
   /*
@@ -1526,25 +1526,25 @@ pppMain(void *arg)
   PPPDEBUG((LOG_INFO, "pppMain: unit %d: Connecting\n", pd));
   tcpip_callback(pppStartCB, arg);
   while (lcp_phase[pd] != PHASE_DEAD) {
-    if (pc->kill_link) {
-      PPPDEBUG((LOG_DEBUG, "pppMain: unit %d kill_link -> pppStopCB\n", pd));
-      pc->errCode = PPPERR_USER;
-      /* This will leave us at PHASE_DEAD. */
-      tcpip_callback(pppStopCB, arg);
-      pc->kill_link = 0;
-    } else if (pc->sig_hup) {
-      PPPDEBUG((LOG_DEBUG, "pppMain: unit %d sig_hup -> pppHupCB\n", pd));
-      pc->sig_hup = 0;
-      tcpip_callback(pppHupCB, arg);
-    } else {
-      c = sio_read(pc->fd, p->payload, p->len);
-      if(c > 0) {
-        pppInProc(pd, p->payload, c);
-      } else {
-        PPPDEBUG((LOG_DEBUG, "pppMain: unit %d sio_read len=%d returned %d\n", pd, p->len, c));
-        sys_msleep(1); /* give other tasks a chance to run */
-      }
-    }
+	if (pc->kill_link) {
+	  PPPDEBUG((LOG_DEBUG, "pppMain: unit %d kill_link -> pppStopCB\n", pd));
+	  pc->errCode = PPPERR_USER;
+	  /* This will leave us at PHASE_DEAD. */
+	  tcpip_callback(pppStopCB, arg);
+	  pc->kill_link = 0;
+	} else if (pc->sig_hup) {
+	  PPPDEBUG((LOG_DEBUG, "pppMain: unit %d sig_hup -> pppHupCB\n", pd));
+	  pc->sig_hup = 0;
+	  tcpip_callback(pppHupCB, arg);
+	} else {
+	  c = sio_read(pc->fd, p->payload, p->len);
+	  if(c > 0) {
+		pppInProc(pd, p->payload, c);
+	  } else {
+		PPPDEBUG((LOG_DEBUG, "pppMain: unit %d sio_read len=%d returned %d\n", pd, p->len, c));
+		sys_msleep(1); /* give other tasks a chance to run */
+	  }
+	}
   }
   PPPDEBUG((LOG_INFO, "pppMain: unit %d: PHASE_DEAD\n", pd));
   pppDrop(pc); /* bug fix #17726 */
@@ -1553,7 +1553,7 @@ pppMain(void *arg)
 out:
   PPPDEBUG((LOG_DEBUG, "pppMain: unit %d: linkStatusCB=%lx errCode=%d\n", pd, pc->linkStatusCB, pc->errCode));
   if(pc->linkStatusCB) {
-    pc->linkStatusCB(pc->linkStatusCtx, pc->errCode ? pc->errCode : PPPERR_PROTOCOL, NULL);
+	pc->linkStatusCB(pc->linkStatusCtx, pc->errCode ? pc->errCode : PPPERR_PROTOCOL, NULL);
   }
 
   pc->openFlag = 0;
@@ -1576,7 +1576,7 @@ pppOverEthernetInitFailed(void* arg)
   pc->openFlag = 0;
 
   if(pc->linkStatusCB) {
-    pc->linkStatusCB(pc->linkStatusCtx, pc->errCode ? pc->errCode : PPPERR_PROTOCOL, NULL);
+	pc->linkStatusCB(pc->linkStatusCtx, pc->errCode ? pc->errCode : PPPERR_PROTOCOL, NULL);
   }
 }
 
@@ -1584,12 +1584,12 @@ static void
 pppOverEthernetLinkStatusCB(int pd, int up)
 {
   if(up) {
-    PPPDEBUG((LOG_INFO, "pppMain: unit %d: Connecting\n", pd));
-    tcpip_callback(pppStartCB, (void*)pd);
+	PPPDEBUG((LOG_INFO, "pppMain: unit %d: Connecting\n", pd));
+	tcpip_callback(pppStartCB, (void*)pd);
   } else {
-    PPPControl* pc;
-    pc = &pppControl[pd];
-    tcpip_callback(pppOverEthernetInitFailed, (void*)pd);
+	PPPControl* pc;
+	pc = &pppControl[pd];
+	tcpip_callback(pppOverEthernetInitFailed, (void*)pd);
   }
 }
 #endif /* PPPOE_SUPPORT */
@@ -1601,19 +1601,19 @@ pppSingleBuf(struct pbuf *p)
   u_char *pl;
 
   if(p->tot_len == p->len) {
-    return p;
+	return p;
   }
 
   q = pbuf_alloc(PBUF_RAW, p->tot_len, PBUF_RAM);
   if(!q) {
-    PPPDEBUG((LOG_ERR,
-             "pppSingleBuf: unable to alloc new buf (%d)\n", p->tot_len));
-    return p; /* live dangerously */
+	PPPDEBUG((LOG_ERR,
+			 "pppSingleBuf: unable to alloc new buf (%d)\n", p->tot_len));
+	return p; /* live dangerously */
   }
 
   for(b = p, pl = q->payload; b != NULL; b = b->next) {
-    MEMCPY(pl, b->payload, b->len);
-    pl += b->len;
+	MEMCPY(pl, b->payload, b->len);
+	pl += b->len;
   }
 
   pbuf_free(p);
@@ -1639,10 +1639,10 @@ pppInput(void *arg)
 
   pd = ((struct pppInputHeader *)nb->payload)->unit;
   protocol = ((struct pppInputHeader *)nb->payload)->proto;
-    
+
   if(pbuf_header(nb, -(int)sizeof(struct pppInputHeader))) {
-    LWIP_ASSERT("pbuf_header failed\n", 0);
-    goto drop;
+	LWIP_ASSERT("pbuf_header failed\n", 0);
+	goto drop;
   }
 
   LINK_STATS_INC(link.recv);
@@ -1653,91 +1653,91 @@ pppInput(void *arg)
    * except LCP, LQR and authentication packets.
    */
   if((lcp_phase[pd] <= PHASE_AUTHENTICATE) && (protocol != PPP_LCP)) {
-    if(!((protocol == PPP_LQR) || (protocol == PPP_PAP) || (protocol == PPP_CHAP)) ||
-        (lcp_phase[pd] != PHASE_AUTHENTICATE)) {
-      PPPDEBUG((LOG_INFO, "pppInput: discarding proto 0x%04X in phase %d\n", protocol, lcp_phase[pd]));
-      goto drop;
-    }
+	if(!((protocol == PPP_LQR) || (protocol == PPP_PAP) || (protocol == PPP_CHAP)) ||
+		(lcp_phase[pd] != PHASE_AUTHENTICATE)) {
+	  PPPDEBUG((LOG_INFO, "pppInput: discarding proto 0x%04X in phase %d\n", protocol, lcp_phase[pd]));
+	  goto drop;
+	}
   }
 
   switch(protocol) {
-    case PPP_VJC_COMP:      /* VJ compressed TCP */
+	case PPP_VJC_COMP:      /* VJ compressed TCP */
 #if VJ_SUPPORT
-      PPPDEBUG((LOG_INFO, "pppInput[%d]: vj_comp in pbuf len=%d\n", pd, nb->len));
-      /*
-       * Clip off the VJ header and prepend the rebuilt TCP/IP header and
-       * pass the result to IP.
-       */
-      if ((vj_uncompress_tcp(&nb, &pppControl[pd].vjComp) >= 0) && (pppControl[pd].netif.input)) {
-        pppControl[pd].netif.input(nb, &pppControl[pd].netif);
-        return;
-      }
-      /* Something's wrong so drop it. */
-      PPPDEBUG((LOG_WARNING, "pppInput[%d]: Dropping VJ compressed\n", pd));
+	  PPPDEBUG((LOG_INFO, "pppInput[%d]: vj_comp in pbuf len=%d\n", pd, nb->len));
+	  /*
+	   * Clip off the VJ header and prepend the rebuilt TCP/IP header and
+	   * pass the result to IP.
+	   */
+	  if ((vj_uncompress_tcp(&nb, &pppControl[pd].vjComp) >= 0) && (pppControl[pd].netif.input)) {
+		pppControl[pd].netif.input(nb, &pppControl[pd].netif);
+		return;
+	  }
+	  /* Something's wrong so drop it. */
+	  PPPDEBUG((LOG_WARNING, "pppInput[%d]: Dropping VJ compressed\n", pd));
 #else  /* VJ_SUPPORT */
-      /* No handler for this protocol so drop the packet. */
-      PPPDEBUG((LOG_INFO, "pppInput[%d]: drop VJ Comp in %d:%s\n", pd, nb->len, nb->payload));
+	  /* No handler for this protocol so drop the packet. */
+	  PPPDEBUG((LOG_INFO, "pppInput[%d]: drop VJ Comp in %d:%s\n", pd, nb->len, nb->payload));
 #endif /* VJ_SUPPORT */
-      break;
+	  break;
 
-    case PPP_VJC_UNCOMP:    /* VJ uncompressed TCP */
+	case PPP_VJC_UNCOMP:    /* VJ uncompressed TCP */
 #if VJ_SUPPORT
-      PPPDEBUG((LOG_INFO, "pppInput[%d]: vj_un in pbuf len=%d\n", pd, nb->len));
-      /*
-       * Process the TCP/IP header for VJ header compression and then pass
-       * the packet to IP.
-       */
-      if ((vj_uncompress_uncomp(nb, &pppControl[pd].vjComp) >= 0) && pppControl[pd].netif.input) {
-        pppControl[pd].netif.input(nb, &pppControl[pd].netif);
-        return;
-      }
-      /* Something's wrong so drop it. */
-      PPPDEBUG((LOG_WARNING, "pppInput[%d]: Dropping VJ uncompressed\n", pd));
+	  PPPDEBUG((LOG_INFO, "pppInput[%d]: vj_un in pbuf len=%d\n", pd, nb->len));
+	  /*
+	   * Process the TCP/IP header for VJ header compression and then pass
+	   * the packet to IP.
+	   */
+	  if ((vj_uncompress_uncomp(nb, &pppControl[pd].vjComp) >= 0) && pppControl[pd].netif.input) {
+		pppControl[pd].netif.input(nb, &pppControl[pd].netif);
+		return;
+	  }
+	  /* Something's wrong so drop it. */
+	  PPPDEBUG((LOG_WARNING, "pppInput[%d]: Dropping VJ uncompressed\n", pd));
 #else  /* VJ_SUPPORT */
-      /* No handler for this protocol so drop the packet. */
-      PPPDEBUG((LOG_INFO,
-               "pppInput[%d]: drop VJ UnComp in %d:.*H\n", 
-                pd, nb->len, LWIP_MIN(nb->len * 2, 40), nb->payload));
+	  /* No handler for this protocol so drop the packet. */
+	  PPPDEBUG((LOG_INFO,
+			   "pppInput[%d]: drop VJ UnComp in %d:.*H\n",
+				pd, nb->len, LWIP_MIN(nb->len * 2, 40), nb->payload));
 #endif /* VJ_SUPPORT */
-      break;
+	  break;
 
-    case PPP_IP:            /* Internet Protocol */
-      PPPDEBUG((LOG_INFO, "pppInput[%d]: ip in pbuf len=%d\n", pd, nb->len));
-      if (pppControl[pd].netif.input) {
-        pppControl[pd].netif.input(nb, &pppControl[pd].netif);
-        return;
-      }
-      break;
+	case PPP_IP:            /* Internet Protocol */
+	  PPPDEBUG((LOG_INFO, "pppInput[%d]: ip in pbuf len=%d\n", pd, nb->len));
+	  if (pppControl[pd].netif.input) {
+		pppControl[pd].netif.input(nb, &pppControl[pd].netif);
+		return;
+	  }
+	  break;
 
-    default: {
-      struct protent *protp;
-      int i;
+	default: {
+	  struct protent *protp;
+	  int i;
 
-      /*
-       * Upcall the proper protocol input routine.
-       */
-      for (i = 0; (protp = ppp_protocols[i]) != NULL; ++i) {
-        if (protp->protocol == protocol && protp->enabled_flag) {
-          PPPDEBUG((LOG_INFO, "pppInput[%d]: %s len=%d\n", pd, protp->name, nb->len));
-          nb = pppSingleBuf(nb);
-          (*protp->input)(pd, nb->payload, nb->len);
-          goto out;
-        }
-      }
+	  /*
+	   * Upcall the proper protocol input routine.
+	   */
+	  for (i = 0; (protp = ppp_protocols[i]) != NULL; ++i) {
+		if (protp->protocol == protocol && protp->enabled_flag) {
+		  PPPDEBUG((LOG_INFO, "pppInput[%d]: %s len=%d\n", pd, protp->name, nb->len));
+		  nb = pppSingleBuf(nb);
+		  (*protp->input)(pd, nb->payload, nb->len);
+		  goto out;
+		}
+	  }
 
-      /* No handler for this protocol so reject the packet. */
-      PPPDEBUG((LOG_INFO, "pppInput[%d]: rejecting unsupported proto 0x%04X len=%d\n", pd, protocol, nb->len));
-      if (pbuf_header(nb, sizeof(protocol))) {
-        LWIP_ASSERT("pbuf_header failed\n", 0);
-        goto drop;
-      }
+	  /* No handler for this protocol so reject the packet. */
+	  PPPDEBUG((LOG_INFO, "pppInput[%d]: rejecting unsupported proto 0x%04X len=%d\n", pd, protocol, nb->len));
+	  if (pbuf_header(nb, sizeof(protocol))) {
+		LWIP_ASSERT("pbuf_header failed\n", 0);
+		goto drop;
+	  }
 #if BYTE_ORDER == LITTLE_ENDIAN
-      protocol = htons(protocol);
-      SMEMCPY(nb->payload, &protocol, sizeof(protocol));
+	  protocol = htons(protocol);
+	  SMEMCPY(nb->payload, &protocol, sizeof(protocol));
 #endif /* BYTE_ORDER == LITTLE_ENDIAN */
-      lcp_sprotrej(pd, nb->payload, nb->len);
-    }
-    break;
+	  lcp_sprotrej(pd, nb->payload, nb->len);
+	}
+	break;
   }
 
 drop:
@@ -1757,15 +1757,15 @@ pppDrop(PPPControl *pc)
 {
   if (pc->inHead != NULL) {
 #if 0
-    PPPDEBUG((LOG_INFO, "pppDrop: %d:%.*H\n", pc->inHead->len, min(60, pc->inHead->len * 2), pc->inHead->payload));
+	PPPDEBUG((LOG_INFO, "pppDrop: %d:%.*H\n", pc->inHead->len, min(60, pc->inHead->len * 2), pc->inHead->payload));
 #endif
-    PPPDEBUG((LOG_INFO, "pppDrop: pbuf len=%d\n", pc->inHead->len));
-    if (pc->inTail && (pc->inTail != pc->inHead)) {
-      pbuf_free(pc->inTail);
-    }
-    pbuf_free(pc->inHead);
-    pc->inHead = NULL;
-    pc->inTail = NULL;
+	PPPDEBUG((LOG_INFO, "pppDrop: pbuf len=%d\n", pc->inHead->len));
+	if (pc->inTail && (pc->inTail != pc->inHead)) {
+	  pbuf_free(pc->inTail);
+	}
+	pbuf_free(pc->inHead);
+	pc->inHead = NULL;
+	pc->inTail = NULL;
   }
 #if VJ_SUPPORT
   vj_uncompress_err(&pc->vjComp);
@@ -1786,174 +1786,174 @@ pppInProc(int pd, u_char *s, int l)
 
   PPPDEBUG((LOG_DEBUG, "pppInProc[%d]: got %d bytes\n", pd, l));
   while (l-- > 0) {
-    curChar = *s++;
-    
-    /* Handle special characters. */
-    if (ESCAPE_P(pc->inACCM, curChar)) {
-      /* Check for escape sequences. */
-      /* XXX Note that this does not handle an escaped 0x5d character which
-       * would appear as an escape character.  Since this is an ASCII ']'
-       * and there is no reason that I know of to escape it, I won't complicate
-       * the code to handle this case. GLL */
-      if (curChar == PPP_ESCAPE) {
-        pc->inEscaped = 1;
-      /* Check for the flag character. */
-      } else if (curChar == PPP_FLAG) {
-         /* If this is just an extra flag character, ignore it. */
-         if (pc->inState <= PDADDRESS) {
-           /* ignore it */;
-         /* If we haven't received the packet header, drop what has come in. */
-         } else if (pc->inState < PDDATA) {
-           PPPDEBUG((LOG_WARNING,
-                    "pppInProc[%d]: Dropping incomplete packet %d\n", 
-                     pd, pc->inState));
-           LINK_STATS_INC(link.lenerr);
-           pppDrop(pc);
-         /* If the fcs is invalid, drop the packet. */
-         } else if (pc->inFCS != PPP_GOODFCS) {
-           PPPDEBUG((LOG_INFO,
-                    "pppInProc[%d]: Dropping bad fcs 0x%04X proto=0x%04X\n", 
-                     pd, pc->inFCS, pc->inProtocol));
-           LINK_STATS_INC(link.chkerr);
-           pppDrop(pc);
-         /* Otherwise it's a good packet so pass it on. */
-         } else {
-           /* Trim off the checksum. */
-           if(pc->inTail->len >= 2) {
-             pc->inTail->len -= 2;
+	curChar = *s++;
 
-             pc->inTail->tot_len = pc->inTail->len;
-             if (pc->inTail != pc->inHead) {
-               pbuf_cat(pc->inHead, pc->inTail);
-             }
-           } else {
-             pc->inTail->tot_len = pc->inTail->len;
-             if (pc->inTail != pc->inHead) {
-               pbuf_cat(pc->inHead, pc->inTail);
-             }
+	/* Handle special characters. */
+	if (ESCAPE_P(pc->inACCM, curChar)) {
+	  /* Check for escape sequences. */
+	  /* XXX Note that this does not handle an escaped 0x5d character which
+	   * would appear as an escape character.  Since this is an ASCII ']'
+	   * and there is no reason that I know of to escape it, I won't complicate
+	   * the code to handle this case. GLL */
+	  if (curChar == PPP_ESCAPE) {
+		pc->inEscaped = 1;
+	  /* Check for the flag character. */
+	  } else if (curChar == PPP_FLAG) {
+		 /* If this is just an extra flag character, ignore it. */
+		 if (pc->inState <= PDADDRESS) {
+		   /* ignore it */;
+		 /* If we haven't received the packet header, drop what has come in. */
+		 } else if (pc->inState < PDDATA) {
+		   PPPDEBUG((LOG_WARNING,
+					"pppInProc[%d]: Dropping incomplete packet %d\n",
+					 pd, pc->inState));
+		   LINK_STATS_INC(link.lenerr);
+		   pppDrop(pc);
+		 /* If the fcs is invalid, drop the packet. */
+		 } else if (pc->inFCS != PPP_GOODFCS) {
+		   PPPDEBUG((LOG_INFO,
+					"pppInProc[%d]: Dropping bad fcs 0x%04X proto=0x%04X\n",
+					 pd, pc->inFCS, pc->inProtocol));
+		   LINK_STATS_INC(link.chkerr);
+		   pppDrop(pc);
+		 /* Otherwise it's a good packet so pass it on. */
+		 } else {
+		   /* Trim off the checksum. */
+		   if(pc->inTail->len >= 2) {
+			 pc->inTail->len -= 2;
 
-             pbuf_realloc(pc->inHead, pc->inHead->tot_len - 2);
-           }
+			 pc->inTail->tot_len = pc->inTail->len;
+			 if (pc->inTail != pc->inHead) {
+			   pbuf_cat(pc->inHead, pc->inTail);
+			 }
+		   } else {
+			 pc->inTail->tot_len = pc->inTail->len;
+			 if (pc->inTail != pc->inHead) {
+			   pbuf_cat(pc->inHead, pc->inTail);
+			 }
 
-           /* Dispatch the packet thereby consuming it. */
-           if(tcpip_callback(pppInput, pc->inHead) != ERR_OK) {
-             PPPDEBUG((LOG_ERR, "pppInProc[%d]: tcpip_callback() failed, dropping packet\n", pd));
-             pbuf_free(pc->inHead);
-             LINK_STATS_INC(link.drop);
-           }
-           pc->inHead = NULL;
-           pc->inTail = NULL;
-         }
+			 pbuf_realloc(pc->inHead, pc->inHead->tot_len - 2);
+		   }
 
-         /* Prepare for a new packet. */
-         pc->inFCS = PPP_INITFCS;
-         pc->inState = PDADDRESS;
-         pc->inEscaped = 0;
-      /* Other characters are usually control characters that may have
-       * been inserted by the physical layer so here we just drop them. */
-      } else {
-        PPPDEBUG((LOG_WARNING,
-                 "pppInProc[%d]: Dropping ACCM char <%d>\n", pd, curChar));
-      }
-    /* Process other characters. */
-    } else {
-      /* Unencode escaped characters. */
-      if (pc->inEscaped) {
-        pc->inEscaped = 0;
-        curChar ^= PPP_TRANS;
-      }
+		   /* Dispatch the packet thereby consuming it. */
+		   if(tcpip_callback(pppInput, pc->inHead) != ERR_OK) {
+			 PPPDEBUG((LOG_ERR, "pppInProc[%d]: tcpip_callback() failed, dropping packet\n", pd));
+			 pbuf_free(pc->inHead);
+			 LINK_STATS_INC(link.drop);
+		   }
+		   pc->inHead = NULL;
+		   pc->inTail = NULL;
+		 }
 
-      /* Process character relative to current state. */
-      switch(pc->inState) {
-        case PDIDLE:                    /* Idle state - waiting. */
-          /* Drop the character if it's not 0xff
-           * we would have processed a flag character above. */
-          if (curChar != PPP_ALLSTATIONS) {
-            break;
-          }
+		 /* Prepare for a new packet. */
+		 pc->inFCS = PPP_INITFCS;
+		 pc->inState = PDADDRESS;
+		 pc->inEscaped = 0;
+	  /* Other characters are usually control characters that may have
+	   * been inserted by the physical layer so here we just drop them. */
+	  } else {
+		PPPDEBUG((LOG_WARNING,
+				 "pppInProc[%d]: Dropping ACCM char <%d>\n", pd, curChar));
+	  }
+	/* Process other characters. */
+	} else {
+	  /* Unencode escaped characters. */
+	  if (pc->inEscaped) {
+		pc->inEscaped = 0;
+		curChar ^= PPP_TRANS;
+	  }
 
-        /* Fall through */
-        case PDSTART:                   /* Process start flag. */
-          /* Prepare for a new packet. */
-          pc->inFCS = PPP_INITFCS;
+	  /* Process character relative to current state. */
+	  switch(pc->inState) {
+		case PDIDLE:                    /* Idle state - waiting. */
+		  /* Drop the character if it's not 0xff
+		   * we would have processed a flag character above. */
+		  if (curChar != PPP_ALLSTATIONS) {
+			break;
+		  }
 
-        /* Fall through */
-        case PDADDRESS:                 /* Process address field. */
-          if (curChar == PPP_ALLSTATIONS) {
-            pc->inState = PDCONTROL;
-            break;
-          }
-          /* Else assume compressed address and control fields so
-           * fall through to get the protocol... */
-        case PDCONTROL:                 /* Process control field. */
-          /* If we don't get a valid control code, restart. */
-          if (curChar == PPP_UI) {
-            pc->inState = PDPROTOCOL1;
-            break;
-          }
+		/* Fall through */
+		case PDSTART:                   /* Process start flag. */
+		  /* Prepare for a new packet. */
+		  pc->inFCS = PPP_INITFCS;
+
+		/* Fall through */
+		case PDADDRESS:                 /* Process address field. */
+		  if (curChar == PPP_ALLSTATIONS) {
+			pc->inState = PDCONTROL;
+			break;
+		  }
+		  /* Else assume compressed address and control fields so
+		   * fall through to get the protocol... */
+		case PDCONTROL:                 /* Process control field. */
+		  /* If we don't get a valid control code, restart. */
+		  if (curChar == PPP_UI) {
+			pc->inState = PDPROTOCOL1;
+			break;
+		  }
 #if 0
-          else {
-            PPPDEBUG((LOG_WARNING,
-                     "pppInProc[%d]: Invalid control <%d>\n", pd, curChar));
-                      pc->inState = PDSTART;
-          }
+		  else {
+			PPPDEBUG((LOG_WARNING,
+					 "pppInProc[%d]: Invalid control <%d>\n", pd, curChar));
+					  pc->inState = PDSTART;
+		  }
 #endif
-        case PDPROTOCOL1:               /* Process protocol field 1. */
-          /* If the lower bit is set, this is the end of the protocol
-           * field. */
-          if (curChar & 1) {
-            pc->inProtocol = curChar;
-            pc->inState = PDDATA;
-          } else {
-            pc->inProtocol = (u_int)curChar << 8;
-            pc->inState = PDPROTOCOL2;
-          }
-          break;
-        case PDPROTOCOL2:               /* Process protocol field 2. */
-          pc->inProtocol |= curChar;
-          pc->inState = PDDATA;
-          break;
-        case PDDATA:                    /* Process data byte. */
-          /* Make space to receive processed data. */
-          if (pc->inTail == NULL || pc->inTail->len == PBUF_POOL_BUFSIZE) {
-            if(pc->inTail) {
-              pc->inTail->tot_len = pc->inTail->len;
-              if (pc->inTail != pc->inHead) {
-                pbuf_cat(pc->inHead, pc->inTail);
-              }
-            }
-            /* If we haven't started a packet, we need a packet header. */
-            nextNBuf = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
-            if (nextNBuf == NULL) {
-              /* No free buffers.  Drop the input packet and let the
-               * higher layers deal with it.  Continue processing
-               * the received pbuf chain in case a new packet starts. */
-              PPPDEBUG((LOG_ERR, "pppInProc[%d]: NO FREE MBUFS!\n", pd));
-              LINK_STATS_INC(link.memerr);
-              pppDrop(pc);
-              pc->inState = PDSTART;  /* Wait for flag sequence. */
-              break;
-            }
-            if (pc->inHead == NULL) {
-              struct pppInputHeader *pih = nextNBuf->payload;
+		case PDPROTOCOL1:               /* Process protocol field 1. */
+		  /* If the lower bit is set, this is the end of the protocol
+		   * field. */
+		  if (curChar & 1) {
+			pc->inProtocol = curChar;
+			pc->inState = PDDATA;
+		  } else {
+			pc->inProtocol = (u_int)curChar << 8;
+			pc->inState = PDPROTOCOL2;
+		  }
+		  break;
+		case PDPROTOCOL2:               /* Process protocol field 2. */
+		  pc->inProtocol |= curChar;
+		  pc->inState = PDDATA;
+		  break;
+		case PDDATA:                    /* Process data byte. */
+		  /* Make space to receive processed data. */
+		  if (pc->inTail == NULL || pc->inTail->len == PBUF_POOL_BUFSIZE) {
+			if(pc->inTail) {
+			  pc->inTail->tot_len = pc->inTail->len;
+			  if (pc->inTail != pc->inHead) {
+				pbuf_cat(pc->inHead, pc->inTail);
+			  }
+			}
+			/* If we haven't started a packet, we need a packet header. */
+			nextNBuf = pbuf_alloc(PBUF_RAW, 0, PBUF_POOL);
+			if (nextNBuf == NULL) {
+			  /* No free buffers.  Drop the input packet and let the
+			   * higher layers deal with it.  Continue processing
+			   * the received pbuf chain in case a new packet starts. */
+			  PPPDEBUG((LOG_ERR, "pppInProc[%d]: NO FREE MBUFS!\n", pd));
+			  LINK_STATS_INC(link.memerr);
+			  pppDrop(pc);
+			  pc->inState = PDSTART;  /* Wait for flag sequence. */
+			  break;
+			}
+			if (pc->inHead == NULL) {
+			  struct pppInputHeader *pih = nextNBuf->payload;
 
-              pih->unit = pd;
-              pih->proto = pc->inProtocol;
+			  pih->unit = pd;
+			  pih->proto = pc->inProtocol;
 
-              nextNBuf->len += sizeof(*pih);
+			  nextNBuf->len += sizeof(*pih);
 
-              pc->inHead = nextNBuf;
-            }
-            pc->inTail = nextNBuf;
-          }
-          /* Load character into buffer. */
-          ((u_char*)pc->inTail->payload)[pc->inTail->len++] = curChar;
-          break;
-      }
+			  pc->inHead = nextNBuf;
+			}
+			pc->inTail = nextNBuf;
+		  }
+		  /* Load character into buffer. */
+		  ((u_char*)pc->inTail->payload)[pc->inTail->len++] = curChar;
+		  break;
+	  }
 
-      /* update the frame check sequence number. */
-      pc->inFCS = PPP_FCS(pc->inFCS, curChar);
-    }
+	  /* update the frame check sequence number. */
+	  pc->inFCS = PPP_FCS(pc->inFCS, curChar);
+	}
   }
 
   avRandomize();
@@ -1968,16 +1968,16 @@ pppInProcOverEthernet(int pd, struct pbuf *pb)
   u16_t inProtocol;
 
   if(pb->len < sizeof(inProtocol)) {
-    PPPDEBUG((LOG_ERR, "pppInProcOverEthernet: too small for protocol field\n"));
-    goto drop;
+	PPPDEBUG((LOG_ERR, "pppInProcOverEthernet: too small for protocol field\n"));
+	goto drop;
   }
 
   inProtocol = (((u8_t *)pb->payload)[0] << 8) | ((u8_t*)pb->payload)[1];
 
   /* make room for pppInputHeader - should not fail */
   if (pbuf_header(pb, sizeof(*pih) - sizeof(inProtocol)) != 0) {
-    PPPDEBUG((LOG_ERR, "pppInProcOverEthernet: could not allocate room for header\n"));
-    goto drop;
+	PPPDEBUG((LOG_ERR, "pppInProcOverEthernet: could not allocate room for header\n"));
+	goto drop;
   }
 
   pih = pb->payload;
@@ -1987,8 +1987,8 @@ pppInProcOverEthernet(int pd, struct pbuf *pb)
 
   /* Dispatch the packet thereby consuming it. */
   if(tcpip_callback(pppInput, pb) != ERR_OK) {
-    PPPDEBUG((LOG_ERR, "pppInProcOverEthernet[%d]: tcpip_callback() failed, dropping packet\n", pd));
-    goto drop;
+	PPPDEBUG((LOG_ERR, "pppInProcOverEthernet[%d]: tcpip_callback() failed, dropping packet\n", pd));
+	goto drop;
   }
 
   return;

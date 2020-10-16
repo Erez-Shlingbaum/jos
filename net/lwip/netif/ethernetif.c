@@ -133,10 +133,10 @@ low_level_output(struct netif *netif, struct pbuf *p)
 #endif
 
   for(q = p; q != NULL; q = q->next) {
-    /* Send the data from the pbuf to the interface, one pbuf at a
-       time. The size of the data in each pbuf is kept in the ->len
-       variable. */
-    send data from(q->payload, q->len);
+	/* Send the data from the pbuf to the interface, one pbuf at a
+	   time. The size of the data in each pbuf is kept in the ->len
+	   variable. */
+	send data from(q->payload, q->len);
   }
 
   signal that packet should be sent();
@@ -144,7 +144,7 @@ low_level_output(struct netif *netif, struct pbuf *p)
 #if ETH_PAD_SIZE
   pbuf_header(p, ETH_PAD_SIZE); /* reclaim the padding word */
 #endif
-  
+
   LINK_STATS_INC(link.xmit);
 
   return ERR_OK;
@@ -166,7 +166,7 @@ low_level_input(struct netif *netif)
   u16_t len;
 
   /* Obtain the size of the packet and put it into the "len"
-     variable. */
+	 variable. */
   len = ;
 
 #if ETH_PAD_SIZE
@@ -175,35 +175,35 @@ low_level_input(struct netif *netif)
 
   /* We allocate a pbuf chain of pbufs from the pool. */
   p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
-  
+
   if (p != NULL) {
 
 #if ETH_PAD_SIZE
-    pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
+	pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
 #endif
 
-    /* We iterate over the pbuf chain until we have read the entire
-     * packet into the pbuf. */
-    for(q = p; q != NULL; q = q->next) {
-      /* Read enough bytes to fill this pbuf in the chain. The
-       * available data in the pbuf is given by the q->len
-       * variable. */
-      read data into(q->payload, q->len);
-    }
-    acknowledge that packet has been read();
+	/* We iterate over the pbuf chain until we have read the entire
+	 * packet into the pbuf. */
+	for(q = p; q != NULL; q = q->next) {
+	  /* Read enough bytes to fill this pbuf in the chain. The
+	   * available data in the pbuf is given by the q->len
+	   * variable. */
+	  read data into(q->payload, q->len);
+	}
+	acknowledge that packet has been read();
 
 #if ETH_PAD_SIZE
-    pbuf_header(p, ETH_PAD_SIZE); /* reclaim the padding word */
+	pbuf_header(p, ETH_PAD_SIZE); /* reclaim the padding word */
 #endif
 
-    LINK_STATS_INC(link.recv);
+	LINK_STATS_INC(link.recv);
   } else {
-    drop packet();
-    LINK_STATS_INC(link.memerr);
-    LINK_STATS_INC(link.drop);
+	drop packet();
+	LINK_STATS_INC(link.memerr);
+	LINK_STATS_INC(link.drop);
   }
 
-  return p;  
+  return p;
 }
 
 /**
@@ -240,18 +240,18 @@ ethernetif_input(struct netif *netif)
   case ETHTYPE_PPPOEDISC:
   case ETHTYPE_PPPOE:
 #endif /* PPPOE_SUPPORT */
-    /* full packet send to tcpip_thread to process */
-    if (netif->input(p, netif)!=ERR_OK)
-     { LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
-       pbuf_free(p);
-       p = NULL;
-     }
-    break;
+	/* full packet send to tcpip_thread to process */
+	if (netif->input(p, netif)!=ERR_OK)
+	 { LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
+	   pbuf_free(p);
+	   p = NULL;
+	 }
+	break;
 
   default:
-    pbuf_free(p);
-    p = NULL;
-    break;
+	pbuf_free(p);
+	p = NULL;
+	break;
   }
 }
 
@@ -273,11 +273,11 @@ ethernetif_init(struct netif *netif)
   struct ethernetif *ethernetif;
 
   LWIP_ASSERT("netif != NULL", (netif != NULL));
-    
+
   ethernetif = mem_malloc(sizeof(struct ethernetif));
   if (ethernetif == NULL) {
-    LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_init: out of memory\n"));
-    return ERR_MEM;
+	LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_init: out of memory\n"));
+	return ERR_MEM;
   }
 
 #if LWIP_NETIF_HOSTNAME

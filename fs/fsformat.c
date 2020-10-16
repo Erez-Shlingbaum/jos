@@ -5,6 +5,7 @@
 // We don't actually want to define off_t!
 #define off_t xxx_off_t
 #define bool xxx_bool
+
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -17,6 +18,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
 #undef off_t
 #undef bool
 
@@ -34,8 +36,7 @@ typedef int bool;
 #define ROUNDUP(n, v) ((n) - 1 + (v) - ((n) - 1) % (v))
 #define MAX_DIR_ENTS 128
 
-struct Dir
-{
+struct Dir {
 	struct File *f;
 	struct File *ents;
 	int n;
@@ -62,7 +63,8 @@ void
 readn(int f, void *out, size_t n)
 {
 	size_t p = 0;
-	while (p < n) {
+	while (p < n)
+	{
 		ssize_t m = read(f, out + p, n - p);
 		if (m < 0)
 			panic("read: %s", strerror(errno));
@@ -75,7 +77,7 @@ readn(int f, void *out, size_t n)
 uint32_t
 blockof(void *pos)
 {
-	return ((char*)pos - diskmap) / BLKSIZE;
+	return ((char *) pos - diskmap) / BLKSIZE;
 }
 
 void *
@@ -97,11 +99,11 @@ opendisk(const char *name)
 		panic("open %s: %s", name, strerror(errno));
 
 	if ((r = ftruncate(diskfd, 0)) < 0
-	    || (r = ftruncate(diskfd, nblocks * BLKSIZE)) < 0)
+		|| (r = ftruncate(diskfd, nblocks * BLKSIZE)) < 0)
 		panic("truncate %s: %s", name, strerror(errno));
 
-	if ((diskmap = mmap(NULL, nblocks * BLKSIZE, PROT_READ|PROT_WRITE,
-			    MAP_SHARED, diskfd, 0)) == MAP_FAILED)
+	if ((diskmap = mmap(NULL, nblocks * BLKSIZE, PROT_READ | PROT_WRITE,
+						MAP_SHARED, diskfd, 0)) == MAP_FAILED)
 		panic("mmap %s: %s", name, strerror(errno));
 
 	close(diskfd);
@@ -125,7 +127,7 @@ finishdisk(void)
 	int r, i;
 
 	for (i = 0; i < blockof(diskpos); ++i)
-		bitmap[i/32] &= ~(1<<(i%32));
+		bitmap[i / 32] &= ~(1 << (i % 32));
 
 	if ((r = msync(diskmap, nblocks * BLKSIZE, MS_SYNC)) < 0)
 		panic("msync: %s", strerror(errno));
@@ -139,7 +141,8 @@ finishfile(struct File *f, uint32_t start, uint32_t len)
 	len = ROUNDUP(len, BLKSIZE);
 	for (i = 0; i < len / BLKSIZE && i < NDIRECT; ++i)
 		f->f_direct[i] = start + i;
-	if (i == NDIRECT) {
+	if (i == NDIRECT)
+	{
 		uint32_t *ind = alloc(BLKSIZE);
 		f->f_indirect = blockof(ind);
 		for (; i < len / BLKSIZE; ++i)

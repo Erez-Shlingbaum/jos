@@ -5,7 +5,7 @@
 #define debug 0
 
 // Virtual address at which to receive page mappings containing client requests.
-#define REQVA		0x0ffff000
+#define REQVA        0x0ffff000
 union Nsipc nsipcbuf __attribute__((aligned(PGSIZE)));
 
 // Send an IP request to the network server, and wait for a reply.
@@ -25,7 +25,7 @@ nsipc(unsigned type)
 	if (debug)
 		cprintf("[%08x] nsipc %d\n", thisenv->env_id, type);
 
-	ipc_send(nsenv, type, &nsipcbuf, PTE_P|PTE_W|PTE_U);
+	ipc_send(nsenv, type, &nsipcbuf, PTE_P | PTE_W | PTE_U);
 	return ipc_recv(NULL, NULL, NULL);
 }
 
@@ -36,7 +36,8 @@ nsipc_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 
 	nsipcbuf.accept.req_s = s;
 	nsipcbuf.accept.req_addrlen = *addrlen;
-	if ((r = nsipc(NSREQ_ACCEPT)) >= 0) {
+	if ((r = nsipc(NSREQ_ACCEPT)) >= 0)
+	{
 		struct Nsret_accept *ret = &nsipcbuf.acceptRet;
 		memmove(addr, &ret->ret_addr, ret->ret_addrlen);
 		*addrlen = ret->ret_addrlen;
@@ -94,7 +95,8 @@ nsipc_recv(int s, void *mem, int len, unsigned int flags)
 	nsipcbuf.recv.req_len = len;
 	nsipcbuf.recv.req_flags = flags;
 
-	if ((r = nsipc(NSREQ_RECV)) >= 0) {
+	if ((r = nsipc(NSREQ_RECV)) >= 0)
+	{
 		assert(r < 1600 && r <= len);
 		memmove(mem, nsipcbuf.recvRet.ret_buf, r);
 	}

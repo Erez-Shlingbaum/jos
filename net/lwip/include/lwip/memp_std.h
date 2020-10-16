@@ -14,7 +14,7 @@
 #define LWIP_MALLOC_MEMPOOL(num, size) LWIP_MEMPOOL(POOL_##size, num, size, "MALLOC_"#size)
 #define LWIP_MALLOC_MEMPOOL_START
 #define LWIP_MALLOC_MEMPOOL_END
-#endif /* LWIP_MALLOC_MEMPOOL */ 
+#endif /* LWIP_MALLOC_MEMPOOL */
 
 #ifndef LWIP_PBUF_MEMPOOL
 /* This treats "pbuf pools" just like any other pool.
@@ -52,9 +52,11 @@ LWIP_MEMPOOL(NETBUF,         MEMP_NUM_NETBUF,          sizeof(struct netbuf),   
 LWIP_MEMPOOL(NETCONN,        MEMP_NUM_NETCONN,         sizeof(struct netconn),        "NETCONN")
 #endif /* LWIP_NETCONN */
 
-#if NO_SYS==0
-LWIP_MEMPOOL(TCPIP_MSG_API,  MEMP_NUM_TCPIP_MSG_API,   sizeof(struct tcpip_msg),      "TCPIP_MSG_API")
-LWIP_MEMPOOL(TCPIP_MSG_INPKT,MEMP_NUM_TCPIP_MSG_INPKT, sizeof(struct tcpip_msg),      "TCPIP_MSG_INPKT")
+#if NO_SYS == 0
+LWIP_MEMPOOL(TCPIP_MSG_API, MEMP_NUM_TCPIP_MSG_API,
+sizeof(struct tcpip_msg),      "TCPIP_MSG_API")
+LWIP_MEMPOOL(TCPIP_MSG_INPKT, MEMP_NUM_TCPIP_MSG_INPKT,
+sizeof(struct tcpip_msg),      "TCPIP_MSG_INPKT")
 #endif /* NO_SYS==0 */
 
 #if ARP_QUEUEING
@@ -65,8 +67,9 @@ LWIP_MEMPOOL(ARP_QUEUE,      MEMP_NUM_ARP_QUEUE,       sizeof(struct etharp_q_en
 LWIP_MEMPOOL(IGMP_GROUP,     MEMP_NUM_IGMP_GROUP,      sizeof(struct igmp_group),     "IGMP_GROUP")
 #endif /* LWIP_IGMP */
 
-#if NO_SYS==0
-LWIP_MEMPOOL(SYS_TIMEOUT,    MEMP_NUM_SYS_TIMEOUT,     sizeof(struct sys_timeo),      "SYS_TIMEOUT")
+#if NO_SYS == 0
+LWIP_MEMPOOL(SYS_TIMEOUT, MEMP_NUM_SYS_TIMEOUT,
+sizeof(struct sys_timeo),      "SYS_TIMEOUT")
 #endif /* NO_SYS==0 */
 
 
@@ -78,8 +81,8 @@ LWIP_MEMPOOL(SYS_TIMEOUT,    MEMP_NUM_SYS_TIMEOUT,     sizeof(struct sys_timeo),
  *     This allocates enough space for the pbuf struct and a payload.
  *     (Example: pbuf_payload_size=0 allocates only size for the struct)
  */
-LWIP_PBUF_MEMPOOL(PBUF,      MEMP_NUM_PBUF,            0,                             "PBUF_REF/ROM")
-LWIP_PBUF_MEMPOOL(PBUF_POOL, PBUF_POOL_SIZE,           PBUF_POOL_BUFSIZE,             "PBUF_POOL")
+LWIP_PBUF_MEMPOOL(PBUF, MEMP_NUM_PBUF, 0, "PBUF_REF/ROM")
+LWIP_PBUF_MEMPOOL(PBUF_POOL, PBUF_POOL_SIZE, PBUF_POOL_BUFSIZE, "PBUF_POOL")
 
 
 /*

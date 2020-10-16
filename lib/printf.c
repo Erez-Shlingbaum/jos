@@ -17,8 +17,8 @@
 // and prevent interrupts from causing context switches
 // in the middle of a console output line and such.
 struct printbuf {
-	int idx;	// current buffer index
-	int cnt;	// total bytes printed so far
+	int idx;    // current buffer index
+	int cnt;    // total bytes printed so far
 	char buf[256];
 };
 
@@ -27,7 +27,8 @@ static void
 putch(int ch, struct printbuf *b)
 {
 	b->buf[b->idx++] = ch;
-	if (b->idx == 256-1) {
+	if (b->idx == 256 - 1)
+	{
 		sys_cputs(b->buf, b->idx);
 		b->idx = 0;
 	}
@@ -41,7 +42,7 @@ vcprintf(const char *fmt, va_list ap)
 
 	b.idx = 0;
 	b.cnt = 0;
-	vprintfmt((void*)putch, &b, fmt, ap);
+	vprintfmt((void *) putch, &b, fmt, ap);
 	sys_cputs(b.buf, b.idx);
 
 	return b.cnt;

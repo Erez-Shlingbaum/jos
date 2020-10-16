@@ -47,17 +47,17 @@ extern "C" {
 
 /* members are in network byte order */
 struct sockaddr_in {
-  u8_t sin_len;
-  u8_t sin_family;
-  u16_t sin_port;
-  struct in_addr sin_addr;
-  char sin_zero[8];
+	u8_t sin_len;
+	u8_t sin_family;
+	u16_t sin_port;
+	struct in_addr sin_addr;
+	char sin_zero[8];
 };
 
 struct sockaddr {
-  u8_t sa_len;
-  u8_t sa_family;
-  char sa_data[14];
+	u8_t sa_len;
+	u8_t sa_family;
+	char sa_data[14];
 };
 
 #ifndef socklen_t
@@ -104,8 +104,8 @@ struct sockaddr {
  * Structure used for manipulating linger option.
  */
 struct linger {
-       int l_onoff;                /* option on/off */
-       int l_linger;               /* linger time */
+	int l_onoff;                /* option on/off */
+	int l_linger;               /* linger time */
 };
 
 /*
@@ -172,8 +172,8 @@ struct linger {
 #define IP_MULTICAST_LOOP  7
 
 typedef struct ip_mreq {
-    struct in_addr imr_multiaddr; /* IP multicast address of group */
-    struct in_addr imr_interface; /* local IP address of interface */
+	struct in_addr imr_multiaddr; /* IP multicast address of group */
+	struct in_addr imr_interface; /* local IP address of interface */
 } ip_mreq;
 #endif /* LWIP_IGMP */
 
@@ -238,13 +238,13 @@ typedef struct ip_mreq {
 #define IOC_OUT         0x40000000UL    /* copy out parameters */
 #define IOC_IN          0x80000000UL    /* copy in parameters */
 #define IOC_INOUT       (IOC_IN|IOC_OUT)
-                                        /* 0x20000000 distinguishes new &
-                                           old ioctl's */
-#define _IO(x,y)        (IOC_VOID|((x)<<8)|(y))
+/* 0x20000000 distinguishes new &
+   old ioctl's */
+#define _IO(x, y)        (IOC_VOID|((x)<<8)|(y))
 
-#define _IOR(x,y,t)     (IOC_OUT|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
+#define _IOR(x, y, t)     (IOC_OUT|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
 
-#define _IOW(x,y,t)     (IOC_IN|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
+#define _IOW(x, y, t)     (IOC_IN|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
 #endif /* !defined(FIONREAD) || !defined(FIONBIO) */
 
 #ifndef FIONREAD
@@ -270,30 +270,30 @@ typedef struct ip_mreq {
 
 /* FD_SET used for lwip_select */
 #ifndef FD_SET
-  #undef  FD_SETSIZE
-  /* Make FD_SETSIZE match NUM_SOCKETS in socket.c */
-  #define FD_SETSIZE    MEMP_NUM_NETCONN
-  #define FD_SET(n, p)  ((p)->fd_bits[(n)/8] |=  (1 << ((n) & 7)))
-  #define FD_CLR(n, p)  ((p)->fd_bits[(n)/8] &= ~(1 << ((n) & 7)))
-  #define FD_ISSET(n,p) ((p)->fd_bits[(n)/8] &   (1 << ((n) & 7)))
-  #define FD_ZERO(p)    memset((void*)(p),0,sizeof(*(p)))
+#undef  FD_SETSIZE
+/* Make FD_SETSIZE match NUM_SOCKETS in socket.c */
+#define FD_SETSIZE    MEMP_NUM_NETCONN
+#define FD_SET(n, p)  ((p)->fd_bits[(n)/8] |=  (1 << ((n) & 7)))
+#define FD_CLR(n, p)  ((p)->fd_bits[(n)/8] &= ~(1 << ((n) & 7)))
+#define FD_ISSET(n, p) ((p)->fd_bits[(n)/8] &   (1 << ((n) & 7)))
+#define FD_ZERO(p)    memset((void*)(p),0,sizeof(*(p)))
 
-  typedef struct fd_set {
-          unsigned char fd_bits [(FD_SETSIZE+7)/8];
-        } fd_set;
+typedef struct fd_set {
+	unsigned char fd_bits[(FD_SETSIZE + 7) / 8];
+} fd_set;
 
 #endif /* FD_SET */
 
 /** LWIP_TIMEVAL_PRIVATE: if you want to use the struct timeval provided
- * by your system, set this to 0 and include <sys/time.h> in cc.h */ 
+ * by your system, set this to 0 and include <sys/time.h> in cc.h */
 #ifndef LWIP_TIMEVAL_PRIVATE
 #define LWIP_TIMEVAL_PRIVATE 1
 #endif
 
 #if LWIP_TIMEVAL_PRIVATE
 struct timeval {
-  long    tv_sec;         /* seconds */
-  long    tv_usec;        /* and microseconds */
+	long tv_sec;         /* seconds */
+	long tv_usec;        /* and microseconds */
 };
 #endif /* LWIP_TIMEVAL_PRIVATE */
 
@@ -302,48 +302,48 @@ void lwip_socket_init(void);
 int lwip_accept(int s, struct sockaddr *addr, socklen_t *addrlen);
 int lwip_bind(int s, struct sockaddr *name, socklen_t namelen);
 int lwip_shutdown(int s, int how);
-int lwip_getpeername (int s, struct sockaddr *name, socklen_t *namelen);
-int lwip_getsockname (int s, struct sockaddr *name, socklen_t *namelen);
-int lwip_getsockopt (int s, int level, int optname, void *optval, socklen_t *optlen);
-int lwip_setsockopt (int s, int level, int optname, const void *optval, socklen_t optlen);
+int lwip_getpeername(int s, struct sockaddr *name, socklen_t *namelen);
+int lwip_getsockname(int s, struct sockaddr *name, socklen_t *namelen);
+int lwip_getsockopt(int s, int level, int optname, void *optval, socklen_t *optlen);
+int lwip_setsockopt(int s, int level, int optname, const void *optval, socklen_t optlen);
 int lwip_close(int s);
 int lwip_connect(int s, const struct sockaddr *name, socklen_t namelen);
 int lwip_listen(int s, int backlog);
 int lwip_recv(int s, void *mem, int len, unsigned int flags);
 int lwip_read(int s, void *mem, int len);
 int lwip_recvfrom(int s, void *mem, int len, unsigned int flags,
-      struct sockaddr *from, socklen_t *fromlen);
+				  struct sockaddr *from, socklen_t *fromlen);
 int lwip_send(int s, const void *dataptr, int size, unsigned int flags);
 int lwip_sendto(int s, const void *dataptr, int size, unsigned int flags,
-    struct sockaddr *to, socklen_t tolen);
+				struct sockaddr *to, socklen_t tolen);
 int lwip_socket(int domain, int type, int protocol);
 int lwip_write(int s, const void *dataptr, int size);
 int lwip_select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset,
-                struct timeval *timeout);
+				struct timeval *timeout);
 int lwip_ioctl(int s, long cmd, void *argp);
 
 #if LWIP_COMPAT_SOCKETS
-#define accept(a,b,c)         lwip_accept(a,b,c)
-#define bind(a,b,c)           lwip_bind(a,b,c)
-#define shutdown(a,b)         lwip_shutdown(a,b)
+#define accept(a, b, c)         lwip_accept(a,b,c)
+#define bind(a, b, c)           lwip_bind(a,b,c)
+#define shutdown(a, b)         lwip_shutdown(a,b)
 #define closesocket(s)        lwip_close(s)
-#define connect(a,b,c)        lwip_connect(a,b,c)
-#define getsockname(a,b,c)    lwip_getsockname(a,b,c)
-#define getpeername(a,b,c)    lwip_getpeername(a,b,c)
-#define setsockopt(a,b,c,d,e) lwip_setsockopt(a,b,c,d,e)
-#define getsockopt(a,b,c,d,e) lwip_getsockopt(a,b,c,d,e)
-#define listen(a,b)           lwip_listen(a,b)
-#define recv(a,b,c,d)         lwip_recv(a,b,c,d)
-#define recvfrom(a,b,c,d,e,f) lwip_recvfrom(a,b,c,d,e,f)
-#define send(a,b,c,d)         lwip_send(a,b,c,d)
-#define sendto(a,b,c,d,e,f)   lwip_sendto(a,b,c,d,e,f)
-#define socket(a,b,c)         lwip_socket(a,b,c)
-#define select(a,b,c,d,e)     lwip_select(a,b,c,d,e)
-#define ioctlsocket(a,b,c)    lwip_ioctl(a,b,c)
+#define connect(a, b, c)        lwip_connect(a,b,c)
+#define getsockname(a, b, c)    lwip_getsockname(a,b,c)
+#define getpeername(a, b, c)    lwip_getpeername(a,b,c)
+#define setsockopt(a, b, c, d, e) lwip_setsockopt(a,b,c,d,e)
+#define getsockopt(a, b, c, d, e) lwip_getsockopt(a,b,c,d,e)
+#define listen(a, b)           lwip_listen(a,b)
+#define recv(a, b, c, d)         lwip_recv(a,b,c,d)
+#define recvfrom(a, b, c, d, e, f) lwip_recvfrom(a,b,c,d,e,f)
+#define send(a, b, c, d)         lwip_send(a,b,c,d)
+#define sendto(a, b, c, d, e, f)   lwip_sendto(a,b,c,d,e,f)
+#define socket(a, b, c)         lwip_socket(a,b,c)
+#define select(a, b, c, d, e)     lwip_select(a,b,c,d,e)
+#define ioctlsocket(a, b, c)    lwip_ioctl(a,b,c)
 
 #if LWIP_POSIX_SOCKETS_IO_NAMES
-#define read(a,b,c)           lwip_read(a,b,c)
-#define write(a,b,c)          lwip_write(a,b,c)
+#define read(a, b, c)           lwip_read(a,b,c)
+#define write(a, b, c)          lwip_write(a,b,c)
 #define close(s)              lwip_close(s)
 #endif /* LWIP_POSIX_SOCKETS_IO_NAMES */
 

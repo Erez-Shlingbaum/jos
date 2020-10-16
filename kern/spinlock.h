@@ -15,7 +15,7 @@ struct spinlock {
 	char *name;            // Name of lock.
 	struct CpuInfo *cpu;   // The CPU holding the lock.
 	uintptr_t pcs[10];     // The call stack (an array of program counters)
-	                       // that locked the lock.
+	// that locked the lock.
 #endif
 };
 

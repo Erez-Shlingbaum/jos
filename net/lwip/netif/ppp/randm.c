@@ -88,15 +88,15 @@ avChurnRand(char *randData, u32_t randLen)
   MD5Init(&md5);
   MD5Update(&md5, (u_char *)randPool, sizeof(randPool));
   if (randData) {
-    MD5Update(&md5, (u_char *)randData, randLen);
+	MD5Update(&md5, (u_char *)randData, randLen);
   } else {
-    struct {
-      /* INCLUDE fields for any system sources of randomness */
-      char foobar;
-    } sysData;
+	struct {
+	  /* INCLUDE fields for any system sources of randomness */
+	  char foobar;
+	} sysData;
 
-    /* Load sysData fields here. */
-    MD5Update(&md5, (u_char *)&sysData, sizeof(sysData));
+	/* Load sysData fields here. */
+	MD5Update(&md5, (u_char *)&sysData, sizeof(sysData));
   }
   MD5Final((u_char *)randPool, &md5);
 /*  ppp_trace(LOG_INFO, "churnRand: -> 0\n"); */
@@ -126,15 +126,15 @@ avGenRand(char *buf, u32_t bufLen)
   u32_t n;
 
   while (bufLen > 0) {
-    n = LWIP_MIN(bufLen, RANDPOOLSZ);
-    MD5Init(&md5);
-    MD5Update(&md5, (u_char *)randPool, sizeof(randPool));
-    MD5Update(&md5, (u_char *)&randCount, sizeof(randCount));
-    MD5Final(tmp, &md5);
-    randCount++;
-    MEMCPY(buf, tmp, n);
-    buf += n;
-    bufLen -= n;
+	n = LWIP_MIN(bufLen, RANDPOOLSZ);
+	MD5Init(&md5);
+	MD5Update(&md5, (u_char *)randPool, sizeof(randPool));
+	MD5Update(&md5, (u_char *)&randCount, sizeof(randCount));
+	MD5Final(tmp, &md5);
+	randCount++;
+	MEMCPY(buf, tmp, n);
+	buf += n;
+	bufLen -= n;
   }
 }
 
@@ -196,7 +196,7 @@ avRandomInit()
    */
   readClk();
   avRandomSeed += *(u32_t *)clockBuf + *lptr1 + OSIdleCtr
-           + ppp_mtime() + ((u32_t)TM1 << 16) + TM1;
+		   + ppp_mtime() + ((u32_t)TM1 << 16) + TM1;
 #else
   avRandomSeed += sys_jiffies(); /* XXX */
 #endif
@@ -218,12 +218,12 @@ avRandomize(void)
   static u32_t last_jiffies;
 
   if (!avRandomized) {
-    avRandomized = !0;
-    avRandomInit();
-    /* The initialization function also updates the seed. */
+	avRandomized = !0;
+	avRandomInit();
+	/* The initialization function also updates the seed. */
   } else {
-    /* avRandomSeed += (avRandomSeed << 16) + TM1; */
-    avRandomSeed += (sys_jiffies() - last_jiffies); /* XXX */
+	/* avRandomSeed += (avRandomSeed << 16) + TM1; */
+	avRandomSeed += (sys_jiffies() - last_jiffies); /* XXX */
   }
   last_jiffies = sys_jiffies();
 }

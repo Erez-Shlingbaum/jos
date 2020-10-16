@@ -103,41 +103,41 @@
  * Each FSM is described by an fsm structure and fsm callbacks.
  */
 typedef struct fsm {
-  int unit;                        /* Interface unit number */
-  u_short protocol;                /* Data Link Layer Protocol field value */
-  int state;                       /* State */
-  int flags;                       /* Contains option bits */
-  u_char id;                       /* Current id */
-  u_char reqid;                    /* Current request id */
-  u_char seen_ack;                 /* Have received valid Ack/Nak/Rej to Req */
-  int timeouttime;                 /* Timeout time in milliseconds */
-  int maxconfreqtransmits;         /* Maximum Configure-Request transmissions */
-  int retransmits;                 /* Number of retransmissions left */
-  int maxtermtransmits;            /* Maximum Terminate-Request transmissions */
-  int nakloops;                    /* Number of nak loops since last ack */
-  int maxnakloops;                 /* Maximum number of nak loops tolerated */
-  struct fsm_callbacks* callbacks; /* Callback routines */
-  char* term_reason;               /* Reason for closing protocol */
-  int term_reason_len;             /* Length of term_reason */
+	int unit;                        /* Interface unit number */
+	u_short protocol;                /* Data Link Layer Protocol field value */
+	int state;                       /* State */
+	int flags;                       /* Contains option bits */
+	u_char id;                       /* Current id */
+	u_char reqid;                    /* Current request id */
+	u_char seen_ack;                 /* Have received valid Ack/Nak/Rej to Req */
+	int timeouttime;                 /* Timeout time in milliseconds */
+	int maxconfreqtransmits;         /* Maximum Configure-Request transmissions */
+	int retransmits;                 /* Number of retransmissions left */
+	int maxtermtransmits;            /* Maximum Terminate-Request transmissions */
+	int nakloops;                    /* Number of nak loops since last ack */
+	int maxnakloops;                 /* Maximum number of nak loops tolerated */
+	struct fsm_callbacks *callbacks; /* Callback routines */
+	char *term_reason;               /* Reason for closing protocol */
+	int term_reason_len;             /* Length of term_reason */
 } fsm;
 
 
 typedef struct fsm_callbacks {
-  void (*resetci)(fsm*);                            /* Reset our Configuration Information */
-  int  (*cilen)(fsm*);                              /* Length of our Configuration Information */
-  void (*addci)(fsm*, u_char*, int*);               /* Add our Configuration Information */
-  int  (*ackci)(fsm*, u_char*, int);                /* ACK our Configuration Information */
-  int  (*nakci)(fsm*, u_char*, int);                /* NAK our Configuration Information */
-  int  (*rejci)(fsm*, u_char*, int);                /* Reject our Configuration Information */
-  int  (*reqci)(fsm*, u_char*, int*, int);          /* Request peer's Configuration Information */
-  void (*up)(fsm*);                                 /* Called when fsm reaches LS_OPENED state */
-  void (*down)(fsm*);                               /* Called when fsm leaves LS_OPENED state */
-  void (*starting)(fsm*);                           /* Called when we want the lower layer */
-  void (*finished)(fsm*);                           /* Called when we don't want the lower layer */
-  void (*protreject)(int);                          /* Called when Protocol-Reject received */
-  void (*retransmit)(fsm*);                         /* Retransmission is necessary */
-  int  (*extcode)(fsm*, int, u_char, u_char*, int); /* Called when unknown code received */
-  char *proto_name;                                 /* String name for protocol (for messages) */
+	void (*resetci)(fsm *);                            /* Reset our Configuration Information */
+	int (*cilen)(fsm *);                              /* Length of our Configuration Information */
+	void (*addci)(fsm *, u_char *, int *);               /* Add our Configuration Information */
+	int (*ackci)(fsm *, u_char *, int);                /* ACK our Configuration Information */
+	int (*nakci)(fsm *, u_char *, int);                /* NAK our Configuration Information */
+	int (*rejci)(fsm *, u_char *, int);                /* Reject our Configuration Information */
+	int (*reqci)(fsm *, u_char *, int *, int);          /* Request peer's Configuration Information */
+	void (*up)(fsm *);                                 /* Called when fsm reaches LS_OPENED state */
+	void (*down)(fsm *);                               /* Called when fsm leaves LS_OPENED state */
+	void (*starting)(fsm *);                           /* Called when we want the lower layer */
+	void (*finished)(fsm *);                           /* Called when we don't want the lower layer */
+	void (*protreject)(int);                          /* Called when Protocol-Reject received */
+	void (*retransmit)(fsm *);                         /* Retransmission is necessary */
+	int (*extcode)(fsm *, int, u_char, u_char *, int); /* Called when unknown code received */
+	char *proto_name;                                 /* String name for protocol (for messages) */
 } fsm_callbacks;
 
 
@@ -157,13 +157,13 @@ extern int peer_mru[]; /* currently negotiated peer MRU (per unit) */
 /*
  * Prototypes
  */
-void fsm_init (fsm*);
-void fsm_lowerup (fsm*);
-void fsm_lowerdown (fsm*);
-void fsm_open (fsm*);
-void fsm_close (fsm*, char*);
-void fsm_input (fsm*, u_char*, int);
-void fsm_protreject (fsm*);
-void fsm_sdata (fsm*, u_char, u_char, u_char*, int);
+void fsm_init(fsm *);
+void fsm_lowerup(fsm *);
+void fsm_lowerdown(fsm *);
+void fsm_open(fsm *);
+void fsm_close(fsm *, char *);
+void fsm_input(fsm *, u_char *, int);
+void fsm_protreject(fsm *);
+void fsm_sdata(fsm *, u_char, u_char, u_char *, int);
 
 #endif /* FSM_H */

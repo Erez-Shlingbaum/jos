@@ -7,14 +7,14 @@ static int devsock_close(struct Fd *fd);
 static int devsock_stat(struct Fd *fd, struct Stat *stat);
 
 struct Dev devsock =
-{
-	.dev_id =	's',
-	.dev_name =	"sock",
-	.dev_read =	devsock_read,
-	.dev_write =	devsock_write,
-	.dev_close =	devsock_close,
-	.dev_stat =	devsock_stat,
-};
+		{
+				.dev_id =    's',
+				.dev_name =    "sock",
+				.dev_read =    devsock_read,
+				.dev_write =    devsock_write,
+				.dev_close =    devsock_close,
+				.dev_stat =    devsock_stat,
+		};
 
 static int
 fd2sockid(int fd)
@@ -36,7 +36,8 @@ alloc_sockfd(int sockid)
 	int r;
 
 	if ((r = fd_alloc(&sfd)) < 0
-	    || (r = sys_page_alloc(0, sfd, PTE_P|PTE_W|PTE_U|PTE_SHARE)) < 0) {
+		|| (r = sys_page_alloc(0, sfd, PTE_P | PTE_W | PTE_U | PTE_SHARE)) < 0)
+	{
 		nsipc_close(sockid);
 		return r;
 	}
@@ -48,7 +49,7 @@ alloc_sockfd(int sockid)
 }
 
 int
-accept(int s, struct sockaddr *addr, socklen_t *addrlen)
+accept(int s, struct sockaddr *addr, socklen_t * addrlen)
 {
 	int r;
 	if ((r = fd2sockid(s)) < 0)

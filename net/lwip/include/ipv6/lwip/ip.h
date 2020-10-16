@@ -83,17 +83,17 @@ extern "C" {
 /* The IPv6 header. */
 struct ip_hdr {
 #if BYTE_ORDER == LITTLE_ENDIAN
-  u8_t tclass1:4, v:4;
-  u8_t flow1:4, tclass2:4;  
+	u8_t tclass1:4, v:4;
+	u8_t flow1:4, tclass2:4;
 #else
-  u8_t v:4, tclass1:4;
-  u8_t tclass2:8, flow1:4;
+	u8_t v: 4, tclass1: 4;
+	u8_t tclass2: 8, flow1: 4;
 #endif
-  u16_t flow2;
-  u16_t len;                /* payload length */
-  u8_t nexthdr;             /* next header */
-  u8_t hoplim;              /* hop limit (TTL) */
-  struct ip_addr src, dest;          /* source and destination IP addresses */
+	u16_t flow2;
+	u16_t len;                /* payload length */
+	u8_t nexthdr;             /* next header */
+	u8_t hoplim;              /* hop limit (TTL) */
+	struct ip_addr src, dest;          /* source and destination IP addresses */
 };
 
 #define IPH_PROTO(hdr) (iphdr->nexthdr)
@@ -108,11 +108,11 @@ void ip_input(struct pbuf *p, struct netif *inp);
 
 /* source and destination addresses in network byte order, please */
 err_t ip_output(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest,
-         u8_t ttl, u8_t proto);
+				u8_t ttl, u8_t proto);
 
 err_t ip_output_if(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest,
-      u8_t ttl, u8_t proto,
-      struct netif *netif);
+				   u8_t ttl, u8_t proto,
+				   struct netif *netif);
 
 #if IP_DEBUG
 void ip_debug_print(struct pbuf *p);

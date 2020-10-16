@@ -21,17 +21,17 @@ syscall(int num, int check, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 	// memory locations.
 
 	asm volatile("int %1\n"
-		     : "=a" (ret)
-		     : "i" (T_SYSCALL),
-		       "a" (num),
-		       "d" (a1),
-		       "c" (a2),
-		       "b" (a3),
-		       "D" (a4),
-		       "S" (a5)
-		     : "cc", "memory");
+	: "=a" (ret)
+	: "i" (T_SYSCALL),
+	"a" (num),
+	"d" (a1),
+	"c" (a2),
+	"b" (a3),
+	"D" (a4),
+	"S" (a5)
+	: "cc", "memory");
 
-	if(check && ret > 0)
+	if (check && ret > 0)
 		panic("syscall %d returned %d (> 0)\n", num, ret);
 
 	return ret;
@@ -40,7 +40,7 @@ syscall(int num, int check, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 void
 sys_cputs(const char *s, size_t len)
 {
-	syscall(SYS_cputs, 0, (uint32_t)s, len, 0, 0, 0);
+	syscall(SYS_cputs, 0, (uint32_t) s, len, 0, 0, 0);
 }
 
 int
@@ -58,7 +58,7 @@ sys_env_destroy(envid_t envid)
 envid_t
 sys_getenvid(void)
 {
-	 return syscall(SYS_getenvid, 0, 0, 0, 0, 0, 0);
+	return syscall(SYS_getenvid, 0, 0, 0, 0, 0, 0);
 }
 
 void
@@ -114,11 +114,21 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, int perm)
 int
 sys_ipc_recv(void *dstva)
 {
-	return syscall(SYS_ipc_recv, 1, (uint32_t)dstva, 0, 0, 0, 0);
+	return syscall(SYS_ipc_recv, 1, (uint32_t) dstva, 0, 0, 0, 0);
 }
 
 unsigned int
 sys_time_msec(void)
 {
 	return (unsigned int) syscall(SYS_time_msec, 0, 0, 0, 0, 0, 0);
+}
+
+int sys_try_transmit_packet(const uint8_t *packet_data, uint32_t packet_size)
+{
+	return (unsigned int) syscall(SYS_try_transmit_packet, 0, (uint32_t) packet_data, packet_size, 0, 0, 0);
+}
+
+int sys_try_recv_packet(uint8_t *buffer, uint32_t buffer_size, uint32_t *packet_size)
+{
+	return syscall(SYS_try_recv_packet, 0, (uint32_t) buffer, buffer_size, (uint32_t) packet_size, 0, 0);
 }

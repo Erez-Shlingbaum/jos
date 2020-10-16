@@ -17,7 +17,7 @@ int ncpu;
 
 // Per-CPU kernel stacks
 unsigned char percpu_kstacks[NCPU][KSTKSIZE]
-__attribute__ ((aligned(PGSIZE)));
+		__attribute__ ((aligned(PGSIZE)));
 
 
 // See MultiProcessor Specification Version 1.[14]
@@ -76,7 +76,7 @@ sum(void *addr, int len)
 
 	sum = 0;
 	for (i = 0; i < len; i++)
-		sum += ((uint8_t *)addr)[i];
+		sum += ((uint8_t *) addr)[i];
 	return sum;
 }
 
@@ -88,7 +88,7 @@ mpsearch1(physaddr_t a, int len)
 
 	for (; mp < end; mp++)
 		if (memcmp(mp->signature, "_MP_", 4) == 0 &&
-		    sum(mp, sizeof(*mp)) == 0)
+			sum(mp, sizeof(*mp)) == 0)
 			return mp;
 	return NULL;
 }
@@ -112,11 +112,13 @@ mpsearch(void)
 
 	// [MP 4] The 16-bit segment of the EBDA is in the two bytes
 	// starting at byte 0x0E of the BDA.  0 if not present.
-	if ((p = *(uint16_t *) (bda + 0x0E))) {
-		p <<= 4;	// Translate from segment to PA
+	if ((p = *(uint16_t *) (bda + 0x0E)))
+	{
+		p <<= 4;    // Translate from segment to PA
 		if ((mp = mpsearch1(p, 1024)))
 			return mp;
-	} else {
+	} else
+	{
 		// The size of base memory, in KB is in the two bytes
 		// starting at 0x13 of the BDA.
 		p = *(uint16_t *) (bda + 0x13) * 1024;
@@ -137,24 +139,29 @@ mpconfig(struct mp **pmp)
 
 	if ((mp = mpsearch()) == 0)
 		return NULL;
-	if (mp->physaddr == 0 || mp->type != 0) {
+	if (mp->physaddr == 0 || mp->type != 0)
+	{
 		cprintf("SMP: Default configurations not implemented\n");
 		return NULL;
 	}
 	conf = (struct mpconf *) KADDR(mp->physaddr);
-	if (memcmp(conf, "PCMP", 4) != 0) {
+	if (memcmp(conf, "PCMP", 4) != 0)
+	{
 		cprintf("SMP: Incorrect MP configuration table signature\n");
 		return NULL;
 	}
-	if (sum(conf, conf->length) != 0) {
+	if (sum(conf, conf->length) != 0)
+	{
 		cprintf("SMP: Bad MP configuration checksum\n");
 		return NULL;
 	}
-	if (conf->version != 1 && conf->version != 4) {
+	if (conf->version != 1 && conf->version != 4)
+	{
 		cprintf("SMP: Unsupported MP version %d\n", conf->version);
 		return NULL;
 	}
-	if ((sum((uint8_t *)conf + conf->length, conf->xlength) + conf->xchecksum) & 0xff) {
+	if ((sum((uint8_t *) conf + conf->length, conf->xlength) + conf->xchecksum) & 0xff)
+	{
 		cprintf("SMP: Bad MP configuration extended checksum\n");
 		return NULL;
 	}
@@ -177,45 +184,51 @@ mp_init(void)
 	ismp = 1;
 	lapicaddr = conf->lapicaddr;
 
-	for (p = conf->entries, i = 0; i < conf->entry; i++) {
-		switch (*p) {
-		case MPPROC:
-			proc = (struct mpproc *)p;
-			if (proc->flags & MPPROC_BOOT)
-				bootcpu = &cpus[ncpu];
-			if (ncpu < NCPU) {
-				cpus[ncpu].cpu_id = ncpu;
-				ncpu++;
-			} else {
-				cprintf("SMP: too many CPUs, CPU %d disabled\n",
-					proc->apicid);
-			}
-			p += sizeof(struct mpproc);
-			continue;
-		case MPBUS:
-		case MPIOAPIC:
-		case MPIOINTR:
-		case MPLINTR:
-			p += 8;
-			continue;
-		default:
-			cprintf("mpinit: unknown config type %x\n", *p);
-			ismp = 0;
-			i = conf->entry;
+	for (p = conf->entries, i = 0; i < conf->entry; i++)
+	{
+		switch (*p)
+		{
+			case MPPROC:
+				proc = (struct mpproc *) p;
+				if (proc->flags & MPPROC_BOOT)
+					bootcpu = &cpus[ncpu];
+				if (ncpu < NCPU)
+				{
+					cpus[ncpu].cpu_id = ncpu;
+					ncpu++;
+				} else
+				{
+					cprintf("SMP: too many CPUs, CPU %d disabled\n",
+							proc->apicid);
+				}
+				p += sizeof(struct mpproc);
+				continue;
+			case MPBUS:
+			case MPIOAPIC:
+			case MPIOINTR:
+			case MPLINTR:
+				p += 8;
+				continue;
+			default:
+				cprintf("mpinit: unknown config type %x\n", *p);
+				ismp = 0;
+				i = conf->entry;
 		}
 	}
 
 	bootcpu->cpu_status = CPU_STARTED;
-	if (!ismp) {
+	if (!ismp)
+	{
 		// Didn't like what we found; fall back to no MP.
 		ncpu = 1;
 		lapicaddr = 0;
 		cprintf("SMP: configuration not found, SMP disabled\n");
 		return;
 	}
-	cprintf("SMP: CPU %d found %d CPU(s)\n", bootcpu->cpu_id,  ncpu);
+	cprintf("SMP: CPU %d found %d CPU(s)\n", bootcpu->cpu_id, ncpu);
 
-	if (mp->imcrp) {
+	if (mp->imcrp)
+	{
 		// [MP 3.2.6.1] If the hardware implements PIC mode,
 		// switch to getting interrupts from the LAPIC.
 		cprintf("SMP: Setting IMCR to switch from PIC mode to symmetric I/O mode\n");

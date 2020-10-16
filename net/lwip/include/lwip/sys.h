@@ -73,22 +73,22 @@ struct sys_timeo {u8_t dummy;};
 /* sys_mbox_tryfetch returns SYS_MBOX_EMPTY if appropriate.
  * For now we use the same magic value, but we allow this to change in future.
  */
-#define SYS_MBOX_EMPTY SYS_ARCH_TIMEOUT 
+#define SYS_MBOX_EMPTY SYS_ARCH_TIMEOUT
 
 #include "lwip/err.h"
 #include "arch/sys_arch.h"
 
-typedef void (* sys_timeout_handler)(void *arg);
+typedef void (*sys_timeout_handler)(void *arg);
 
 struct sys_timeo {
-  struct sys_timeo *next;
-  u32_t time;
-  sys_timeout_handler h;
-  void *arg;
+	struct sys_timeo *next;
+	u32_t time;
+	sys_timeout_handler h;
+	void *arg;
 };
 
 struct sys_timeouts {
-  struct sys_timeo *next;
+	struct sys_timeo *next;
 };
 
 /* sys_init() must be called before anthing else. */
@@ -137,7 +137,7 @@ void sys_mbox_free(sys_mbox_t mbox);
 void sys_mbox_fetch(sys_mbox_t mbox, void **msg);
 
 /* Thread functions. */
-sys_thread_t sys_thread_new(char *name, void (* thread)(void *arg), void *arg, int stacksize, int prio);
+sys_thread_t sys_thread_new(char *name, void (*thread)(void *arg), void *arg, int stacksize, int prio);
 
 /* The following functions are used only in Unix code, and
    can be omitted when porting the stack. */

@@ -22,14 +22,15 @@ umain(int argc, char **argv)
 			usage();
 
 	for (i = 0; i < 32; i++)
-		if (fstat(i, &st) >= 0) {
+		if (fstat(i, &st) >= 0)
+		{
 			if (usefprint)
 				fprintf(1, "fd %d: name %s isdir %d size %d dev %s\n",
-					i, st.st_name, st.st_isdir,
-					st.st_size, st.st_dev->dev_name);
+						i, st.st_name, st.st_isdir,
+						st.st_size, st.st_dev->dev_name);
 			else
 				cprintf("fd %d: name %s isdir %d size %d dev %s\n",
-					i, st.st_name, st.st_isdir,
-					st.st_size, st.st_dev->dev_name);
+						i, st.st_name, st.st_isdir,
+						st.st_size, st.st_dev->dev_name);
 		}
 }

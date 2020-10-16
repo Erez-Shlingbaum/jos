@@ -102,12 +102,12 @@ struct mib_node
   /** returns struct obj_def for the given object identifier */
   void (*get_object_def)(u8_t ident_len, s32_t *ident, struct obj_def *od);
   /** returns object value for the given object identifier,
-     @note the caller must allocate at least len bytes for the value */
+	 @note the caller must allocate at least len bytes for the value */
   void (*get_value)(struct obj_def *od, u16_t len, void *value);
   /** tests length and/or range BEFORE setting */
   u8_t (*set_test)(struct obj_def *od, u16_t len, void *value);
   /** sets object value, only to be called when set_test()  */
-  void (*set_value)(struct obj_def *od, u16_t len, void *value);  
+  void (*set_value)(struct obj_def *od, u16_t len, void *value);
   /** One out of MIB_NODE_AR, MIB_NODE_LR or MIB_NODE_EX */
   const u8_t node_type;
   /* array or max list length */
@@ -118,7 +118,7 @@ struct mib_node
 typedef struct mib_node mib_scalar_node;
 
 /** derived node, points to a fixed size const array
-    of sub-identifiers plus a 'child' pointer */
+	of sub-identifiers plus a 'child' pointer */
 struct mib_array_node
 {
   /* inherited "base class" members */
@@ -136,7 +136,7 @@ struct mib_array_node
 };
 
 /** derived node, points to a fixed size mem_malloced array
-    of sub-identifiers plus a 'child' pointer */
+	of sub-identifiers plus a 'child' pointer */
 struct mib_ram_array_node
 {
   /* inherited "base class" members */
@@ -155,14 +155,14 @@ struct mib_ram_array_node
 
 struct mib_list_node
 {
-  struct mib_list_node *prev;  
+  struct mib_list_node *prev;
   struct mib_list_node *next;
   s32_t objid;
   struct mib_node *nptr;
 };
 
 /** derived node, points to a doubly linked list
-    of sub-identifiers plus a 'child' pointer */
+	of sub-identifiers plus a 'child' pointer */
 struct mib_list_rootnode
 {
   /* inherited "base class" members */
@@ -182,7 +182,7 @@ struct mib_list_rootnode
 };
 
 /** derived node, has access functions for mib object in external memory or device
-    using 'tree_level' and 'idx', with a range 0 .. (level_length() - 1) */
+	using 'tree_level' and 'idx', with a range 0 .. (level_length() - 1) */
 struct mib_external_node
 {
   /* inherited "base class" members */
@@ -196,14 +196,14 @@ struct mib_external_node
 
   /* aditional struct members */
   /** points to an extenal (in memory) record of some sort of addressing
-      information, passed to and interpreted by the funtions below */
+	  information, passed to and interpreted by the funtions below */
   void* addr_inf;
   /** tree levels under this node */
   u8_t tree_levels;
   /** number of objects at this level */
   u16_t (*level_length)(void* addr_inf, u8_t level);
   /** compares object sub identifier with external id
-      return zero when equal, nonzero when unequal */
+	  return zero when equal, nonzero when unequal */
   s32_t (*ident_cmp)(void* addr_inf, u8_t level, u16_t idx, s32_t sub_id);
   void (*get_objid)(void* addr_inf, u8_t level, u16_t idx, s32_t *sub_id);
 
@@ -217,8 +217,8 @@ struct mib_external_node
   void (*get_value_a)(u8_t rid, struct obj_def *od, u16_t len, void *value);
   u8_t (*set_test_a)(u8_t rid, struct obj_def *od, u16_t len, void *value);
   void (*set_value_a)(u8_t rid, struct obj_def *od, u16_t len, void *value);
-  /** async Panic Close (agent returns error reply, 
-      e.g. used for external transaction cleanup) */
+  /** async Panic Close (agent returns error reply,
+	  e.g. used for external transaction cleanup) */
   void (*get_object_def_pc)(u8_t rid, u8_t ident_len, s32_t *ident);
   void (*get_value_pc)(u8_t rid, struct obj_def *od);
   void (*set_test_pc)(u8_t rid, struct obj_def *od);

@@ -92,9 +92,9 @@
 /*** LOCAL DATA TYPES ***/
 /************************/
 typedef struct {
-    u_char LANManResp[24];
-    u_char NTResp[24];
-    u_char UseNT; /* If 1, ignore the LANMan response field */
+	u_char LANManResp[24];
+	u_char NTResp[24];
+	u_char UseNT; /* If 1, ignore the LANMan response field */
 } MS_ChapResponse;
 /* We use MS_CHAP_RESPONSE_LEN, rather than sizeof(MS_ChapResponse),
    in case this struct gets padded. */
@@ -173,8 +173,8 @@ ChapMS( chap_state *cstate, char *rchallenge, int rchallenge_len, char *secret, 
 /**********************************/
 static void
 ChallengeResponse( u_char *challenge, /* IN   8 octets */
-                   u_char *pwHash,    /* IN  16 octets */
-                   u_char *response   /* OUT 24 octets */)
+				   u_char *pwHash,    /* IN  16 octets */
+				   u_char *response   /* OUT 24 octets */)
 {
   char    ZPasswordHash[21];
 
@@ -198,8 +198,8 @@ ChallengeResponse( u_char *challenge, /* IN   8 octets */
 #ifdef USE_CRYPT
 static void
 DesEncrypt( u_char *clear, /* IN  8 octets */
-            u_char *key,   /* IN  7 octets */
-            u_char *cipher /* OUT 8 octets */)
+			u_char *key,   /* IN  7 octets */
+			u_char *cipher /* OUT 8 octets */)
 {
   u_char des_key[8];
   u_char crypt_key[66];
@@ -212,7 +212,7 @@ DesEncrypt( u_char *clear, /* IN  8 octets */
 
 #if 0
   CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet input : %02X%02X%02X%02X%02X%02X%02X%02X\n",
-             clear[0], clear[1], clear[2], clear[3], clear[4], clear[5], clear[6], clear[7]));
+			 clear[0], clear[1], clear[2], clear[3], clear[4], clear[5], clear[6], clear[7]));
 #endif
 
   Expand(clear, des_input);
@@ -221,7 +221,7 @@ DesEncrypt( u_char *clear, /* IN  8 octets */
 
 #if 0
   CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet output: %02X%02X%02X%02X%02X%02X%02X%02X\n",
-             cipher[0], cipher[1], cipher[2], cipher[3], cipher[4], cipher[5], cipher[6], cipher[7]));
+			 cipher[0], cipher[1], cipher[2], cipher[3], cipher[4], cipher[5], cipher[6], cipher[7]));
 #endif
 }
 
@@ -229,8 +229,8 @@ DesEncrypt( u_char *clear, /* IN  8 octets */
 
 static void
 DesEncrypt( u_char *clear, /* IN  8 octets */
-            u_char *key,   /* IN  7 octets */
-            u_char *cipher /* OUT 8 octets */)
+			u_char *key,   /* IN  7 octets */
+			u_char *cipher /* OUT 8 octets */)
 {
   des_cblock    des_key;
   des_key_schedule  key_schedule;
@@ -241,14 +241,14 @@ DesEncrypt( u_char *clear, /* IN  8 octets */
 
 #if 0
   CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet input : %02X%02X%02X%02X%02X%02X%02X%02X\n",
-             clear[0], clear[1], clear[2], clear[3], clear[4], clear[5], clear[6], clear[7]));
+			 clear[0], clear[1], clear[2], clear[3], clear[4], clear[5], clear[6], clear[7]));
 #endif
 
   des_ecb_encrypt((des_cblock *)clear, (des_cblock *)cipher, key_schedule, 1);
 
 #if 0
   CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet output: %02X%02X%02X%02X%02X%02X%02X%02X\n",
-             cipher[0], cipher[1], cipher[2], cipher[3], cipher[4], cipher[5], cipher[6], cipher[7]));
+			 cipher[0], cipher[1], cipher[2], cipher[3], cipher[4], cipher[5], cipher[6], cipher[7]));
 #endif
 }
 
@@ -281,11 +281,11 @@ Expand(u_char *in, u_char *out)
   int i;
 
   for(i = 0; i < 64; in++){
-    c = *in;
-    for(j = 7; j >= 0; j--) {
-      *out++ = (c >> j) & 01;
-    }
-    i += 8;
+	c = *in;
+	for(j = 7; j >= 0; j--) {
+	  *out++ = (c >> j) & 01;
+	}
+	i += 8;
   }
 }
 
@@ -299,18 +299,18 @@ Collapse(u_char *in, u_char *out)
   unsigned int c;
 
   for (i = 0; i < 64; i += 8, out++) {
-    c = 0;
-    for (j = 7; j >= 0; j--, in++) {
-      c |= *in << j;
-    }
-    *out = c & 0xff;
+	c = 0;
+	for (j = 7; j >= 0; j--, in++) {
+	  c |= *in << j;
+	}
+	*out = c & 0xff;
   }
 }
 #endif
 
 static void
 MakeKey( u_char *key,    /* IN  56 bit DES key missing parity bits */
-         u_char *des_key /* OUT 64 bit DES key with parity bits added */)
+		 u_char *des_key /* OUT 64 bit DES key with parity bits added */)
 {
   des_key[0] = Get7Bits(key,  0);
   des_key[1] = Get7Bits(key,  7);
@@ -320,25 +320,25 @@ MakeKey( u_char *key,    /* IN  56 bit DES key missing parity bits */
   des_key[5] = Get7Bits(key, 35);
   des_key[6] = Get7Bits(key, 42);
   des_key[7] = Get7Bits(key, 49);
-  
+
 #ifndef USE_CRYPT
   des_set_odd_parity((des_cblock *)des_key);
 #endif
-  
+
 #if 0
   CHAPDEBUG((LOG_INFO, "MakeKey: 56-bit input : %02X%02X%02X%02X%02X%02X%02X\n",
-             key[0], key[1], key[2], key[3], key[4], key[5], key[6]));
+			 key[0], key[1], key[2], key[3], key[4], key[5], key[6]));
   CHAPDEBUG((LOG_INFO, "MakeKey: 64-bit output: %02X%02X%02X%02X%02X%02X%02X%02X\n",
-             des_key[0], des_key[1], des_key[2], des_key[3], des_key[4], des_key[5], des_key[6], des_key[7]));
+			 des_key[0], des_key[1], des_key[2], des_key[3], des_key[4], des_key[5], des_key[6], des_key[7]));
 #endif
 }
 
 static void
 ChapMS_NT( char *rchallenge,
-           int rchallenge_len,
-           char *secret,
-           int secret_len,
-           MS_ChapResponse *response)
+		   int rchallenge_len,
+		   char *secret,
+		   int secret_len,
+		   MS_ChapResponse *response)
 {
   int      i;
   MDstruct  md4Context;
@@ -349,16 +349,16 @@ ChapMS_NT( char *rchallenge,
   /* This implicitly supports 8-bit ISO8859/1 characters. */
   BZERO(unicodePassword, sizeof(unicodePassword));
   for (i = 0; i < secret_len; i++) {
-    unicodePassword[i * 2] = (u_char)secret[i];
+	unicodePassword[i * 2] = (u_char)secret[i];
   }
   MDbegin(&md4Context);
   MDupdate(&md4Context, unicodePassword, secret_len * 2 * 8);  /* Unicode is 2 bytes/char, *8 for bit count */
 
   if (low_byte_first == -1) {
-    low_byte_first = (htons((unsigned short int)1) != 1);
+	low_byte_first = (htons((unsigned short int)1) != 1);
   }
   if (low_byte_first == 0) {
-    MDreverse((u_long *)&md4Context);  /*  sfb 961105 */
+	MDreverse((u_long *)&md4Context);  /*  sfb 961105 */
   }
 
   MDupdate(&md4Context, NULL, 0);  /* Tell MD4 we're done */
@@ -371,19 +371,19 @@ static u_char *StdText = (u_char *)"KGS!@#$%"; /* key from rasapi32.dll */
 
 static void
 ChapMS_LANMan( char *rchallenge,
-               int rchallenge_len,
-               char *secret,
-               int secret_len,
-               MS_ChapResponse  *response)
+			   int rchallenge_len,
+			   char *secret,
+			   int secret_len,
+			   MS_ChapResponse  *response)
 {
   int      i;
   u_char    UcasePassword[MAX_NT_PASSWORD]; /* max is actually 14 */
   u_char    PasswordHash[16];
-  
+
   /* LANMan password is case insensitive */
   BZERO(UcasePassword, sizeof(UcasePassword));
   for (i = 0; i < secret_len; i++) {
-    UcasePassword[i] = (u_char)toupper(secret[i]);
+	UcasePassword[i] = (u_char)toupper(secret[i]);
   }
   DesEncrypt( StdText, UcasePassword + 0, PasswordHash + 0 );
   DesEncrypt( StdText, UcasePassword + 7, PasswordHash + 8 );

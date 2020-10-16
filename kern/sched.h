@@ -9,4 +9,4 @@
 // This function does not return.
 void sched_yield(void) __attribute__((noreturn));
 
-#endif	// !JOS_KERN_SCHED_H
+#endif    // !JOS_KERN_SCHED_H

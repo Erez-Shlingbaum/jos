@@ -88,22 +88,22 @@ slipif_output(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr)
   sio_send(SLIP_END, netif->state);
 
   for (q = p; q != NULL; q = q->next) {
-    for (i = 0; i < q->len; i++) {
-      c = ((u8_t *)q->payload)[i];
-      switch (c) {
-      case SLIP_END:
-        sio_send(SLIP_ESC, netif->state);
-        sio_send(SLIP_ESC_END, netif->state);
-        break;
-      case SLIP_ESC:
-        sio_send(SLIP_ESC, netif->state);
-        sio_send(SLIP_ESC_ESC, netif->state);
-        break;
-      default:
-        sio_send(c, netif->state);
-        break;
-      }
-    }
+	for (i = 0; i < q->len; i++) {
+	  c = ((u8_t *)q->payload)[i];
+	  switch (c) {
+	  case SLIP_END:
+		sio_send(SLIP_ESC, netif->state);
+		sio_send(SLIP_ESC_END, netif->state);
+		break;
+	  case SLIP_ESC:
+		sio_send(SLIP_ESC, netif->state);
+		sio_send(SLIP_ESC_ESC, netif->state);
+		break;
+	  default:
+		sio_send(c, netif->state);
+		break;
+	  }
+	}
   }
   sio_send(SLIP_END, netif->state);
   return ERR_OK;
@@ -115,7 +115,7 @@ slipif_output(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr)
  * Poll the serial layer by calling sio_recv()
  *
  * @param netif the lwip network interface structure for this slipif
- * @return The IP packet when SLIP_END is received 
+ * @return The IP packet when SLIP_END is received
  */
 static struct pbuf *
 slipif_input(struct netif *netif)
@@ -134,76 +134,76 @@ slipif_input(struct netif *netif)
   c = 0;
 
   while (1) {
-    c = sio_recv(netif->state);
-    switch (c) {
-    case SLIP_END:
-      if (recved > 0) {
-        /* Received whole packet. */
-        /* Trim the pbuf to the size of the received packet. */
-        pbuf_realloc(q, recved);
-        
-        LINK_STATS_INC(link.recv);
-        
-        LWIP_DEBUGF(SLIP_DEBUG, ("slipif: Got packet\n"));
-        return q;
-      }
-      break;
+	c = sio_recv(netif->state);
+	switch (c) {
+	case SLIP_END:
+	  if (recved > 0) {
+		/* Received whole packet. */
+		/* Trim the pbuf to the size of the received packet. */
+		pbuf_realloc(q, recved);
 
-    case SLIP_ESC:
-      c = sio_recv(netif->state);
-      switch (c) {
-      case SLIP_ESC_END:
-        c = SLIP_END;
-        break;
-      case SLIP_ESC_ESC:
-        c = SLIP_ESC;
-        break;
-      }
-      /* FALLTHROUGH */
+		LINK_STATS_INC(link.recv);
 
-    default:
-      /* byte received, packet not yet completely received */
-      if (p == NULL) {
-        /* allocate a new pbuf */
-        LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: alloc\n"));
-        p = pbuf_alloc(PBUF_LINK, PBUF_POOL_BUFSIZE, PBUF_POOL);
+		LWIP_DEBUGF(SLIP_DEBUG, ("slipif: Got packet\n"));
+		return q;
+	  }
+	  break;
 
-        if (p == NULL) {
-          LINK_STATS_INC(link.drop);
-          LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: no new pbuf! (DROP)\n"));
-          /* don't process any further since we got no pbuf to receive to */
-          break;
-        }
+	case SLIP_ESC:
+	  c = sio_recv(netif->state);
+	  switch (c) {
+	  case SLIP_ESC_END:
+		c = SLIP_END;
+		break;
+	  case SLIP_ESC_ESC:
+		c = SLIP_ESC;
+		break;
+	  }
+	  /* FALLTHROUGH */
 
-        if (q != NULL) {
-          /* 'chain' the pbuf to the existing chain */
-          pbuf_cat(q, p);
-        } else {
-          /* p is the first pbuf in the chain */
-          q = p;
-        }
-      }
+	default:
+	  /* byte received, packet not yet completely received */
+	  if (p == NULL) {
+		/* allocate a new pbuf */
+		LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: alloc\n"));
+		p = pbuf_alloc(PBUF_LINK, PBUF_POOL_BUFSIZE, PBUF_POOL);
 
-      /* this automatically drops bytes if > MAX_SIZE */
-      if ((p != NULL) && (recved <= MAX_SIZE)) {
-        ((u8_t *)p->payload)[i] = c;
-        recved++;
-        i++;
-        if (i >= p->len) {
-          /* on to the next pbuf */
-          i = 0;
-          if (p->next != NULL && p->next->len > 0) {
-            /* p is a chain, on to the next in the chain */
-            p = p->next;
-          } else {
-            /* p is a single pbuf, set it to NULL so next time a new
-             * pbuf is allocated */
-            p = NULL;
-          }
-        }
-      }
-      break;
-    }
+		if (p == NULL) {
+		  LINK_STATS_INC(link.drop);
+		  LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: no new pbuf! (DROP)\n"));
+		  /* don't process any further since we got no pbuf to receive to */
+		  break;
+		}
+
+		if (q != NULL) {
+		  /* 'chain' the pbuf to the existing chain */
+		  pbuf_cat(q, p);
+		} else {
+		  /* p is the first pbuf in the chain */
+		  q = p;
+		}
+	  }
+
+	  /* this automatically drops bytes if > MAX_SIZE */
+	  if ((p != NULL) && (recved <= MAX_SIZE)) {
+		((u8_t *)p->payload)[i] = c;
+		recved++;
+		i++;
+		if (i >= p->len) {
+		  /* on to the next pbuf */
+		  i = 0;
+		  if (p->next != NULL && p->next->len > 0) {
+			/* p is a chain, on to the next in the chain */
+			p = p->next;
+		  } else {
+			/* p is a single pbuf, set it to NULL so next time a new
+			 * pbuf is allocated */
+			p = NULL;
+		  }
+		}
+	  }
+	  break;
+	}
   }
   return NULL;
 }
@@ -223,13 +223,13 @@ slipif_loop(void *nf)
   struct netif *netif = (struct netif *)nf;
 
   while (1) {
-    p = slipif_input(netif);
-    if (p != NULL) {
-      if (netif->input(p, netif) != ERR_OK) {
-        pbuf_free(p);
-        p = NULL;
-      }
-    }
+	p = slipif_input(netif);
+	if (p != NULL) {
+	  if (netif->input(p, netif) != ERR_OK) {
+		pbuf_free(p);
+		p = NULL;
+	  }
+	}
   }
 }
 #endif /* !NO_SYS */
@@ -262,8 +262,8 @@ slipif_init(struct netif *netif)
   /* Try to open the serial port (netif->num contains the port number). */
   netif->state = sio_open(netif->num);
   if (!netif->state) {
-    /* Opening the serial port failed. */
-    return ERR_IF;
+	/* Opening the serial port failed. */
+	return ERR_IF;
   }
 
   /* initialize the snmp variables and counters inside the struct netif

@@ -13,7 +13,8 @@ umain(int argc, char **argv)
 	// a better way would be to use the processor's HLT instruction
 	// to cause the processor to stop executing until the next interrupt -
 	// doing so allows the processor to conserve power more effectively.
-	while (1) {
+	while (1)
+	{
 		sys_yield();
 	}
 }

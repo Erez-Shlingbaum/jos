@@ -1,15 +1,16 @@
 #include <inc/lib.h>
 #include <lwip/sockets.h>
 #include <lwip/inet.h>
+#include <kern/e1000.h>
 
 #define PORT 80
 #define VERSION "0.1"
 #define HTTP_VERSION "1.0"
 
-#define E_BAD_REQ	1000
+#define E_BAD_REQ    1000
 
 #define BUFFSIZE 512
-#define MAXPENDING 5	// Max connection requests
+#define MAXPENDING 5    // Max connection requests
 
 struct http_request {
 	int sock;
@@ -23,9 +24,9 @@ struct responce_header {
 };
 
 struct responce_header headers[] = {
-	{ 200, 	"HTTP/" HTTP_VERSION " 200 OK\r\n"
-		"Server: jhttpd/" VERSION "\r\n"},
-	{0, 0},
+		{200, "HTTP/" HTTP_VERSION " 200 OK\r\n"
+			  "Server: jhttpd/" VERSION "\r\n"},
+		{0,   0},
 };
 
 struct error_messages {
@@ -34,8 +35,8 @@ struct error_messages {
 };
 
 struct error_messages errors[] = {
-	{400, "Bad Request"},
-	{404, "Not Found"},
+		{400, "Bad Request"},
+		{404, "Not Found"},
 };
 
 static void
@@ -56,7 +57,8 @@ static int
 send_header(struct http_request *req, int code)
 {
 	struct responce_header *h = headers;
-	while (h->code != 0 && h->header!= 0) {
+	while (h->code != 0 && h->header != 0)
+	{
 		if (h->code == code)
 			break;
 		h++;
@@ -66,7 +68,8 @@ send_header(struct http_request *req, int code)
 		return -1;
 
 	int len = strlen(h->header);
-	if (write(req->sock, h->header, len) != len) {
+	if (write(req->sock, h->header, len) != len)
+	{
 		die("Failed to send bytes to client");
 	}
 
@@ -77,7 +80,17 @@ static int
 send_data(struct http_request *req, int fd)
 {
 	// LAB 6: Your code here.
-	panic("send_data not implemented");
+	char buffer[MAX_ETHERNET_PACKET_SIZE];
+
+	while (1)
+	{
+		ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
+		if (bytes_read < 0)
+			return bytes_read;
+		if (bytes_read == 0)
+			return 0;
+		write(req->sock, buffer, bytes_read);
+	}
 }
 
 static int
@@ -86,7 +99,7 @@ send_size(struct http_request *req, off_t size)
 	char buf[64];
 	int r;
 
-	r = snprintf(buf, 64, "Content-Length: %ld\r\n", (long)size);
+	r = snprintf(buf, 64, "Content-Length: %ld\r\n", (long) size);
 	if (r > 63)
 		panic("buffer too small!");
 
@@ -96,7 +109,7 @@ send_size(struct http_request *req, off_t size)
 	return 0;
 }
 
-static const char*
+static const char *
 mime_type(const char *file)
 {
 	//TODO: for now only a single mime type
@@ -187,7 +200,8 @@ send_error(struct http_request *req, int code)
 	int r;
 
 	struct error_messages *e = errors;
-	while (e->code != 0 && e->msg != 0) {
+	while (e->code != 0 && e->msg != 0)
+	{
 		if (e->code == code)
 			break;
 		e++;
@@ -197,12 +211,12 @@ send_error(struct http_request *req, int code)
 		return -1;
 
 	r = snprintf(buf, 512, "HTTP/" HTTP_VERSION" %d %s\r\n"
-			       "Server: jhttpd/" VERSION "\r\n"
-			       "Connection: close"
-			       "Content-type: text/html\r\n"
-			       "\r\n"
-			       "<html><body><p>%d - %s</p></body></html>\r\n",
-			       e->code, e->msg, e->code, e->msg);
+						   "Server: jhttpd/" VERSION "\r\n"
+						   "Connection: close"
+						   "Content-type: text/html\r\n"
+						   "\r\n"
+						   "<html><body><p>%d - %s</p></body></html>\r\n",
+				 e->code, e->msg, e->code, e->msg);
 
 	if (write(req->sock, buf, r) != r)
 		return -1;
@@ -221,9 +235,24 @@ send_file(struct http_request *req)
 	// if the file does not exist, send a 404 error using send_error
 	// if the file is a directory, send a 404 error using send_error
 	// set file_size to the size of the file
-
 	// LAB 6: Your code here.
-	panic("send_file not implemented");
+	fd = open(req->url, O_RDONLY);
+	if (fd < 0)
+		send_error(req, 404);
+
+	struct Stat fdStat;
+	if (fstat(fd, &fdStat) < 0)
+	{
+		send_error(req, 404);
+		goto end;
+	}
+	if (fdStat.st_isdir)
+	{
+		send_error(req, 404);
+		goto end;
+	}
+
+	file_size = fdStat.st_size;
 
 	if ((r = send_header(req, 200)) < 0)
 		goto end;
@@ -239,7 +268,7 @@ send_file(struct http_request *req)
 
 	r = send_data(req, fd);
 
-end:
+	end:
 	close(fd);
 	return r;
 }
@@ -293,14 +322,14 @@ umain(int argc, char **argv)
 		die("Failed to create socket");
 
 	// Construct the server sockaddr_in structure
-	memset(&server, 0, sizeof(server));		// Clear struct
-	server.sin_family = AF_INET;			// Internet/IP
-	server.sin_addr.s_addr = htonl(INADDR_ANY);	// IP address
-	server.sin_port = htons(PORT);			// server port
+	memset(&server, 0, sizeof(server));        // Clear struct
+	server.sin_family = AF_INET;            // Internet/IP
+	server.sin_addr.s_addr = htonl(INADDR_ANY);    // IP address
+	server.sin_port = htons(PORT);            // server port
 
 	// Bind the server socket
 	if (bind(serversock, (struct sockaddr *) &server,
-		 sizeof(server)) < 0)
+			 sizeof(server)) < 0)
 	{
 		die("Failed to bind the server socket");
 	}
@@ -311,12 +340,13 @@ umain(int argc, char **argv)
 
 	cprintf("Waiting for http connections...\n");
 
-	while (1) {
+	while (1)
+	{
 		unsigned int clientlen = sizeof(client);
 		// Wait for client connection
 		if ((clientsock = accept(serversock,
-					 (struct sockaddr *) &client,
-					 &clientlen)) < 0)
+								 (struct sockaddr *) &client,
+								 &clientlen)) < 0)
 		{
 			die("Failed to accept client connection");
 		}

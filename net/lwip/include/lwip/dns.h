@@ -85,7 +85,7 @@ void           dns_setserver(u8_t numdns, struct ip_addr *dnsserver);
 struct ip_addr dns_getserver(u8_t numdns);
 
 err_t          dns_gethostbyname(const char *hostname, struct ip_addr *addr,
-                                 dns_found_callback found, void *callback_arg);
+								 dns_found_callback found, void *callback_arg);
 
 #endif /* LWIP_DNS */
 

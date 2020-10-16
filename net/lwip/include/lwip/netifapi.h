@@ -24,7 +24,7 @@
  * This file is part of the lwIP TCP/IP stack.
  * 
  */
- 
+
 #ifndef __LWIP_NETIFAPI_H__
 #define __LWIP_NETIFAPI_H__
 
@@ -48,18 +48,18 @@ struct netifapi_msg_msg {
   err_t err;
   struct netif *netif;
   union {
-    struct {
-      struct ip_addr *ipaddr;
-      struct ip_addr *netmask;
-      struct ip_addr *gw;
-      void *state;
-      err_t (* init) (struct netif *netif);
-      err_t (* input)(struct pbuf *p, struct netif *netif);
-    } add;
-    struct {
-      void  (* voidfunc)(struct netif *netif);
-      err_t (* errtfunc)(struct netif *netif);
-    } common;
+	struct {
+	  struct ip_addr *ipaddr;
+	  struct ip_addr *netmask;
+	  struct ip_addr *gw;
+	  void *state;
+	  err_t (* init) (struct netif *netif);
+	  err_t (* input)(struct pbuf *p, struct netif *netif);
+	} add;
+	struct {
+	  void  (* voidfunc)(struct netif *netif);
+	  err_t (* errtfunc)(struct netif *netif);
+	} common;
   } msg;
 };
 
@@ -71,16 +71,16 @@ struct netifapi_msg {
 
 /* API for application */
 err_t netifapi_netif_add       ( struct netif *netif,
-                                 struct ip_addr *ipaddr,
-                                 struct ip_addr *netmask,
-                                 struct ip_addr *gw,
-                                 void *state,
-                                 err_t (* init)(struct netif *netif),
-                                 err_t (* input)(struct pbuf *p, struct netif *netif) );
+								 struct ip_addr *ipaddr,
+								 struct ip_addr *netmask,
+								 struct ip_addr *gw,
+								 void *state,
+								 err_t (* init)(struct netif *netif),
+								 err_t (* input)(struct pbuf *p, struct netif *netif) );
 
 err_t netifapi_netif_common    ( struct netif *netif,
-                                 void  (* voidfunc)(struct netif *netif),
-                                 err_t (* errtfunc)(struct netif *netif) );
+								 void  (* voidfunc)(struct netif *netif),
+								 err_t (* errtfunc)(struct netif *netif) );
 
 #define netifapi_netif_remove(n)      netifapi_netif_common(n, netif_remove, NULL)
 #define netifapi_netif_set_up(n)      netifapi_netif_common(n, netif_set_up, NULL)

@@ -6,10 +6,10 @@
 // and prevent interrupts from causing context switches
 // in the middle of a console output line and such.
 struct printbuf {
-	int fd;		// file descriptor
-	int idx;	// current buffer index
-	ssize_t result;	// accumulated results from write
-	int error;	// first error that occurred
+	int fd;        // file descriptor
+	int idx;    // current buffer index
+	ssize_t result;    // accumulated results from write
+	int error;    // first error that occurred
 	char buf[256];
 };
 
@@ -17,7 +17,8 @@ struct printbuf {
 static void
 writebuf(struct printbuf *b)
 {
-	if (b->error > 0) {
+	if (b->error > 0)
+	{
 		ssize_t result = write(b->fd, b->buf, b->idx);
 		if (result > 0)
 			b->result += result;
@@ -31,7 +32,8 @@ putch(int ch, void *thunk)
 {
 	struct printbuf *b = (struct printbuf *) thunk;
 	b->buf[b->idx++] = ch;
-	if (b->idx == 256) {
+	if (b->idx == 256)
+	{
 		writebuf(b);
 		b->idx = 0;
 	}

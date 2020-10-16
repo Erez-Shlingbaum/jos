@@ -28,14 +28,14 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/lab3" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:github" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:github/lab6" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="jos" targetName="fs" />
+      <config projectName="jos" targetName="userStuff" />
       <config projectName="jos" targetName="main" />
     </generated>
   </component>
@@ -46,43 +46,236 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b207754b-21fa-418e-8a5d-383ccd1603c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jos.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/Activate.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/activate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/activate.csh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/activate.fish" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/bin/python3.8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/lib64" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/pyvenv.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jos.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GNUmakefile" beforeDir="false" afterPath="$PROJECT_DIR$/GNUmakefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fs/bc.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/bc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boot/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/boot/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fs/fs.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/fs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/fs.h" beforeDir="false" afterPath="$PROJECT_DIR$/fs/fs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/fsformat.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/fsformat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/ide.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/ide.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/fs/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fs/serv.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/serv.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/test.c" beforeDir="false" afterPath="$PROJECT_DIR$/fs/test.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fs/testshell.sh" beforeDir="false" afterPath="$PROJECT_DIR$/fs/testshell.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grade-lab5" beforeDir="false" afterPath="$PROJECT_DIR$/grade-lab5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/assert.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/assert.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/elf.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/elf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/env.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/env.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/fd.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/fd.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/fs.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/fs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/kbdreg.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/kbdreg.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/lib.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/lib.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/memlayout.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/mmu.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/mmu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/partition.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/partition.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/stab.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/stab.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/stdarg.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/stdarg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/stdio.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/stdio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/string.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/string.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/syscall.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/trap.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/trap.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/types.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/x86.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/x86.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/console.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/console.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/console.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/console.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/e1000.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/e1000.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/e1000.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/e1000.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/entrypgdir.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/entrypgdir.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kern/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/env.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/env.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/env.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/kclock.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/kclock.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/kclock.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/kclock.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/kdebug.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/kdebug.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/kdebug.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/kdebug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/lapic.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/lapic.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/monitor.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/monitor.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/monitor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/mpconfig.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/mpconfig.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/pci.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pci.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/pci.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pci.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/pcireg.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pcireg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/picirq.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/picirq.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/picirq.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/picirq.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/pmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pmap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/pmap.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/pmap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/printf.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/sched.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/sched.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/sched.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/sched.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/spinlock.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/spinlock.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kern/spinlock.h" beforeDir="false" afterPath="$PROJECT_DIR$/kern/spinlock.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/syscall.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kern/trap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trap.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kern/trapentry.S" beforeDir="false" afterPath="$PROJECT_DIR$/kern/trapentry.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/args.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/args.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/console.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/console.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/fd.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fd.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/file.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/file.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/fork.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fork.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ipc.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ipc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/libmain.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/libmain.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pfentry.S" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pfentry.S" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pgfault.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pgfault.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/fprintf.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fprintf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/malloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/malloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/nsipc.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/nsipc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/panic.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/panic.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pipe.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pipe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printf.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printfmt.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printfmt.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/readline.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/readline.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/sockets.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sockets.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/spawn.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/spawn.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/string.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/string.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/syscall.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/pingpong.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/pingpong.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/input.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/input.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/api_lib.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/api_lib.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/api_msg.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/api_msg.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/err.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/err.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/netbuf.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/netbuf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/netdb.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/netdb.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/netifapi.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/netifapi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/sockets.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/sockets.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/api/tcpip.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/api/tcpip.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/dhcp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/dhcp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/dns.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/dns.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/autoip.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/autoip.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/icmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/icmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/igmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/igmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/inet.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/inet.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/inet_chksum.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/inet_chksum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/ip.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/ip.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/ip_addr.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/ip_addr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv4/ip_frag.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv4/ip_frag.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv6/icmp6.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv6/icmp6.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv6/inet6.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv6/inet6.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv6/ip6.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv6/ip6.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/ipv6/ip6_addr.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/ipv6/ip6_addr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/mem.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/mem.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/memp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/memp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/netif.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/netif.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/pbuf.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/pbuf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/raw.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/raw.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/asn1_dec.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/asn1_dec.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/asn1_enc.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/asn1_enc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/mib2.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/mib2.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/mib_structs.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/mib_structs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/msg_in.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/msg_in.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/snmp/msg_out.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/snmp/msg_out.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/stats.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/stats.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/sys.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/sys.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/tcp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/tcp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/tcp_in.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/tcp_in.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/tcp_out.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/tcp_out.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/core/udp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/core/udp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/autoip.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/autoip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/icmp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/icmp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/inet.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/inet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/inet_chksum.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/inet_chksum.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip_addr.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip_addr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip_frag.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv4/lwip/ip_frag.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/icmp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/icmp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/inet.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/inet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/ip.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/ip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/ip_addr.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/ipv6/lwip/ip_addr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/api.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/api.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/api_msg.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/api_msg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/arch.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/arch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/debug.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/debug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/def.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/def.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/dhcp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/dhcp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/dns.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/dns.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/err.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/err.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/mem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/memp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/memp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/memp_std.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/memp_std.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/netbuf.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/netbuf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/netdb.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/netdb.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/netif.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/netif.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/netifapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/netifapi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/opt.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/opt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/pbuf.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/pbuf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/raw.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/raw.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/sio.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/sio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/snmp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/snmp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_asn1.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_asn1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_msg.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_msg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/snmp_structs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/sockets.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/sockets.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/stats.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/stats.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/sys.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/sys.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/tcp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/tcp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/tcpip.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/tcpip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/lwip/udp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/lwip/udp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/netif/etharp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/netif/etharp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/include/netif/slipif.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/include/netif/slipif.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/cc.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/cc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/i386/setjmp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/i386/setjmp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/perror.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/perror.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/queue.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/queue.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/setjmp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/setjmp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/sys_arch.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/sys_arch.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/sys_arch.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/sys_arch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/thread.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/thread.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/thread.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/thread.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/arch/threadq.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/arch/threadq.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/jif/jif.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/jif/jif.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/jif/jif.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/jif/jif.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/jos/lwipopts.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/jos/lwipopts.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/etharp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/etharp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ethernetif.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ethernetif.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/auth.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/auth.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/auth.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/auth.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/chap.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/chap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/chap.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/chap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/chpms.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/chpms.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/chpms.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/chpms.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/fsm.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/fsm.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/fsm.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/fsm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/ipcp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/ipcp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/ipcp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/ipcp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/lcp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/lcp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/lcp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/lcp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/magic.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/magic.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/md5.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/md5.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/md5.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/pap.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/pap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp_oe.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/ppp_oe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/pppdebug.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/pppdebug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/randm.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/randm.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/vj.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/vj.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/vj.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/vj.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/ppp/vjbsdhdr.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/ppp/vjbsdhdr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/lwip/netif/slipif.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/lwip/netif/slipif.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/ns.h" beforeDir="false" afterPath="$PROJECT_DIR$/net/ns.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/output.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/output.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/serv.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/serv.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/testinput.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/testinput.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/testoutput.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/testoutput.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/timer.c" beforeDir="false" afterPath="$PROJECT_DIR$/net/timer.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/cat.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/cat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/echo.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/echo.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/httpd.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/httpd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/icode.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/icode.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/idle.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/idle.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/ls.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/ls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/lsfd.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/lsfd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/num.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/num.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/sh.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/sh.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/spin.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/spin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/testbss.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/testbss.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/testfile.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/testfile.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +307,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="0-Debug-fs" />
+  </component>
   <component name="ProjectId" id="1auGTfqQYBOE0Anp27NuqSWz9Xg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -128,7 +324,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../matan_jos" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="MakefileSettings" />
+    <property name="settings.editor.selected.configurable" value="CLionExternalConfigurable" />
   </component>
   <component name="RunManager" selected="Makefile.qemu">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
@@ -136,12 +332,12 @@
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="fs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="fs" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="fs">
+    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="main">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="main" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="main">
+    <configuration name="userStuff" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jos" TARGET_NAME="userStuff" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jos" RUN_TARGET_NAME="userStuff">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -182,8 +378,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="CMake Application.fs" />
       <item itemvalue="CMake Application.main" />
+      <item itemvalue="CMake Application.userStuff" />
       <item itemvalue="Makefile.clean" />
       <item itemvalue="Makefile.gdb" />
       <item itemvalue="Makefile.qemu" />
@@ -247,6 +443,8 @@
       <workItem from="1599364503244" duration="101475000" />
       <workItem from="1600605446816" duration="31000" />
       <workItem from="1600622790289" duration="11360000" />
+      <workItem from="1602010790234" duration="14000" />
+      <workItem from="1602010833513" duration="77216000" />
     </task>
     <task id="LOCAL-00001" summary="Solved lab1.&#10;&#10;Implemented backtrace function.">
       <created>1588115190784</created>
@@ -325,11 +523,28 @@
       <option name="project" value="LOCAL" />
       <updated>1600515279487</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Merge branch 'lab5' into lab6&#10;&#10;# Conflicts:&#10;#&#9;kern/trap.c">
+      <created>1600637091539</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600637091539</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -342,7 +557,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/lab3" />
+                        <option value="github/lab6" />
                       </list>
                     </value>
                   </entry>
@@ -366,7 +581,8 @@
     <MESSAGE value="Finished Exercise 4(Part A) of lab3" />
     <MESSAGE value="Merge branch 'lab3' into lab4&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/kernel.ld&#10;#&#9;kern/pmap.c&#10;#&#9;kern/pmap.h&#10;#&#9;kern/trap.c" />
     <MESSAGE value="Merge branch 'lab4' into lab5&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/init.c&#10;#&#9;kern/trap.c" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'lab4' into lab5&#10;&#10;# Conflicts:&#10;#&#9;kern/env.c&#10;#&#9;kern/init.c&#10;#&#9;kern/trap.c" />
+    <MESSAGE value="Merge branch 'lab5' into lab6&#10;&#10;# Conflicts:&#10;#&#9;kern/trap.c" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'lab5' into lab6&#10;&#10;# Conflicts:&#10;#&#9;kern/trap.c" />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="182" width="802" height="717" key="#Plugins" timestamp="1599364484800">
@@ -374,10 +590,10 @@
     </state>
     <state x="497" y="155" width="802" height="717" key="#Plugins/0.0.1718.888@0.0.1718.888" timestamp="1596282935438" />
     <state x="555" y="182" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1599364484800" />
-    <state x="418" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599766592670">
+    <state x="418" y="178" width="1084" height="708" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602278083821">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="418" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599766592670" />
+    <state x="418" y="178" width="1084" height="708" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602278083821" />
     <state x="704" y="327" width="515" height="392" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600435227328">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -386,40 +602,45 @@
       <screen x="0" y="0" width="1718" height="888" />
     </state>
     <state x="542" y="184" width="626" height="526" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1718.888@0.0.1718.888" timestamp="1596282884625" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1600515279439">
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2" timestamp="1600637091201">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="495" y="102" width="814" height="690" key="CommitChangelistDialog2/0.0.1718.888@0.0.1718.888" timestamp="1596392868156" />
-    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1600515279439" />
-    <state x="99" y="100" width="1722" height="841" key="DiffContextDialog" timestamp="1597859525518">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="553" y="120" width="1095" height="836" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1600637091201" />
+    <state x="88" y="85" width="1538" height="715" key="DiffContextDialog" timestamp="1602096545135">
+      <screen x="0" y="0" width="1714" height="884" />
     </state>
+    <state x="88" y="85" width="1538" height="715" key="DiffContextDialog/0.0.1714.884@0.0.1714.884" timestamp="1602096545135" />
     <state x="99" y="100" width="1722" height="841" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597859525518" />
     <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl" timestamp="1600542499060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="226" key="FileChooserDialogImpl/0.0.1718.888@0.0.1718.888" timestamp="1598382069635" />
     <state x="743" y="265" width="426" height="516" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1600542499060" />
-    <state width="1878" height="285" key="GridCell.Tab.0.bottom" timestamp="1600628602732">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1672" height="231" key="GridCell.Tab.0.bottom" timestamp="1602096572025">
+      <screen x="0" y="0" width="1714" height="884" />
     </state>
+    <state width="1672" height="231" key="GridCell.Tab.0.bottom/0.0.1714.884@0.0.1714.884" timestamp="1602096572025" />
     <state width="817" height="350" key="GridCell.Tab.0.bottom/0.0.1718.888@0.0.1718.888" timestamp="1597262079154" />
-    <state width="1878" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600628602732" />
-    <state width="1878" height="285" key="GridCell.Tab.0.center" timestamp="1600628602731">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1878" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602088730788" />
+    <state width="1672" height="231" key="GridCell.Tab.0.center" timestamp="1602096572024">
+      <screen x="0" y="0" width="1714" height="884" />
     </state>
+    <state width="1672" height="231" key="GridCell.Tab.0.center/0.0.1714.884@0.0.1714.884" timestamp="1602096572024" />
     <state width="817" height="350" key="GridCell.Tab.0.center/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
-    <state width="1878" height="285" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600628602731" />
-    <state width="1878" height="285" key="GridCell.Tab.0.left" timestamp="1600628602730">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1878" height="285" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602088730787" />
+    <state width="1672" height="231" key="GridCell.Tab.0.left" timestamp="1602096572023">
+      <screen x="0" y="0" width="1714" height="884" />
     </state>
+    <state width="1672" height="231" key="GridCell.Tab.0.left/0.0.1714.884@0.0.1714.884" timestamp="1602096572023" />
     <state width="817" height="350" key="GridCell.Tab.0.left/0.0.1718.888@0.0.1718.888" timestamp="1597262079152" />
-    <state width="1878" height="285" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600628602730" />
-    <state width="1878" height="285" key="GridCell.Tab.0.right" timestamp="1600628602731">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1878" height="285" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602088730786" />
+    <state width="1672" height="231" key="GridCell.Tab.0.right" timestamp="1602096572025">
+      <screen x="0" y="0" width="1714" height="884" />
     </state>
+    <state width="1672" height="231" key="GridCell.Tab.0.right/0.0.1714.884@0.0.1714.884" timestamp="1602096572025" />
     <state width="817" height="350" key="GridCell.Tab.0.right/0.0.1718.888@0.0.1718.888" timestamp="1597262079153" />
-    <state width="1878" height="285" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600628602731" />
+    <state width="1878" height="285" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602088730788" />
     <state width="640" height="204" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1597223981496">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -428,26 +649,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="640" height="476" key="ImportCMakeProjectWizard.topPanel/0.0.1920.1040@0.0.1920.1040" timestamp="1597223981496" />
-    <state x="51" y="6" width="1853" height="990" key="MergeDialog" timestamp="1600515249727">
+    <state x="51" y="6" width="1853" height="990" key="MergeDialog" timestamp="1600637069753">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="51" y="6" width="1853" height="990" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600515249727" />
-    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog" timestamp="1600515249730">
+    <state x="51" y="6" width="1853" height="990" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600637069753" />
+    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog" timestamp="1600637069756">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600515249730" />
-    <state x="456" y="155" width="1007" height="735" key="SettingsEditor" timestamp="1599364660778">
+    <state x="670" y="244" width="830" height="567" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600637069756" />
+    <state x="794" y="227" width="323" height="592" key="RollbackChangesDialog" timestamp="1602854106959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="456" y="155" width="1007" height="735" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599364660778" />
+    <state x="794" y="227" width="323" height="592" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602854106959" />
+    <state x="456" y="155" width="1007" height="735" key="SettingsEditor" timestamp="1602278048000">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="456" y="155" width="1007" height="735" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1602278048000" />
     <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog" timestamp="1596747555594">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="99" y="100" width="1722" height="841" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596747555594" />
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1600515285882">
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2" timestamp="1600637098685">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600515285882" />
+    <state x="555" y="256" width="802" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600637098685" />
     <state x="566" y="134" width="780" height="778" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600462425632">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -456,6 +681,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="759" y="438" width="401" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1596752286866" />
+    <state x="0" y="0" width="1607" height="822" key="dock-window-1" timestamp="1602844780942">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="0" y="0" width="1607" height="822" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1602844780942" />
     <state x="656" y="276" width="608" height="488" key="find.popup" timestamp="1600543201885">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -472,18 +701,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="733" y="425" width="446" height="196" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596745326209" />
-    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog" timestamp="1597169029209">
+    <state x="1087" y="155" width="550" height="408" key="refactoring.ChangeSignatureDialog" timestamp="1602348119685">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1087" y="155" width="550" height="412" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597169029209" />
-    <state x="623" y="236" key="run.anything.popup" timestamp="1600623348642">
+    <state x="1087" y="155" width="550" height="408" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602348119685" />
+    <state x="623" y="236" key="run.anything.popup" timestamp="1602852326283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600623348642" />
-    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup" timestamp="1600630085722">
+    <state x="623" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602852326283" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup" timestamp="1602280003651">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="557" y="196" width="672" height="579" key="search.everywhere.popup/0.0.1718.888@0.0.1718.888" timestamp="1596476252413" />
-    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600630085722" />
+    <state x="622" y="230" width="752" height="679" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602280003651" />
   </component>
 </project>

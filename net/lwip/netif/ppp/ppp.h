@@ -174,33 +174,33 @@ enum NPmode {
  * cp MUST be u_char *.
  */
 #define GETCHAR(c, cp) { \
-    (c) = *(cp)++; \
+	(c) = *(cp)++; \
 }
 #define PUTCHAR(c, cp) { \
-    *(cp)++ = (u_char) (c); \
+	*(cp)++ = (u_char) (c); \
 }
 
 
 #define GETSHORT(s, cp) { \
-    (s) = *(cp); (cp)++; (s) <<= 8; \
-    (s) |= *(cp); (cp)++; \
+	(s) = *(cp); (cp)++; (s) <<= 8; \
+	(s) |= *(cp); (cp)++; \
 }
 #define PUTSHORT(s, cp) { \
-    *(cp)++ = (u_char) ((s) >> 8); \
-    *(cp)++ = (u_char) (s & 0xff); \
+	*(cp)++ = (u_char) ((s) >> 8); \
+	*(cp)++ = (u_char) (s & 0xff); \
 }
 
 #define GETLONG(l, cp) { \
-    (l) = *(cp); (cp)++; (l) <<= 8; \
-    (l) |= *(cp); (cp)++; (l) <<= 8; \
-    (l) |= *(cp); (cp)++; (l) <<= 8; \
-    (l) |= *(cp); (cp)++; \
+	(l) = *(cp); (cp)++; (l) <<= 8; \
+	(l) |= *(cp); (cp)++; (l) <<= 8; \
+	(l) |= *(cp); (cp)++; (l) <<= 8; \
+	(l) |= *(cp); (cp)++; \
 }
 #define PUTLONG(l, cp) { \
-    *(cp)++ = (u_char) ((l) >> 24); \
-    *(cp)++ = (u_char) ((l) >> 16); \
-    *(cp)++ = (u_char) ((l) >> 8); \
-    *(cp)++ = (u_char) (l); \
+	*(cp)++ = (u_char) ((l) >> 24); \
+	*(cp)++ = (u_char) ((l) >> 16); \
+	*(cp)++ = (u_char) ((l) >> 8); \
+	*(cp)++ = (u_char) (l); \
 }
 
 
@@ -221,9 +221,9 @@ enum NPmode {
  * MAKEHEADER - Add PPP Header fields to a packet.
  */
 #define MAKEHEADER(p, t) { \
-    PUTCHAR(PPP_ALLSTATIONS, p); \
-    PUTCHAR(PPP_UI, p); \
-    PUTSHORT(t, p); }
+	PUTCHAR(PPP_ALLSTATIONS, p); \
+	PUTCHAR(PPP_UI, p); \
+	PUTSHORT(t, p); }
 
 /*************************
 *** PUBLIC DEFINITIONS ***
@@ -261,38 +261,38 @@ enum NPmode {
  * for a particular protocol.
  */
 struct protent {
-    u_short protocol;       /* PPP protocol number */
-    /* Initialization procedure */
-    void (*init) (int unit);
-    /* Process a received packet */
-    void (*input) (int unit, u_char *pkt, int len);
-    /* Process a received protocol-reject */
-    void (*protrej) (int unit);
-    /* Lower layer has come up */
-    void (*lowerup) (int unit);
-    /* Lower layer has gone down */
-    void (*lowerdown) (int unit);
-    /* Open the protocol */
-    void (*open) (int unit);
-    /* Close the protocol */
-    void (*close) (int unit, char *reason);
+	u_short protocol;       /* PPP protocol number */
+	/* Initialization procedure */
+	void (*init) (int unit);
+	/* Process a received packet */
+	void (*input) (int unit, u_char *pkt, int len);
+	/* Process a received protocol-reject */
+	void (*protrej) (int unit);
+	/* Lower layer has come up */
+	void (*lowerup) (int unit);
+	/* Lower layer has gone down */
+	void (*lowerdown) (int unit);
+	/* Open the protocol */
+	void (*open) (int unit);
+	/* Close the protocol */
+	void (*close) (int unit, char *reason);
 #if 0
-    /* Print a packet in readable form */
-    int  (*printpkt) (u_char *pkt, int len,
-              void (*printer) (void *, char *, ...),
-              void *arg);
-    /* Process a received data packet */
-    void (*datainput) (int unit, u_char *pkt, int len);
+	/* Print a packet in readable form */
+	int  (*printpkt) (u_char *pkt, int len,
+			  void (*printer) (void *, char *, ...),
+			  void *arg);
+	/* Process a received data packet */
+	void (*datainput) (int unit, u_char *pkt, int len);
 #endif
-    int  enabled_flag;      /* 0 iff protocol is disabled */
-    char *name;         /* Text name of protocol */
+	int  enabled_flag;      /* 0 iff protocol is disabled */
+	char *name;         /* Text name of protocol */
 #if 0
-    /* Check requested options, assign defaults */
-    void (*check_options) (u_long);
-    /* Configure interface for demand-dial */
-    int  (*demand_conf) (int unit);
-    /* Say whether to bring up link for this pkt */
-    int  (*active_pkt) (u_char *pkt, int len);
+	/* Check requested options, assign defaults */
+	void (*check_options) (u_long);
+	/* Configure interface for demand-dial */
+	int  (*demand_conf) (int unit);
+	/* Say whether to bring up link for this pkt */
+	int  (*active_pkt) (u_char *pkt, int len);
 #endif
 };
 
@@ -367,10 +367,10 @@ err_t pppInit(void);
  *
  */
 enum pppAuthType {
-    PPPAUTHTYPE_NONE,
-    PPPAUTHTYPE_ANY,
-    PPPAUTHTYPE_PAP,
-    PPPAUTHTYPE_CHAP
+	PPPAUTHTYPE_NONE,
+	PPPAUTHTYPE_ANY,
+	PPPAUTHTYPE_PAP,
+	PPPAUTHTYPE_CHAP
 };
 
 void pppSetAuth(enum pppAuthType authType, const char *user, const char *passwd);
@@ -458,7 +458,7 @@ int  sifdefaultroute (int, u32_t, u32_t);
 int  cifdefaultroute (int, u32_t, u32_t);
 
 /* Get appropriate netmask for address */
-u32_t GetMask (u32_t); 
+u32_t GetMask (u32_t);
 
 #endif /* PPP_SUPPORT */
 

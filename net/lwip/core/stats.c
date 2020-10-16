@@ -104,7 +104,7 @@ stats_display_memp(struct stats_mem *mem, int index)
 #include "lwip/memp_std.h"
   };
   if(index < MEMP_MAX) {
-    stats_display_mem(mem, memp_names[index]);
+	stats_display_mem(mem, memp_names[index]);
   }
 }
 #endif /* MEMP_STATS */
@@ -115,12 +115,12 @@ void
 stats_display_sys(struct stats_sys *sys)
 {
   LWIP_PLATFORM_DIAG(("\nSYS\n\t"));
-  LWIP_PLATFORM_DIAG(("sem.used: %"U32_F"\n\t", (u32_t)sys->sem.used)); 
-  LWIP_PLATFORM_DIAG(("sem.max:  %"U32_F"\n\t", (u32_t)sys->sem.max)); 
-  LWIP_PLATFORM_DIAG(("sem.err:  %"U32_F"\n\t", (u32_t)sys->sem.err)); 
-  LWIP_PLATFORM_DIAG(("mbox.used: %"U32_F"\n\t", (u32_t)sys->mbox.used)); 
-  LWIP_PLATFORM_DIAG(("mbox.max:  %"U32_F"\n\t", (u32_t)sys->mbox.max)); 
-  LWIP_PLATFORM_DIAG(("mbox.err:  %"U32_F"\n\t", (u32_t)sys->mbox.err)); 
+  LWIP_PLATFORM_DIAG(("sem.used: %"U32_F"\n\t", (u32_t)sys->sem.used));
+  LWIP_PLATFORM_DIAG(("sem.max:  %"U32_F"\n\t", (u32_t)sys->sem.max));
+  LWIP_PLATFORM_DIAG(("sem.err:  %"U32_F"\n\t", (u32_t)sys->sem.err));
+  LWIP_PLATFORM_DIAG(("mbox.used: %"U32_F"\n\t", (u32_t)sys->mbox.used));
+  LWIP_PLATFORM_DIAG(("mbox.max:  %"U32_F"\n\t", (u32_t)sys->mbox.max));
+  LWIP_PLATFORM_DIAG(("mbox.err:  %"U32_F"\n\t", (u32_t)sys->mbox.err));
 }
 #endif /* SYS_STATS */
 
@@ -139,7 +139,7 @@ stats_display(void)
   TCP_STATS_DISPLAY();
   MEM_STATS_DISPLAY();
   for (i = 0; i < MEMP_MAX; i++) {
-    MEMP_STATS_DISPLAY(i);
+	MEMP_STATS_DISPLAY(i);
   }
   SYS_STATS_DISPLAY();
 }

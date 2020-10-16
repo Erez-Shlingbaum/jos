@@ -9,7 +9,8 @@ umain(int argc, char **argv)
 	envid_t env;
 
 	cprintf("I am the parent.  Forking the child...\n");
-	if ((env = fork()) == 0) {
+	if ((env = fork()) == 0)
+	{
 		cprintf("I am the child.  Spinning...\n");
 		while (1)
 			/* do nothing */;

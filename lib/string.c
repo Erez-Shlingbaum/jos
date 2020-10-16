@@ -48,12 +48,14 @@ strcat(char *dst, const char *src)
 }
 
 char *
-strncpy(char *dst, const char *src, size_t size) {
+strncpy(char *dst, const char *src, size_t size)
+{
 	size_t i;
 	char *ret;
 
 	ret = dst;
-	for (i = 0; i < size; i++) {
+	for (i = 0; i < size; i++)
+	{
 		*dst++ = *src;
 		// If strlen(src) < size, null-pad 'dst' out to 'size' chars
 		if (*src != '\0')
@@ -68,7 +70,8 @@ strlcpy(char *dst, const char *src, size_t size)
 	char *dst_in;
 
 	dst_in = dst;
-	if (size > 0) {
+	if (size > 0)
+	{
 		while (--size > 0 && *src != '\0')
 			*dst++ = *src++;
 		*dst = '\0';
@@ -118,6 +121,7 @@ strfind(const char *s, char c)
 }
 
 #if ASM
+
 void *
 memset(void *v, int c, size_t n)
 {
@@ -125,15 +129,16 @@ memset(void *v, int c, size_t n)
 
 	if (n == 0)
 		return v;
-	if ((int)v%4 == 0 && n%4 == 0) {
+	if ((int) v % 4 == 0 && n % 4 == 0)
+	{
 		c &= 0xFF;
-		c = (c<<24)|(c<<16)|(c<<8)|c;
+		c = (c << 24) | (c << 16) | (c << 8) | c;
 		asm volatile("cld; rep stosl\n"
-			:: "D" (v), "a" (c), "c" (n/4)
-			: "cc", "memory");
+		::"D" (v), "a" (c), "c" (n / 4)
+		: "cc", "memory");
 	} else
-		asm volatile("cld; rep stosb\n"
-			:: "D" (v), "a" (c), "c" (n)
+			asm volatile("cld; rep stosb\n"
+			::"D" (v), "a" (c), "c" (n)
 			: "cc", "memory");
 	return v;
 }
@@ -146,24 +151,26 @@ memmove(void *dst, const void *src, size_t n)
 
 	s = src;
 	d = dst;
-	if (s < d && s + n > d) {
+	if (s < d && s + n > d)
+	{
 		s += n;
 		d += n;
-		if ((int)s%4 == 0 && (int)d%4 == 0 && n%4 == 0)
-			asm volatile("std; rep movsl\n"
-				:: "D" (d-4), "S" (s-4), "c" (n/4) : "cc", "memory");
+		if ((int) s % 4 == 0 && (int) d % 4 == 0 && n % 4 == 0)
+				asm volatile("std; rep movsl\n"
+				::"D" (d - 4), "S" (s - 4), "c" (n / 4) : "cc", "memory");
 		else
-			asm volatile("std; rep movsb\n"
-				:: "D" (d-1), "S" (s-1), "c" (n) : "cc", "memory");
+				asm volatile("std; rep movsb\n"
+				::"D" (d - 1), "S" (s - 1), "c" (n) : "cc", "memory");
 		// Some versions of GCC rely on DF being clear
-		asm volatile("cld" ::: "cc");
-	} else {
-		if ((int)s%4 == 0 && (int)d%4 == 0 && n%4 == 0)
-			asm volatile("cld; rep movsl\n"
-				:: "D" (d), "S" (s), "c" (n/4) : "cc", "memory");
+		asm volatile("cld":: : "cc");
+	} else
+	{
+		if ((int) s % 4 == 0 && (int) d % 4 == 0 && n % 4 == 0)
+				asm volatile("cld; rep movsl\n"
+				::"D" (d), "S" (s), "c" (n / 4) : "cc", "memory");
 		else
-			asm volatile("cld; rep movsb\n"
-				:: "D" (d), "S" (s), "c" (n) : "cc", "memory");
+				asm volatile("cld; rep movsb\n"
+				::"D" (d), "S" (s), "c" (n) : "cc", "memory");
 	}
 	return dst;
 }
@@ -217,7 +224,8 @@ memcmp(const void *v1, const void *v2, size_t n)
 	const uint8_t *s1 = (const uint8_t *) v1;
 	const uint8_t *s2 = (const uint8_t *) v2;
 
-	while (n-- > 0) {
+	while (n-- > 0)
+	{
 		if (*s1 != *s2)
 			return (int) *s1 - (int) *s2;
 		s1++, s2++;
@@ -261,7 +269,8 @@ strtol(const char *s, char **endptr, int base)
 		base = 10;
 
 	// digits
-	while (1) {
+	while (1)
+	{
 		int dig;
 
 		if (*s >= '0' && *s <= '9')

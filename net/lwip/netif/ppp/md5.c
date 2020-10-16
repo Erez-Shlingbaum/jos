@@ -145,26 +145,26 @@ MD5Update(MD5_CTX *mdContext, unsigned char *inBuf, unsigned int inLen)
 
   /* update number of bits */
   if ((mdContext->i[0] + ((u32_t)inLen << 3)) < mdContext->i[0]) {
-    mdContext->i[1]++;
+	mdContext->i[1]++;
   }
   mdContext->i[0] += ((u32_t)inLen << 3);
   mdContext->i[1] += ((u32_t)inLen >> 29);
 
   while (inLen--) {
-    /* add new character to buffer, increment mdi */
-    mdContext->in[mdi++] = *inBuf++;
+	/* add new character to buffer, increment mdi */
+	mdContext->in[mdi++] = *inBuf++;
 
-    /* transform if necessary */
-    if (mdi == 0x40) {
-      for (i = 0, ii = 0; i < 16; i++, ii += 4) {
-        in[i] = (((u32_t)mdContext->in[ii+3]) << 24) |
-                (((u32_t)mdContext->in[ii+2]) << 16) |
-                (((u32_t)mdContext->in[ii+1]) << 8)  |
-                ((u32_t)mdContext->in[ii]);
-      }
-      Transform (mdContext->buf, in);
-      mdi = 0;
-    }
+	/* transform if necessary */
+	if (mdi == 0x40) {
+	  for (i = 0, ii = 0; i < 16; i++, ii += 4) {
+		in[i] = (((u32_t)mdContext->in[ii+3]) << 24) |
+				(((u32_t)mdContext->in[ii+2]) << 16) |
+				(((u32_t)mdContext->in[ii+1]) << 8)  |
+				((u32_t)mdContext->in[ii]);
+	  }
+	  Transform (mdContext->buf, in);
+	  mdi = 0;
+	}
   }
 }
 
@@ -192,22 +192,22 @@ MD5Final (unsigned char hash[], MD5_CTX *mdContext)
 
   /* append length in bits and transform */
   for (i = 0, ii = 0; i < 14; i++, ii += 4) {
-    in[i] = (((u32_t)mdContext->in[ii+3]) << 24) |
-            (((u32_t)mdContext->in[ii+2]) << 16) |
-            (((u32_t)mdContext->in[ii+1]) << 8)  |
-            ((u32_t)mdContext->in[ii]);
+	in[i] = (((u32_t)mdContext->in[ii+3]) << 24) |
+			(((u32_t)mdContext->in[ii+2]) << 16) |
+			(((u32_t)mdContext->in[ii+1]) << 8)  |
+			((u32_t)mdContext->in[ii]);
   }
   Transform (mdContext->buf, in);
 
   /* store buffer in digest */
   for (i = 0, ii = 0; i < 4; i++, ii += 4) {
-    mdContext->digest[ii]   = (unsigned char)(mdContext->buf[i] & 0xFF);
-    mdContext->digest[ii+1] =
-      (unsigned char)((mdContext->buf[i] >> 8)  & 0xFF);
-    mdContext->digest[ii+2] =
-      (unsigned char)((mdContext->buf[i] >> 16) & 0xFF);
-    mdContext->digest[ii+3] =
-      (unsigned char)((mdContext->buf[i] >> 24) & 0xFF);
+	mdContext->digest[ii]   = (unsigned char)(mdContext->buf[i] & 0xFF);
+	mdContext->digest[ii+1] =
+	  (unsigned char)((mdContext->buf[i] >> 8)  & 0xFF);
+	mdContext->digest[ii+2] =
+	  (unsigned char)((mdContext->buf[i] >> 16) & 0xFF);
+	mdContext->digest[ii+3] =
+	  (unsigned char)((mdContext->buf[i] >> 24) & 0xFF);
   }
   SMEMCPY(hash, mdContext->digest, 16);
 }

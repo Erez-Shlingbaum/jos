@@ -10,8 +10,10 @@ num(int f, const char *s)
 	int r;
 	char c;
 
-	while ((n = read(f, &c, 1)) > 0) {
-		if (bol) {
+	while ((n = read(f, &c, 1)) > 0)
+	{
+		if (bol)
+		{
 			printf("%5d ", ++line);
 			bol = 0;
 		}
@@ -33,11 +35,13 @@ umain(int argc, char **argv)
 	if (argc == 1)
 		num(0, "<stdin>");
 	else
-		for (i = 1; i < argc; i++) {
+		for (i = 1; i < argc; i++)
+		{
 			f = open(argv[i], O_RDONLY);
 			if (f < 0)
 				panic("can't open %s: %e", argv[i], f);
-			else {
+			else
+			{
 				num(f, argv[i]);
 				close(f);
 			}

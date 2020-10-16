@@ -42,6 +42,7 @@
 
 #include "lwip/inet.h"
 #include "lwip/pbuf.h"
+
 #if LWIP_DHCP
 struct dhcp;
 #endif
@@ -86,93 +87,93 @@ extern "C" {
  *  function for the device driver: hwaddr_len, hwaddr[], mtu, flags */
 
 struct netif {
-  /** pointer to next in linked list */
-  struct netif *next;
+	/** pointer to next in linked list */
+	struct netif *next;
 
-  /** IP address configuration in network byte order */
-  struct ip_addr ip_addr;
-  struct ip_addr netmask;
-  struct ip_addr gw;
+	/** IP address configuration in network byte order */
+	struct ip_addr ip_addr;
+	struct ip_addr netmask;
+	struct ip_addr gw;
 
-  /** This function is called by the network device driver
-   *  to pass a packet up the TCP/IP stack. */
-  err_t (* input)(struct pbuf *p, struct netif *inp);
-  /** This function is called by the IP module when it wants
-   *  to send a packet on the interface. This function typically
-   *  first resolves the hardware address, then sends the packet. */
-  err_t (* output)(struct netif *netif, struct pbuf *p,
-       struct ip_addr *ipaddr);
-  /** This function is called by the ARP module when it wants
-   *  to send a packet on the interface. This function outputs
-   *  the pbuf as-is on the link medium. */
-  err_t (* linkoutput)(struct netif *netif, struct pbuf *p);
+	/** This function is called by the network device driver
+	 *  to pass a packet up the TCP/IP stack. */
+	err_t (*input)(struct pbuf *p, struct netif *inp);
+	/** This function is called by the IP module when it wants
+	 *  to send a packet on the interface. This function typically
+	 *  first resolves the hardware address, then sends the packet. */
+	err_t (*output)(struct netif *netif, struct pbuf *p,
+					struct ip_addr *ipaddr);
+	/** This function is called by the ARP module when it wants
+	 *  to send a packet on the interface. This function outputs
+	 *  the pbuf as-is on the link medium. */
+	err_t (*linkoutput)(struct netif *netif, struct pbuf *p);
 #if LWIP_NETIF_STATUS_CALLBACK
-  /** This function is called when the netif state is set to up or down
-   */
-  void (* status_callback)(struct netif *netif);
+	/** This function is called when the netif state is set to up or down
+	 */
+	void (* status_callback)(struct netif *netif);
 #endif /* LWIP_NETIF_STATUS_CALLBACK */
 #if LWIP_NETIF_LINK_CALLBACK
-  /** This function is called when the netif link is set to up or down
-   */
-  void (* link_callback)(struct netif *netif);
+	/** This function is called when the netif link is set to up or down
+	 */
+	void (* link_callback)(struct netif *netif);
 #endif /* LWIP_NETIF_LINK_CALLBACK */
-  /** This field can be set by the device driver and could point
-   *  to state information for the device. */
-  void *state;
+	/** This field can be set by the device driver and could point
+	 *  to state information for the device. */
+	void *state;
 #if LWIP_DHCP
-  /** the DHCP client state information for this netif */
-  struct dhcp *dhcp;
+	/** the DHCP client state information for this netif */
+	struct dhcp *dhcp;
 #endif /* LWIP_DHCP */
 #if LWIP_AUTOIP
-  /** the AutoIP client state information for this netif */
-  struct autoip *autoip;
+	/** the AutoIP client state information for this netif */
+	struct autoip *autoip;
 #endif
 #if LWIP_NETIF_HOSTNAME
-  /* the hostname for this netif, NULL is a valid value */
-  char*  hostname;
+	/* the hostname for this netif, NULL is a valid value */
+	char*  hostname;
 #endif /* LWIP_NETIF_HOSTNAME */
-  /** number of bytes used in hwaddr */
-  u8_t hwaddr_len;
-  /** link level hardware address of this interface */
-  u8_t hwaddr[NETIF_MAX_HWADDR_LEN];
-  /** maximum transfer unit (in bytes) */
-  u16_t mtu;
-  /** flags (see NETIF_FLAG_ above) */
-  u8_t flags;
-  /** descriptive abbreviation */
-  char name[2];
-  /** number of this interface */
-  u8_t num;
+	/** number of bytes used in hwaddr */
+	u8_t hwaddr_len;
+	/** link level hardware address of this interface */
+	u8_t hwaddr[NETIF_MAX_HWADDR_LEN];
+	/** maximum transfer unit (in bytes) */
+	u16_t mtu;
+	/** flags (see NETIF_FLAG_ above) */
+	u8_t flags;
+	/** descriptive abbreviation */
+	char name[2];
+	/** number of this interface */
+	u8_t num;
 #if LWIP_SNMP
-  /** link type (from "snmp_ifType" enum from snmp.h) */
-  u8_t link_type;
-  /** (estimate) link speed */
-  u32_t link_speed;
-  /** timestamp at last change made (up/down) */
-  u32_t ts;
-  /** counters */
-  u32_t ifinoctets;
-  u32_t ifinucastpkts;
-  u32_t ifinnucastpkts;
-  u32_t ifindiscards;
-  u32_t ifoutoctets;
-  u32_t ifoutucastpkts;
-  u32_t ifoutnucastpkts;
-  u32_t ifoutdiscards;
+	/** link type (from "snmp_ifType" enum from snmp.h) */
+	u8_t link_type;
+	/** (estimate) link speed */
+	u32_t link_speed;
+	/** timestamp at last change made (up/down) */
+	u32_t ts;
+	/** counters */
+	u32_t ifinoctets;
+	u32_t ifinucastpkts;
+	u32_t ifinnucastpkts;
+	u32_t ifindiscards;
+	u32_t ifoutoctets;
+	u32_t ifoutucastpkts;
+	u32_t ifoutnucastpkts;
+	u32_t ifoutdiscards;
 #endif /* LWIP_SNMP */
 #if LWIP_IGMP
-  /* This function could be called to add or delete a entry in the multicast filter table of the ethernet MAC.*/
-  err_t (*igmp_mac_filter)( struct netif *netif, struct ip_addr *group, u8_t action);
+	/* This function could be called to add or delete a entry in the multicast filter table of the ethernet MAC.*/
+	err_t (*igmp_mac_filter)( struct netif *netif, struct ip_addr *group, u8_t action);
 #endif /* LWIP_IGMP */
 #if LWIP_NETIF_HWADDRHINT
-  u8_t *addr_hint;
+	u8_t *addr_hint;
 #endif /* LWIP_NETIF_HWADDRHINT */
 #if ENABLE_LOOPBACK
-  /* List of packets to be queued for ourselves. */
-  struct pbuf *loop_first;
-  struct pbuf *loop_last;
+	/* List of packets to be queued for ourselves. */
+	struct pbuf *loop_first;
+	struct pbuf *loop_last;
 #if LWIP_LOOPBACK_MAX_PBUFS
-  u16_t loop_cnt_current;
+	u16_t loop_cnt_current;
 #endif /* LWIP_LOOPBACK_MAX_PBUFS */
 #endif /* ENABLE_LOOPBACK */
 };
@@ -205,15 +206,15 @@ extern struct netif *netif_default;
 #define netif_init() /* Compatibility define, not init needed. */
 
 struct netif *netif_add(struct netif *netif, struct ip_addr *ipaddr, struct ip_addr *netmask,
-      struct ip_addr *gw,
-      void *state,
-      err_t (* init)(struct netif *netif),
-      err_t (* input)(struct pbuf *p, struct netif *netif));
+						struct ip_addr *gw,
+						void *state,
+						err_t (*init)(struct netif *netif),
+						err_t (*input)(struct pbuf *p, struct netif *netif));
 
 void
-netif_set_addr(struct netif *netif,struct ip_addr *ipaddr, struct ip_addr *netmask,
-    struct ip_addr *gw);
-void netif_remove(struct netif * netif);
+netif_set_addr(struct netif *netif, struct ip_addr *ipaddr, struct ip_addr *netmask,
+			   struct ip_addr *gw);
+void netif_remove(struct netif *netif);
 
 /* Returns a network interface given its name. The name is of the form
    "et0", where the first two letters are the "name" field in the

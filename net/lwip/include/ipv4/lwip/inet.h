@@ -42,7 +42,7 @@ extern "C" {
 
 /* For compatibility with BSD code */
 struct in_addr {
-  u32_t s_addr;
+	u32_t s_addr;
 };
 
 u32_t inet_addr(const char *cp);

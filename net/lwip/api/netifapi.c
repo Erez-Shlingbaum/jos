@@ -45,15 +45,15 @@ void
 do_netifapi_netif_add( struct netifapi_msg_msg *msg)
 {
   if (!netif_add( msg->netif,
-                  msg->msg.add.ipaddr,
-                  msg->msg.add.netmask,
-                  msg->msg.add.gw,
-                  msg->msg.add.state,
-                  msg->msg.add.init,
-                  msg->msg.add.input)) {
-    msg->err = ERR_IF;
+				  msg->msg.add.ipaddr,
+				  msg->msg.add.netmask,
+				  msg->msg.add.gw,
+				  msg->msg.add.state,
+				  msg->msg.add.init,
+				  msg->msg.add.input)) {
+	msg->err = ERR_IF;
   } else {
-    msg->err = ERR_OK;
+	msg->err = ERR_OK;
   }
   TCPIP_NETIFAPI_ACK(msg);
 }
@@ -66,11 +66,11 @@ void
 do_netifapi_netif_common( struct netifapi_msg_msg *msg)
 {
   if (msg->msg.common.errtfunc!=NULL) {
-    msg->err =
-    msg->msg.common.errtfunc(msg->netif);
+	msg->err =
+	msg->msg.common.errtfunc(msg->netif);
   } else {
-    msg->err = ERR_OK;
-    msg->msg.common.voidfunc(msg->netif);
+	msg->err = ERR_OK;
+	msg->msg.common.voidfunc(msg->netif);
   }
   TCPIP_NETIFAPI_ACK(msg);
 }
@@ -83,12 +83,12 @@ do_netifapi_netif_common( struct netifapi_msg_msg *msg)
  */
 err_t
 netifapi_netif_add(struct netif *netif,
-                   struct ip_addr *ipaddr,
-                   struct ip_addr *netmask,
-                   struct ip_addr *gw,
-                   void *state,
-                   err_t (* init)(struct netif *netif),
-                   err_t (* input)(struct pbuf *p, struct netif *netif))
+				   struct ip_addr *ipaddr,
+				   struct ip_addr *netmask,
+				   struct ip_addr *gw,
+				   void *state,
+				   err_t (* init)(struct netif *netif),
+				   err_t (* input)(struct pbuf *p, struct netif *netif))
 {
   struct netifapi_msg msg;
   msg.function = do_netifapi_netif_add;
@@ -111,8 +111,8 @@ netifapi_netif_add(struct netif *netif,
  */
 err_t
 netifapi_netif_common( struct netif *netif,
-                       void  (* voidfunc)(struct netif *netif),
-                       err_t (* errtfunc)(struct netif *netif) )
+					   void  (* voidfunc)(struct netif *netif),
+					   err_t (* errtfunc)(struct netif *netif) )
 {
   struct netifapi_msg msg;
   msg.function = do_netifapi_netif_common;

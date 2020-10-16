@@ -141,7 +141,7 @@
 #define USTABDATA    (PTSIZE / 2)
 
 // Physical address of startup code for non-boot CPUs (APs)
-#define MPENTRY_PADDR	0x7000
+#define MPENTRY_PADDR    0x7000
 
 #ifndef __ASSEMBLER__
 

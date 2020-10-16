@@ -47,10 +47,10 @@ extern "C" {
 struct netif *ip_route(struct ip_addr *dest);
 err_t ip_input(struct pbuf *p, struct netif *inp);
 err_t ip_output(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest,
-    u8_t ttl, u8_t tos, u8_t proto);
+				u8_t ttl, u8_t tos, u8_t proto);
 err_t ip_output_if(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest,
-       u8_t ttl, u8_t tos, u8_t proto,
-       struct netif *netif);
+				   u8_t ttl, u8_t tos, u8_t proto,
+				   struct netif *netif);
 
 #define IP_HLEN 20
 
@@ -92,7 +92,7 @@ err_t ip_output_if(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest,
 
 struct ip_pcb {
 /* Common members of all PCB types */
-  IP_PCB;
+	IP_PCB;
 };
 
 /*
@@ -115,25 +115,25 @@ struct ip_pcb {
 #endif
 PACK_STRUCT_BEGIN
 struct ip_hdr {
-  /* version / header length / type of service */
-  PACK_STRUCT_FIELD(u16_t _v_hl_tos);
-  /* total length */
-  PACK_STRUCT_FIELD(u16_t _len);
-  /* identification */
-  PACK_STRUCT_FIELD(u16_t _id);
-  /* fragment offset field */
-  PACK_STRUCT_FIELD(u16_t _offset);
+	/* version / header length / type of service */
+	PACK_STRUCT_FIELD(u16_t _v_hl_tos);
+	/* total length */
+	PACK_STRUCT_FIELD(u16_t _len);
+	/* identification */
+	PACK_STRUCT_FIELD(u16_t _id);
+	/* fragment offset field */
+	PACK_STRUCT_FIELD(u16_t _offset);
 #define IP_RF 0x8000        /* reserved fragment flag */
 #define IP_DF 0x4000        /* dont fragment flag */
 #define IP_MF 0x2000        /* more fragments flag */
 #define IP_OFFMASK 0x1fff   /* mask for fragmenting bits */
-  /* time to live / protocol*/
-  PACK_STRUCT_FIELD(u16_t _ttl_proto);
-  /* checksum */
-  PACK_STRUCT_FIELD(u16_t _chksum);
-  /* source and destination IP addresses */
-  PACK_STRUCT_FIELD(struct ip_addr src);
-  PACK_STRUCT_FIELD(struct ip_addr dest); 
+	/* time to live / protocol*/
+	PACK_STRUCT_FIELD(u16_t _ttl_proto);
+	/* checksum */
+	PACK_STRUCT_FIELD(u16_t _chksum);
+	/* source and destination IP addresses */
+	PACK_STRUCT_FIELD(struct ip_addr src);
+	PACK_STRUCT_FIELD(struct ip_addr dest);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES

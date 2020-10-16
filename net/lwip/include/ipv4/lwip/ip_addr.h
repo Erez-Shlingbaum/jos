@@ -43,7 +43,7 @@ extern "C" {
 #endif
 PACK_STRUCT_BEGIN
 struct ip_addr {
-  PACK_STRUCT_FIELD(u32_t addr);
+	PACK_STRUCT_FIELD(u32_t addr);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -59,7 +59,7 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 struct ip_addr2 {
-  PACK_STRUCT_FIELD(u16_t addrw[2]);
+	PACK_STRUCT_FIELD(u16_t addrw[2]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -113,7 +113,7 @@ extern const struct ip_addr ip_addr_broadcast;
 
 #define IN_LOOPBACKNET      127                 /* official! */
 
-#define IP4_ADDR(ipaddr, a,b,c,d) \
+#define IP4_ADDR(ipaddr, a, b, c, d) \
         (ipaddr)->addr = htonl(((u32_t)((a) & 0xff) << 24) | \
                                ((u32_t)((b) & 0xff) << 16) | \
                                ((u32_t)((c) & 0xff) << 8) | \

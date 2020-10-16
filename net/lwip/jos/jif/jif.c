@@ -44,29 +44,29 @@
 
 #include <netif/etharp.h>
 
-#define PKTMAP		0x10000000
+#define PKTMAP        0x10000000
 
 struct jif {
-    struct eth_addr *ethaddr;
-    envid_t envid;
+	struct eth_addr *ethaddr;
+	envid_t envid;
 };
 
 static void
 low_level_init(struct netif *netif)
 {
-    int r;
+	int r;
 
-    netif->hwaddr_len = 6;
-    netif->mtu = 1500;
-    netif->flags = NETIF_FLAG_BROADCAST;
+	netif->hwaddr_len = 6;
+	netif->mtu = 1500;
+	netif->flags = NETIF_FLAG_BROADCAST;
 
-    // MAC address is hardcoded to eliminate a system call
-    netif->hwaddr[0] = 0x52;
-    netif->hwaddr[1] = 0x54;
-    netif->hwaddr[2] = 0x00;
-    netif->hwaddr[3] = 0x12;
-    netif->hwaddr[4] = 0x34;
-    netif->hwaddr[5] = 0x56;
+	// MAC address is hardcoded to eliminate a system call
+	netif->hwaddr[0] = 0x52;
+	netif->hwaddr[1] = 0x54;
+	netif->hwaddr[2] = 0x00;
+	netif->hwaddr[3] = 0x12;
+	netif->hwaddr[4] = 0x34;
+	netif->hwaddr[5] = 0x56;
 }
 
 /*
@@ -80,34 +80,35 @@ low_level_init(struct netif *netif)
 static err_t
 low_level_output(struct netif *netif, struct pbuf *p)
 {
-    int r = sys_page_alloc(0, (void *)PKTMAP, PTE_U|PTE_W|PTE_P);
-    if (r < 0)
-	panic("jif: could not allocate page of memory");
-    struct jif_pkt *pkt = (struct jif_pkt *)PKTMAP;
+	int r = sys_page_alloc(0, (void *) PKTMAP, PTE_U | PTE_W | PTE_P);
+	if (r < 0)
+		panic("jif: could not allocate page of memory");
+	struct jif_pkt *pkt = (struct jif_pkt *) PKTMAP;
 
-    struct jif *jif;
-    jif = netif->state;
+	struct jif *jif;
+	jif = netif->state;
 
-    char *txbuf = pkt->jp_data;
-    int txsize = 0;
-    struct pbuf *q;
-    for (q = p; q != NULL; q = q->next) {
-	/* Send the data from the pbuf to the interface, one pbuf at a
-	   time. The size of the data in each pbuf is kept in the ->len
-	   variable. */
+	char *txbuf = pkt->jp_data;
+	int txsize = 0;
+	struct pbuf *q;
+	for (q = p; q != NULL; q = q->next)
+	{
+		/* Send the data from the pbuf to the interface, one pbuf at a
+		   time. The size of the data in each pbuf is kept in the ->len
+		   variable. */
 
-	if (txsize + q->len > 2000)
-	    panic("oversized packet, fragment %d txsize %d\n", q->len, txsize);
-	memcpy(&txbuf[txsize], q->payload, q->len);
-	txsize += q->len;
-    }
+		if (txsize + q->len > 2000)
+			panic("oversized packet, fragment %d txsize %d\n", q->len, txsize);
+		memcpy(&txbuf[txsize], q->payload, q->len);
+		txsize += q->len;
+	}
 
-    pkt->jp_len = txsize;
+	pkt->jp_len = txsize;
 
-    ipc_send(jif->envid, NSREQ_OUTPUT, (void *)pkt, PTE_P|PTE_W|PTE_U);
-    sys_page_unmap(0, (void *)pkt);
+	ipc_send(jif->envid, NSREQ_OUTPUT, (void *) pkt, PTE_P | PTE_W | PTE_U);
+	sys_page_unmap(0, (void *) pkt);
 
-    return ERR_OK;
+	return ERR_OK;
 }
 
 /*
@@ -120,31 +121,33 @@ low_level_output(struct netif *netif, struct pbuf *p)
 static struct pbuf *
 low_level_input(void *va)
 {
-    struct jif_pkt *pkt = (struct jif_pkt *)va;
-    s16_t len = pkt->jp_len;
+	struct jif_pkt *pkt = (struct jif_pkt *) va;
+	s16_t len = pkt->jp_len;
 
-    struct pbuf *p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
-    if (p == 0)
-	return 0;
+	struct pbuf *p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
+	if (p == 0)
+		return 0;
 
-    /* We iterate over the pbuf chain until we have read the entire
-     * packet into the pbuf. */
-    void *rxbuf = (void *) pkt->jp_data;
-    int copied = 0;
-    struct pbuf *q;
-    for (q = p; q != NULL; q = q->next) {
-	/* Read enough bytes to fill this pbuf in the chain. The
-	 * available data in the pbuf is given by the q->len
-	 * variable. */
-	int bytes = q->len;
-	if (bytes > (len - copied))
-	    bytes = len - copied;
-	memcpy(q->payload, rxbuf + copied, bytes);
-	copied += bytes;
-    }
+	/* We iterate over the pbuf chain until we have read the entire
+	 * packet into the pbuf. */
+	void *rxbuf = (void *) pkt->jp_data;
+	int copied = 0;
+	struct pbuf *q;
+	for (q = p; q != NULL; q = q->next)
+	{
+		/* Read enough bytes to fill this pbuf in the chain. The
+		 * available data in the pbuf is given by the q->len
+		 * variable. */
+		int bytes = q->len;
+		if (bytes > (len - copied))
+			bytes = len - copied;
+		memcpy(q->payload, rxbuf + copied, bytes);
+		copied += bytes;
+	}
 
-    return p;
+	return p;
 }
+
 /*
  * jif_output():
  *
@@ -156,10 +159,10 @@ low_level_input(void *va)
 
 static err_t
 jif_output(struct netif *netif, struct pbuf *p,
-      struct ip_addr *ipaddr)
+		   struct ip_addr *ipaddr)
 {
-    /* resolve hardware address, then send (or queue) packet */
-    return etharp_output(netif, p, ipaddr);
+	/* resolve hardware address, then send (or queue) packet */
+	return etharp_output(netif, p, ipaddr);
 }
 
 /*
@@ -175,38 +178,39 @@ jif_output(struct netif *netif, struct pbuf *p,
 void
 jif_input(struct netif *netif, void *va)
 {
-    struct jif *jif;
-    struct eth_hdr *ethhdr;
-    struct pbuf *p;
+	struct jif *jif;
+	struct eth_hdr *ethhdr;
+	struct pbuf *p;
 
-    jif = netif->state;
-  
-    /* move received packet into a new pbuf */
-    p = low_level_input(va);
+	jif = netif->state;
 
-    /* no packet could be read, silently ignore this */
-    if (p == NULL) return;
-    /* points to packet payload, which starts with an Ethernet header */
-    ethhdr = p->payload;
+	/* move received packet into a new pbuf */
+	p = low_level_input(va);
 
-    switch (htons(ethhdr->type)) {
-    case ETHTYPE_IP:
-	/* update ARP table */
-	etharp_ip_input(netif, p);
-	/* skip Ethernet header */
-	pbuf_header(p, -(int)sizeof(struct eth_hdr));
-	/* pass to network layer */
-	netif->input(p, netif);
-	break;
-      
-    case ETHTYPE_ARP:
-	/* pass p to ARP module  */
-	etharp_arp_input(netif, jif->ethaddr, p);
-	break;
+	/* no packet could be read, silently ignore this */
+	if (p == NULL) return;
+	/* points to packet payload, which starts with an Ethernet header */
+	ethhdr = p->payload;
 
-    default:
-	pbuf_free(p);
-    }
+	switch (htons(ethhdr->type))
+	{
+		case ETHTYPE_IP:
+			/* update ARP table */
+			etharp_ip_input(netif, p);
+			/* skip Ethernet header */
+			pbuf_header(p, -(int) sizeof(struct eth_hdr));
+			/* pass to network layer */
+			netif->input(p, netif);
+			break;
+
+		case ETHTYPE_ARP:
+			/* pass p to ARP module  */
+			etharp_arp_input(netif, jif->ethaddr, p);
+			break;
+
+		default:
+			pbuf_free(p);
+	}
 }
 
 /*
@@ -221,35 +225,36 @@ jif_input(struct netif *netif, void *va)
 err_t
 jif_init(struct netif *netif)
 {
-    struct jif *jif;
-    envid_t *output_envid; 
+	struct jif *jif;
+	envid_t *output_envid;
 
-    jif = mem_malloc(sizeof(struct jif));
+	jif = mem_malloc(sizeof(struct jif));
 
-    if (jif == NULL) {
-	LWIP_DEBUGF(NETIF_DEBUG, ("jif_init: out of memory\n"));
-	return ERR_MEM;
-    }
+	if (jif == NULL)
+	{
+		LWIP_DEBUGF(NETIF_DEBUG, ("jif_init: out of memory\n"));
+		return ERR_MEM;
+	}
 
-    output_envid = (envid_t *)netif->state;
+	output_envid = (envid_t *) netif->state;
 
-    netif->state = jif;
-    netif->output = jif_output;
-    netif->linkoutput = low_level_output;
-    memcpy(&netif->name[0], "en", 2);
+	netif->state = jif;
+	netif->output = jif_output;
+	netif->linkoutput = low_level_output;
+	memcpy(&netif->name[0], "en", 2);
 
-    jif->ethaddr = (struct eth_addr *)&(netif->hwaddr[0]);
-    jif->envid = *output_envid; 
+	jif->ethaddr = (struct eth_addr *) &(netif->hwaddr[0]);
+	jif->envid = *output_envid;
 
-    low_level_init(netif);
+	low_level_init(netif);
 
-    etharp_init();
+	etharp_init();
 
-    // qemu user-net is dumb; if the host OS does not send and ARP request
-    // first, the qemu will send packets destined for the host using the mac
-    // addr 00:00:00:00:00; do a arp request for the user-net NAT at 10.0.2.2
-    uint32_t ipaddr = inet_addr("10.0.2.2");
-    etharp_query(netif, (struct ip_addr *) &ipaddr, 0);
+	// qemu user-net is dumb; if the host OS does not send and ARP request
+	// first, the qemu will send packets destined for the host using the mac
+	// addr 00:00:00:00:00; do a arp request for the user-net NAT at 10.0.2.2
+	uint32_t ipaddr = inet_addr("10.0.2.2");
+	etharp_query(netif, (struct ip_addr *) &ipaddr, 0);
 
-    return ERR_OK;
+	return ERR_OK;
 }

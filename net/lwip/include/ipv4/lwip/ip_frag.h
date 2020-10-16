@@ -52,17 +52,17 @@ extern "C" {
  * This is exported because memp needs to know the size.
  */
 struct ip_reassdata {
-  struct ip_reassdata *next;
-  struct pbuf *p;
-  struct ip_hdr iphdr;
-  u16_t datagram_len;
-  u8_t flags;
-  u8_t timer;
+	struct ip_reassdata *next;
+	struct pbuf *p;
+	struct ip_hdr iphdr;
+	u16_t datagram_len;
+	u8_t flags;
+	u8_t timer;
 };
 
 void ip_reass_init(void);
 void ip_reass_tmr(void);
-struct pbuf * ip_reass(struct pbuf *p);
+struct pbuf *ip_reass(struct pbuf *p);
 #endif /* IP_REASSEMBLY */
 
 #if IP_FRAG

@@ -89,7 +89,7 @@ CFLAGS += -fno-omit-frame-pointer
 CFLAGS += -std=gnu99
 CFLAGS += -static
 CFLAGS += -fno-pie
-CFLAGS += -Wall -Wno-format -Wno-unused -Werror -gstabs -m32 -Wno-address-of-packed-member
+CFLAGS += -Wall -Wno-format -Wno-unused -Werror -gstabs -m32 -Wno-address-of-packed-member -Wno-strict-aliasing
 # -fno-tree-ch prevented gcc from sometimes reordering read_ebp() before
 # mon_backtrace()'s function prologue on gcc version: (Debian 4.7.2-5) 4.7.2
 CFLAGS += -fno-tree-ch
@@ -160,10 +160,12 @@ IMAGES = $(OBJDIR)/kern/kernel.img
 QEMUOPTS += -smp $(CPUS)
 QEMUOPTS += -drive file=$(OBJDIR)/fs/fs.img,index=1,media=disk,format=raw
 IMAGES += $(OBJDIR)/fs/fs.img
+#QEMUOPTS += -net user,hostfwd=tcp::$(PORT7)-:7,hostfwd=tcp::$(PORT80)-:80,hostfwd=udp::$(PORT7)-:7 -net nic,model=e1000
+#QEMUOPTS += -netdev user,id=jos0 -device e1000,netdev=jos0 -object filter-dump,id=jos0,netdev=jos0,file=qemu.pcap
 QEMUOPTS += -net user -net nic,model=e1000 -redir tcp:$(PORT7)::7 \
 	   -redir tcp:$(PORT80)::80 -redir udp:$(PORT7)::7 -net dump,file=qemu.pcap
+
 QEMUOPTS += $(QEMUEXTRA)
-#QEMUOPTS += -enable-kvm  # TODO maybe remove
 
 
 .gdbinit: .gdbinit.tmpl

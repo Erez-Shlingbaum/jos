@@ -41,13 +41,13 @@
 ************************/
 /* Trace levels. */
 typedef enum {
-LOG_CRITICAL = 0,
-LOG_ERR      = 1,
-LOG_NOTICE   = 2,
-LOG_WARNING  = 3,
-LOG_INFO     = 5,
-LOG_DETAIL   = 6,
-LOG_DEBUG    = 7
+	LOG_CRITICAL = 0,
+	LOG_ERR = 1,
+	LOG_NOTICE = 2,
+	LOG_WARNING = 3,
+	LOG_INFO = 5,
+	LOG_DETAIL = 6,
+	LOG_DEBUG = 7
 } LogCodes;
 
 
@@ -57,7 +57,7 @@ LOG_DEBUG    = 7
 /*
  * ppp_trace - a form of printf to send tracing information to stderr
  */
-void ppp_trace(int level, const char *format,...);
+void ppp_trace(int level, const char *format, ...);
 
 #define TRACELCP PPP_DEBUG
 

@@ -21,9 +21,9 @@ static inline void
 insb(int port, void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\tinsb"
-		     : "=D" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "memory", "cc");
+	: "=D" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "memory", "cc");
 }
 
 static inline uint16_t
@@ -38,9 +38,9 @@ static inline void
 insw(int port, void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\tinsw"
-		     : "=D" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "memory", "cc");
+	: "=D" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "memory", "cc");
 }
 
 static inline uint32_t
@@ -55,9 +55,9 @@ static inline void
 insl(int port, void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\tinsl"
-		     : "=D" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "memory", "cc");
+	: "=D" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "memory", "cc");
 }
 
 static inline void
@@ -70,9 +70,9 @@ static inline void
 outsb(int port, const void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\toutsb"
-		     : "=S" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "cc");
+	: "=S" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "cc");
 }
 
 static inline void
@@ -85,18 +85,18 @@ static inline void
 outsw(int port, const void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\toutsw"
-		     : "=S" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "cc");
+	: "=S" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "cc");
 }
 
 static inline void
 outsl(int port, const void *addr, int cnt)
 {
 	asm volatile("cld\n\trepne\n\toutsl"
-		     : "=S" (addr), "=c" (cnt)
-		     : "d" (port), "0" (addr), "1" (cnt)
-		     : "cc");
+	: "=S" (addr), "=c" (cnt)
+	: "d" (port), "0" (addr), "1" (cnt)
+	: "cc");
 }
 
 static inline void
@@ -228,8 +228,8 @@ cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *e
 {
 	uint32_t eax, ebx, ecx, edx;
 	asm volatile("cpuid"
-		     : "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx)
-		     : "a" (info));
+	: "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx)
+	: "a" (info));
 	if (eaxp)
 		*eaxp = eax;
 	if (ebxp)
@@ -255,9 +255,9 @@ xchg(volatile uint32_t *addr, uint32_t newval)
 
 	// The + in "+m" denotes a read-modify-write operand.
 	asm volatile("lock; xchgl %0, %1"
-		     : "+m" (*addr), "=a" (result)
-		     : "1" (newval)
-		     : "cc");
+	: "+m" (*addr), "=a" (result)
+	: "1" (newval)
+	: "cc");
 	return result;
 }
 
